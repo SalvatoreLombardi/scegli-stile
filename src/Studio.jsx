@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Anteprima from './Anteprima.jsx'
 import Icona from './Icona.jsx'
 import TabBolla from './TabBolla.jsx'
+import Bandiera from './Bandiera.jsx'
 import { LINGUE, lingueCliente, linguaIniziale } from './lingue.js'
 import { PALETTE, GRUPPI_PALETTE, GRUPPI_FONT, FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD, ATMOSFERE } from './dati.js'
 import { variabili } from './utils.js'
@@ -137,7 +138,7 @@ export default function Studio({ cliente, onBack, onChange }) {
               const l = LINGUE.find((y) => y.id === x.id)
               return (
                 <button key={x.id} className={lang === x.id ? 'on' : ''} onClick={() => setLang(x.id)} aria-pressed={lang === x.id}>
-                  <span>{l.bandiera}</span>{lang === x.id && <b>{l.nativo}</b>}
+                  <Bandiera id={l.id} size={30} />{lang === x.id && <b>{l.nativo}</b>}
                 </button>
               )
             })}

@@ -1,7 +1,8 @@
+import Bandiera from './Bandiera.jsx'
 import Icona from './Icona.jsx'
 import { LINGUE } from './lingue.js'
 
-// Scelta delle lingue del sito: tocca una lingua per aggiungerla, la stella la rende principale.
+// Scelta delle lingue del sito: tocca un pallino per aggiungerla, il pulsante sotto la rende principale.
 export default function SelettoreLingue({ valore, onChange, compatto = false }) {
   const scelta = (id) => valore.find((x) => x.id === id)
 
@@ -12,8 +13,7 @@ export default function SelettoreLingue({ valore, onChange, compatto = false }) 
       if (!resto.some((x) => x.principale)) resto = resto.map((x, i) => (i === 0 ? { ...x, principale: true } : x))
       onChange(resto)
     } else {
-      const nuova = { id, principale: !valore.some((x) => x.principale) }
-      onChange([...valore, nuova])
+      onChange([...valore, { id, principale: !valore.some((x) => x.principale) }])
     }
   }
   const principale = (id) => {
@@ -27,21 +27,22 @@ export default function SelettoreLingue({ valore, onChange, compatto = false }) 
 
   return (
     <div className={'lingue' + (compatto ? ' lingue--compatto' : '')}>
-      <div className="lingue-griglia">
+      <div className="pallini">
         {LINGUE.map((l, i) => {
           const s = scelta(l.id)
           return (
-            <div key={l.id} style={{ '--i': i }} className={'lingua glass' + (s ? ' on' : '')}>
-              <button className="lingua__corpo" onClick={() => alterna(l.id)} aria-pressed={!!s}>
-                <span className="lingua__bandiera">{l.bandiera}</span>
-                <b>{l.nativo}</b>
-                <small>{l.nome}</small>
-                {s && <span className="lingua__spunta"><Icona nome="check" size={16} /></span>}
+            <div key={l.id} style={{ '--i': i }} className={'pallino-col' + (s ? ' on' : '')}>
+              <button className="pallino" onClick={() => alterna(l.id)} aria-pressed={!!s} aria-label={`${l.nome}${s ? ', scelta' : ''}`}>
+                <Bandiera id={l.id} size={compatto ? 60 : 92} />
+                {s && <span className="pallino__spunta"><Icona nome="check" size={compatto ? 12 : 16} /></span>}
               </button>
-              {s && (
-                <button className={'lingua__stato' + (s.principale ? ' on' : '')} onClick={() => principale(l.id)} aria-pressed={s.principale}>
-                  <Icona nome="stella" size={15} /> {s.principale ? 'Principale' : 'Aggiuntiva'}
+              <b>{l.nativo}</b>
+              {s ? (
+                <button className={'pallino__stato' + (s.principale ? ' on' : '')} onClick={() => principale(l.id)} aria-pressed={s.principale}>
+                  <Icona nome="stella" size={13} /> {s.principale ? 'Principale' : 'Aggiuntiva'}
                 </button>
+              ) : (
+                <small>{l.nome}</small>
               )}
             </div>
           )

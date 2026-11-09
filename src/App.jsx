@@ -35,6 +35,11 @@ function Backup({ clienti, onImporta, onChiudi }) {
   )
 }
 
+const LINK = [
+  { etichetta: 'Il mio sito', nome: 'salvatorelombardi.com', url: 'https://salvatorelombardi.com' },
+  { etichetta: 'Un mio lavoro', nome: 'leterrazzesulmondo.it', url: 'https://leterrazzesulmondo.it' },
+]
+
 const ESEMPI = [
   { id: 'vetrina', nome: 'Sito vetrina', desc: 'Presenta l’attività in più pagine' },
   { id: 'ecommerce', nome: 'E-commerce', desc: 'Catalogo, carrello e pagamenti' },
@@ -116,6 +121,14 @@ function Home({ onNuovo }) {
               <b>{e.nome}</b>
               <small>{e.desc}</small>
             </div>
+          ))}
+        </div>
+        <div className="link-home">
+          {LINK.map((l) => (
+            <a key={l.url} className="link-pill glass" href={l.url} target="_blank" rel="noopener">
+              <span><small>{l.etichetta}</small><b>{l.nome}</b></span>
+              <Icona nome="esterno" size={20} />
+            </a>
           ))}
         </div>
       </div>

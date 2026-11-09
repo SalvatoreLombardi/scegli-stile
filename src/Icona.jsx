@@ -36,6 +36,7 @@ const P = {
   'f-leggero': 'M20 4c-8 0-13 4-13 11l-3 5M20 4c0 6-4 10-10 10M9 15h6',
   matita: 'M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4',
   aggiorna: 'M20 11a8 8 0 10-2.4 5.6M20 4v7h-7',
+  esterno: 'M7 17L17 7M9 7h8v8',
   pennello: 'M4 20c3 0 4-1.5 4-3a2.5 2.5 0 015 0c0 2-2 3-9 3zM9.5 14.5L20 4',
 }
 export default function Icona({ nome, size = 22 }) {

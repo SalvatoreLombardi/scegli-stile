@@ -387,3 +387,14 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 
 .rail button.gira svg { animation: gira-icona .6s linear infinite; }
 @keyframes gira-icona { to { transform: rotate(-360deg); } }
+
+/* ---------- Link in home: il mio sito e un mio lavoro ---------- */
+.link-home { display: flex; justify-content: center; gap: 16px; max-width: 860px; margin: 0 auto; }
+.link-pill { flex: 1; max-width: 330px; min-height: 64px; padding: 0 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-decoration: none; color: var(--ink); border-radius: 22px; transition: transform .3s var(--elastico); }
+.link-pill:active { transform: scale(.97); }
+.link-pill span { display: flex; flex-direction: column; gap: 2px; }
+.link-pill small { color: var(--ink2); font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+.link-pill b { font-size: 17px; font-weight: 600; letter-spacing: -.02em; }
+.link-pill svg { flex: none; color: var(--teal); }
+@media (orientation: portrait) { .link-home { flex-direction: column; align-items: stretch; } .link-pill { max-width: none; } }
+.link-pill span { align-items: flex-start; text-align: left; }

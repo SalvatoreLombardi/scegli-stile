@@ -26,10 +26,10 @@ export default function Nuovo({ onAnnulla, onCrea }) {
           <span className="eyebrow">Nuovo cliente · 1 di 4</span>
           <h1 className="titolo">Come si chiama <em>l’attività</em>?</h1>
           <label className="campo">Nome dell’attività
-            <input autoFocus value={d.nome} onChange={(e) => set('nome', e.target.value)} placeholder="Es. Ottica Visione" />
+            <input autoFocus value={d.nome} onChange={(e) => set('nome', e.target.value)} />
           </label>
           <label className="campo">Referente <em>(facoltativo)</em>
-            <input value={d.referente} onChange={(e) => set('referente', e.target.value)} placeholder="Es. Mario Rossi" />
+            <input value={d.referente} onChange={(e) => set('referente', e.target.value)} />
           </label>
         </div>
       )}

@@ -6,7 +6,7 @@ import { PALETTE, FONT, BOTTONI, CARD, ANGOLI_CARD, RIEMPIMENTO } from './dati.j
 import { ATTIVITA, TIPI, LISTINO, RICORRENTI, BRIEF } from './attivita.js'
 import SelettoreLingue from './SelettoreLingue.jsx'
 import { lingueCliente, linguaIniziale } from './lingue.js'
-import { scaricaPdf } from './pdf.js'
+import { creaPdf } from './pdf.js'
 import { trova, variabili, riepilogoCliente } from './utils.js'
 
 export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onElimina }) {
@@ -20,7 +20,36 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
     if (privato && area.current) area.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [privato])
   const [copiato, setCopiato] = useState(false)
-  const [pdf, setPdf] = useState('')
+  // Il PDF si prepara in anticipo: Safari dell'iPad apre la condivisione solo subito dopo il tocco, non dopo un'attesa.
+  const [pdf, setPdf] = useState(null)
+  const [pdfErrore, setPdfErrore] = useState(false)
+  useEffect(() => {
+    let vivo = true
+    let url = null
+    const t = setTimeout(async () => {
+      try {
+        const { blob, nomeFile } = await creaPdf(c)
+        if (!vivo) return
+        url = URL.createObjectURL(blob)
+        setPdf({ url, nome: nomeFile, file: new File([blob], nomeFile, { type: 'application/pdf' }) })
+        setPdfErrore(false)
+      } catch {
+        if (vivo) setPdfErrore(true)
+      }
+    }, 500)
+    return () => {
+      vivo = false
+      clearTimeout(t)
+      if (url) setTimeout(() => URL.revokeObjectURL(url), 15000)
+    }
+  }, [c])
+  const condividi = (e) => {
+    if (!pdf || !navigator.canShare || !navigator.canShare({ files: [pdf.file] })) return // altrimenti scarica il collegamento
+    e.preventDefault()
+    navigator.share({ files: [pdf.file], title: pdf.nome }).catch((err) => {
+      if (err && err.name !== 'AbortError') window.open(pdf.url, '_blank')
+    })
+  }
   const att = trova(ATTIVITA, c.attivita)
   const tipo = trova(TIPI, c.tipo)
   const s = c.stile
@@ -43,10 +72,6 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
       setTimeout(() => setCopiato(false), 2000)
     } catch { /* si può selezionare a mano */ }
   }
-  const scarica = async () => {
-    setPdf('lavoro')
-    try { await scaricaPdf(c); setPdf('') } catch { setPdf('errore'); setTimeout(() => setPdf(''), 3000) }
-  }
   const elimina = () => { if (window.confirm(`Eliminare ${c.nome}? Non si può annullare.`)) onElimina() }
 
   return (
@@ -56,9 +81,11 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
       <header className="cl-testa">
         <Foto att={att.id} nome="hero" className="cl-testa__foto" />
         <div className="cl-testa__velo" />
-        <button className="cl-pdf" onClick={scarica} disabled={pdf === 'lavoro'}>
-          <Icona nome="pdf" size={18} /> {pdf === 'lavoro' ? 'Preparo…' : pdf === 'errore' ? 'Errore, riprova' : 'Scarica PDF'}
-        </button>
+        {pdf ? (
+          <a className="cl-pdf" href={pdf.url} download={pdf.nome} onClick={condividi}><Icona nome="pdf" size={18} /> Scarica PDF</a>
+        ) : (
+          <button className="cl-pdf" disabled><Icona nome="pdf" size={18} /> {pdfErrore ? 'PDF non disponibile' : 'Preparo il PDF…'}</button>
+        )}
         <div className="cl-testa__testo">
           <span className="pill">{att.nome}</span>
           <h1 className="titolo nome-cliente" onPointerDown={inizia} onPointerUp={ferma} onPointerLeave={ferma} onPointerCancel={ferma} onContextMenu={(e) => e.preventDefault()}>{c.nome}</h1>

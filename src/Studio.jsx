@@ -6,7 +6,7 @@ import Bandiera from './Bandiera.jsx'
 import { LINGUE, lingueCliente, linguaIniziale } from './lingue.js'
 import { PALETTE, GRUPPI_PALETTE, GRUPPI_FONT, FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD, ATMOSFERE } from './dati.js'
 import { variabili, temaChiave, colorePrincipale } from './utils.js'
-import { contrasto } from './colori.js'
+import { contrasto, coloriDaFile } from './colori.js'
 
 const ICONE_FONT = { moderno: 'f-moderno', elegante: 'elegante', tech: 'tecnologico', classico: 'f-classico', deciso: 'f-deciso', caldo: 'f-caldo', leggero: 'f-leggero' }
 const SCHEDE = [['atmosfera', 'Stile'], ['colori', 'Colori'], ['font', 'Font'], ['bottoni', 'Bottoni'], ['card', 'Card']].map(([id, nome]) => ({ id, nome }))
@@ -23,6 +23,13 @@ export default function Studio({ cliente, onBack, onChange }) {
   const [gruppoFontId, setGruppoFontId] = useState(() => (GRUPPI_FONT.find((g) => g.font.some((f) => f.id === s.font)) || GRUPPI_FONT[0]).id)
   const gruppoFont = GRUPPI_FONT.find((g) => g.id === gruppoFontId)
   const tema = temaChiave(s)
+  const [logo, setLogo] = useState(null) // colori trovati nella foto del logo (non viene salvata)
+  const leggiLogo = async (e) => {
+    const f = e.target.files && e.target.files[0]
+    e.target.value = ''
+    if (!f) return
+    try { setLogo(await coloriDaFile(f)) } catch { setLogo({ colori: [], anteprima: '', errore: true }) }
+  }
   const vars = variabili(s)
   const pocoContrasto = !!s.coloreMarchio && contrasto(s.coloreMarchio, vars['--bg']) < 3
   const scegliTema = (t) => onChange({ ...s, temaModo: t === 'entrambi' ? 'entrambi' : 'solo', scuro: t === 'scuro' ? true : t === 'chiaro' ? false : s.scuro })
@@ -77,6 +84,30 @@ export default function Studio({ cliente, onBack, onChange }) {
                 </label>
                 {s.coloreMarchio && <button className="marchio-sel__togli" onClick={() => imposta('coloreMarchio', '')}>Togli</button>}
               </div>
+              <label className="logo-btn">
+                <Icona nome="immagine" size={18} /> Prendi il colore da una foto del logo
+                <input type="file" accept="image/*" onChange={leggiLogo} />
+              </label>
+              {logo && (
+                <div className="logo-colori">
+                  {logo.anteprima && <img src={logo.anteprima} alt="Logo del cliente" />}
+                  <div className="logo-colori__corpo">
+                    {logo.colori.length > 0 ? (
+                      <>
+                        <span>Tocca il colore del suo logo</span>
+                        <div className="logo-colori__sw">
+                          {logo.colori.map((c) => (
+                            <button key={c} style={{ background: c }} className={s.coloreMarchio && s.coloreMarchio.toLowerCase() === c ? 'on' : ''} aria-label={'Usa ' + c} onClick={() => imposta('coloreMarchio', c)} />
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <span>{logo.errore ? 'Non riesco a leggere questa immagine.' : 'Non ho trovato colori: prova con una foto più nitida o con sfondo bianco.'}</span>
+                    )}
+                  </div>
+                  <button className="logo-colori__x" onClick={() => setLogo(null)} aria-label="Chiudi">×</button>
+                </div>
+              )}
               {pocoContrasto && <p className="aiuto marchio-sel__avviso">Questo colore si legge poco sullo sfondo: link e bordi risulteranno deboli.</p>}
               <TabBolla compatta voci={GRUPPI_PALETTE.map((g) => ({ id: g.id, nome: g.nome, icona: g.icona }))} attivo={gruppo.id} onScegli={setGruppoId} />
               <div className="gruppo-testa" key={gruppo.id}><b>{gruppo.nome}</b><span>{gruppo.desc}</span></div>

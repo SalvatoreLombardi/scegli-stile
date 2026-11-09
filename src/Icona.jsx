@@ -38,6 +38,7 @@ const P = {
   aggiorna: 'M20 11a8 8 0 10-2.4 5.6M20 4v7h-7',
   esterno: 'M7 17L17 7M9 7h8v8',
   tema: 'M12 3a9 9 0 100 18zM12 3v18',
+  immagine: 'M4 5h16v14H4zM4 16l4.5-4.5 3.5 3.5 3-3 5 5M9 9.5h.01',
   pennello: 'M4 20c3 0 4-1.5 4-3a2.5 2.5 0 015 0c0 2-2 3-9 3zM9.5 14.5L20 4',
 }
 export default function Icona({ nome, size = 22 }) {

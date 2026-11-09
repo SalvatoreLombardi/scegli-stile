@@ -31,3 +31,66 @@ export function palette([id, nome, primary, accent, bg, text], dark = false) {
   }
   return { id, nome, primary, accent, bg, surface, text, muted, ...(dark ? { dark: true } : {}) }
 }
+
+// Trova i colori principali di un'immagine (per esempio il logo di un cliente).
+// Ignora sfondo bianco e trasparenze, preferisce i colori vivaci a quelli spenti, scarta i colori troppo simili.
+export function coloriDaPixel(dati, larghezza, altezza, max = 6) {
+  const gruppi = new Map()
+  let validi = 0
+  for (let i = 0; i < dati.length; i += 4) {
+    const r = dati[i], g = dati[i + 1], b = dati[i + 2], a = dati[i + 3]
+    if (a < 200) continue
+    if (r > 235 && g > 235 && b > 235) continue // bianco: di solito è lo sfondo
+    validi++
+    const chiave = ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4)
+    const x = gruppi.get(chiave) || { n: 0, r: 0, g: 0, b: 0 }
+    x.n++; x.r += r; x.g += g; x.b += b
+    gruppi.set(chiave, x)
+  }
+  if (!validi) return []
+  const candidati = [...gruppi.values()]
+    .filter((x) => x.n >= Math.max(3, validi * 0.004))
+    .map((x) => {
+      const r = x.r / x.n, g = x.g / x.n, b = x.b / x.n
+      const mx = Math.max(r, g, b), mn = Math.min(r, g, b)
+      const saturazione = mx === 0 ? 0 : (mx - mn) / mx
+      return { rgb: [r, g, b], punteggio: x.n * (0.3 + saturazione * 1.5) }
+    })
+    .sort((p, q) => q.punteggio - p.punteggio)
+  // Ai bordi delle forme i colori si mescolano con lo sfondo: sono sfumature di un colore già trovato, non colori nuovi.
+  const distanza = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2])
+  const eSfumatura = (c, base) => {
+    for (let t = 0.1; t <= 0.9; t += 0.1) {
+      const chiaro = base.map((v) => v + (255 - v) * t)
+      const scuro = base.map((v) => v * (1 - t))
+      if (distanza(c, chiaro) < 30 || distanza(c, scuro) < 30) return true
+    }
+    return false
+  }
+  const scelti = []
+  for (const c of candidati) {
+    const vicino = scelti.some((s) => distanza(s, c.rgb) < 70 || eSfumatura(c.rgb, s))
+    if (!vicino) scelti.push(c.rgb)
+    if (scelti.length >= max) break
+  }
+  return scelti.map(hex)
+}
+
+export async function coloriDaFile(file) {
+  const url = URL.createObjectURL(file)
+  try {
+    const img = await new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = ko; i.src = url })
+    const scala = Math.min(1, 96 / Math.max(img.naturalWidth, img.naturalHeight))
+    const w = Math.max(1, Math.round(img.naturalWidth * scala)), h = Math.max(1, Math.round(img.naturalHeight * scala))
+    const c = document.createElement('canvas'); c.width = w; c.height = h
+    const ctx = c.getContext('2d', { willReadFrequently: true })
+    ctx.drawImage(img, 0, 0, w, h)
+    const colori = coloriDaPixel(ctx.getImageData(0, 0, w, h).data, w, h)
+    const s2 = Math.min(1, 200 / Math.max(img.naturalWidth, img.naturalHeight))
+    const t = document.createElement('canvas'); t.width = Math.max(1, Math.round(img.naturalWidth * s2)); t.height = Math.max(1, Math.round(img.naturalHeight * s2))
+    t.getContext('2d').drawImage(img, 0, 0, t.width, t.height)
+    return { colori, anteprima: t.toDataURL('image/png') }
+  } finally {
+    URL.revokeObjectURL(url)
+  }
+}

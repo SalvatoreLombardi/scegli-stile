@@ -35,6 +35,43 @@ function Backup({ clienti, onImporta, onChiudi }) {
   )
 }
 
+const ESEMPI = [
+  { id: 'vetrina', nome: 'Sito vetrina', desc: 'Presenta l’attività in più pagine' },
+  { id: 'ecommerce', nome: 'E-commerce', desc: 'Catalogo, carrello e pagamenti' },
+  { id: 'webapp', nome: 'App', desc: 'Prenotazioni e area clienti' },
+]
+
+// Schemi neutri dei tre layout: solo forme, nessuna foto.
+function Schema({ tipo }) {
+  if (tipo === 'vetrina') {
+    return (
+      <div className="wire">
+        <div className="w-nav"><i className="w-dot" /><i className="w-bar s" /><i className="w-btn" /></div>
+        <div className="w-blk w-hero"><i className="w-bar m" /><i className="w-bar s" /><i className="w-btn" /></div>
+        <div className="w-row"><i className="w-blk p" /><i className="w-blk" /><i className="w-blk p" /></div>
+      </div>
+    )
+  }
+  if (tipo === 'ecommerce') {
+    return (
+      <div className="wire">
+        <div className="w-nav"><i className="w-dot" /><i className="w-bar s" /><i className="w-pill" /></div>
+        <div className="w-blk w-banner" />
+        <div className="w-row w-prod"><div><i className="w-blk" /><i className="w-bar s" /></div><div><i className="w-blk p" /><i className="w-bar s" /></div><div><i className="w-blk" /><i className="w-bar s" /></div></div>
+      </div>
+    )
+  }
+  return (
+    <div className="wire w-app">
+      <div className="w-lato"><i className="w-dot" /><i className="w-bar" /><i className="w-bar" /><i className="w-bar" /></div>
+      <div className="w-main">
+        <div className="w-row w-kpi"><i className="w-blk" /><i className="w-blk p" /><i className="w-blk" /></div>
+        <i className="w-riga" /><i className="w-riga" /><i className="w-riga" />
+      </div>
+    </div>
+  )
+}
+
 function Rail({ attivo, onClienti, onNuovo, onBackup }) {
   return (
     <nav className="rail" aria-label="Navigazione">
@@ -62,7 +99,15 @@ function Home({ clienti, onNuovo, onApri }) {
 
       {clienti.length === 0 ? (
         <div className="vuoto">
-          <Foto att="ottica" nome="hero" className="vuoto__foto" />
+          <div className="esempi">
+            {ESEMPI.map((e, i) => (
+              <button key={e.id} className="esempio glass" style={{ '--i': i }} onClick={onNuovo}>
+                <Schema tipo={e.id} />
+                <b>{e.nome}</b>
+                <small>{e.desc}</small>
+              </button>
+            ))}
+          </div>
           <h2>Nessun cliente, <em className="s">per ora</em></h2>
           <p>Scegli l’attività e il progetto: l’anteprima si veste su misura e il cliente sceglie lo stile.</p>
         </div>

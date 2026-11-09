@@ -4,9 +4,9 @@ import SelettoreLingue from './SelettoreLingue.jsx'
 import { SceltaAttivita, SceltaTipo } from './Scelte.jsx'
 import { LINGUE_DEFAULT } from './lingue.js'
 
-export default function Nuovo({ onAnnulla, onCrea }) {
+export default function Nuovo({ onAnnulla, onCrea, tipoIniziale = '' }) {
   const [passo, setPasso] = useState(1)
-  const [d, setD] = useState({ nome: '', referente: '', attivita: '', tipo: '', lingue: LINGUE_DEFAULT })
+  const [d, setD] = useState({ nome: '', referente: '', attivita: '', tipo: tipoIniziale, lingue: LINGUE_DEFAULT })
   const set = (k, v) => setD((o) => ({ ...o, [k]: v }))
   const ok = [d.nome.trim().length > 1, !!d.attivita, !!d.tipo, d.lingue.length > 0][passo - 1]
   const avanti = () => (passo < 4 ? setPasso(passo + 1) : onCrea({ ...d, nome: d.nome.trim(), referente: d.referente.trim() }))

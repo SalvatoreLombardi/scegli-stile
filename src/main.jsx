@@ -22,3 +22,6 @@ function misuraSchermo() {
 misuraSchermo()
 window.addEventListener('resize', misuraSchermo)
 window.addEventListener('orientationchange', () => setTimeout(misuraSchermo, 350))
+
+// Dopo un aggiornamento manuale tolgo dall'indirizzo il parametro usato per scaricare la versione nuova.
+if (window.location.search.indexOf('r=') !== -1) window.history.replaceState(null, '', window.location.pathname)

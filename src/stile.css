@@ -363,5 +363,4 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .cl-pdf { text-decoration: none; }
 
 .cl-pdf { min-width: 176px; justify-content: center; font-family: inherit; line-height: 1; box-sizing: border-box; }
-.cl-pdf--attesa { opacity: .6; }
 .avviso-pop { position: fixed; z-index: 20; left: 50%; bottom: 28px; transform: translateX(-50%); max-width: 86%; padding: 14px 20px; border-radius: 22px; color: #fff; font-size: 15px; font-weight: 600; line-height: 1.35; text-align: center; background: linear-gradient(160deg, rgba(30, 62, 56, .92), rgba(8, 22, 19, .94)); border: 1px solid rgba(255, 255, 255, .25); box-shadow: 0 16px 36px rgba(10, 30, 26, .4); animation: sale .3s cubic-bezier(.2, .8, .2, 1) both; }

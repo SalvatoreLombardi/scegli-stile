@@ -80,11 +80,10 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
       <header className="cl-testa">
         <Foto att={att.id} nome="hero" className="cl-testa__foto" />
         <div className="cl-testa__velo" />
-        {pdf ? (
-          <a className="cl-pdf" href={pdf.url} onClick={dopoClic} {...(apple ? { target: '_blank', rel: 'noopener' } : { download: pdf.nome })}><Icona nome="pdf" size={18} /> Scarica PDF</a>
-        ) : (
-          <button className="cl-pdf cl-pdf--attesa" disabled><Icona nome="pdf" size={18} /> Scarica PDF</button>
-        )}
+        <a className="cl-pdf" href={pdf ? pdf.url : '#'} {...(pdf ? (apple ? { target: '_blank', rel: 'noopener' } : { download: pdf.nome }) : {})}
+          onClick={(e) => { if (pdf) dopoClic(); else { e.preventDefault(); mostra(pdfErrore ? 'PDF non disponibile, riapri la pagina del cliente' : 'Sto preparando il PDF, riprova tra un attimo') } }}>
+          <Icona nome="pdf" size={18} /> Scarica PDF
+        </a>
         <div className="cl-testa__testo">
           <span className="pill">{att.nome}</span>
           <h1 className="titolo nome-cliente" onPointerDown={inizia} onPointerUp={ferma} onPointerLeave={ferma} onPointerCancel={ferma} onContextMenu={(e) => e.preventDefault()}>{c.nome}</h1>

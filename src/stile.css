@@ -562,3 +562,6 @@ input.file-ancorato { position: absolute; top: 0; left: 0; width: 100%; height: 
 .logo-alt__campo input { width: auto; min-height: 0; margin: 0; padding: 0; border: 0; background: none; box-shadow: none; -webkit-appearance: auto; appearance: auto; font-size: 14px; }
 .logo-alt__incolla { min-height: 44px; font-size: 14px; }
 .conf-logo__cambia, .conf-logo__aggiungi { border: 0; font-family: inherit; color: inherit; }
+
+.logo-pagina.trascina { outline: 3px dashed var(--teal); outline-offset: 4px; }
+.logo-alt__trascina { color: var(--ink2); line-height: 1.4; }

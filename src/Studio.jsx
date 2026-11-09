@@ -93,6 +93,7 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
     if (cliente.logo && !logo) coloriDaUrl(cliente.logo).then((r) => setLogo({ colori: r.colori })).catch(() => {})
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const [trascina, setTrascina] = useState(false) // un'immagine sta passando sopra al riquadro del logo
   const [stato, setStato] = useState('') // '', 'leggo' oppure il testo di un errore
   const elabora = async (f) => {
     setStato('leggo')
@@ -153,15 +154,22 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
               <span className="eyebrow">Passo 1 di {PASSI.length}</span>
               <h2 className="passo-pag__titolo">Il <em>logo</em> del cliente</h2>
               <p className="passo-pag__testo">Parti da qui: dal logo trovo i colori e lo uso per confrontare i font. Puoi cambiare tutto nei passi dopo, oppure saltare se non ce l’ha.</p>
-              <div className="logo-pagina">
+              <div className={'logo-pagina' + (trascina ? ' trascina' : '')}
+                onDragOver={(e) => { e.preventDefault(); setTrascina(true) }} onDragLeave={() => setTrascina(false)}
+                onDrop={(e) => {
+                  e.preventDefault(); setTrascina(false)
+                  const f = [...((e.dataTransfer && e.dataTransfer.files) || [])].find((x) => x.type.indexOf('image/') === 0)
+                  if (f) elabora(f)
+                }}>
                 {cliente.logo ? <img src={cliente.logo} alt="Logo del cliente" /> : <div className="logo-pagina__vuoto"><Icona nome="immagine" size={44} /></div>}
                 <div className="logo-pagina__azioni">
                   <Selettore classe="primario grande logo-pagina__carica" onFile={leggiLogo}><Icona nome="immagine" size={20} /> {cliente.logo ? 'Cambia il logo' : 'Carica il logo'}</Selettore>
                   <small>Foto o immagine: meglio su sfondo bianco o trasparente.</small>
                   <div className="logo-alt">
-                    <span>Se il pulsante non apre le foto, ci sono altre due strade:</span>
+                    <span>Se il pulsante non apre le foto, ci sono altre strade:</span>
                     <label className="logo-alt__campo">1. Scegli il file qui <input type="file" accept="image/*" onChange={leggiLogo} /></label>
                     {puoIncollare && <button className="secondario logo-alt__incolla" onClick={incolla}><Icona nome="copia" size={18} /> 2. Incolla un'immagine copiata</button>}
+                    <span className="logo-alt__trascina">3. Con due app affiancate (Split View): trascina una foto dalle Foto dentro il riquadro bianco del logo.</span>
                   </div>
                   {stato === 'leggo' && <small className="logo-stato">Sto leggendo il logo…</small>}
                   {stato && stato !== 'leggo' && <small className="logo-stato logo-stato--errore">{stato}</small>}

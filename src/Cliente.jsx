@@ -45,24 +45,10 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
       if (url) setTimeout(() => URL.revokeObjectURL(url), 15000)
     }
   }, [c])
-  const scaricaDiretto = () => {
-    const a = document.createElement('a')
-    a.href = pdf.url
-    a.download = pdf.nome
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-  }
-  // Con il foglio di condivisione (iPad) il PDF si salva in File, si manda per mail o con AirDrop.
-  const condividi = (e) => {
-    if (!pdf || !navigator.canShare || !navigator.canShare({ files: [pdf.file] })) return // altrimenti scarica il collegamento
-    e.preventDefault()
-    navigator.share({ files: [pdf.file], title: pdf.nome }).catch((err) => {
-      if (err && err.name === 'AbortError') return
-      mostra('Condivisione non riuscita (' + (err && err.name ? err.name : 'errore') + '): provo il download')
-      scaricaDiretto()
-    })
-  }
+  // Su iPad/iPhone il download con collegamento e la condivisione dopo un'attesa non sono affidabili:
+  // il PDF si apre in una scheda di Safari, da cui si salva con il pulsante Condividi.
+  const apple = typeof navigator !== 'undefined' && (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
+  const dopoClic = () => { if (apple) mostra('PDF aperto: per salvarlo tocca Condividi in alto, poi "Salva su File"') }
   const att = trova(ATTIVITA, c.attivita)
   const tipo = trova(TIPI, c.tipo)
   const s = c.stile
@@ -95,7 +81,7 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
         <Foto att={att.id} nome="hero" className="cl-testa__foto" />
         <div className="cl-testa__velo" />
         {pdf ? (
-          <a className="cl-pdf" href={pdf.url} download={pdf.nome} onClick={condividi}><Icona nome="pdf" size={18} /> Scarica PDF</a>
+          <a className="cl-pdf" href={pdf.url} onClick={dopoClic} {...(apple ? { target: '_blank', rel: 'noopener' } : { download: pdf.nome })}><Icona nome="pdf" size={18} /> Scarica PDF</a>
         ) : (
           <button className="cl-pdf cl-pdf--attesa" disabled><Icona nome="pdf" size={18} /> Scarica PDF</button>
         )}

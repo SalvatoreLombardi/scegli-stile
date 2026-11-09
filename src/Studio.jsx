@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import Anteprima from './Anteprima.jsx'
 import Icona from './Icona.jsx'
 import TabBolla from './TabBolla.jsx'
@@ -19,15 +19,16 @@ const PASSI = [
 const tasto = (fn) => ({ role: 'button', tabIndex: 0, onClick: fn, onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn() } } })
 
 // Componenti definiti fuori da Studio: restano gli stessi a ogni modifica (altrimenti il selettore dei colori si chiuderebbe).
-// Pulsante che apre il selettore delle foto. Su iPad un campo invisibile sopra al pulsante può non rispondere:
-// qui il pulsante apre il campo (nascosto, con il suo aspetto normale) da programma, subito dopo il tocco.
+// Pulsante che apre il selettore delle foto: un'etichetta vera collegata al campo (for/id), senza script.
+// Il campo sta nella stessa posizione del pulsante (quasi trasparente, non cliccabile): così su iPad il selettore
+// ha un punto a cui agganciarsi. Il tocco sull'etichetta lo apre da solo.
 function Selettore({ classe, onFile, children }) {
-  const campo = useRef(null)
+  const id = useId()
   return (
-    <>
-      <button type="button" className={classe} onClick={() => campo.current && campo.current.click()}>{children}</button>
-      <input ref={campo} type="file" accept="image/*" onChange={onFile} className="file-nascosto" tabIndex={-1} aria-hidden="true" />
-    </>
+    <span className="selettore-wrap">
+      <label htmlFor={id} className={classe}>{children}</label>
+      <input id={id} type="file" accept="image/*" onChange={onFile} className="file-ancorato" tabIndex={-1} />
+    </span>
   )
 }
 
@@ -93,10 +94,7 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const [stato, setStato] = useState('') // '', 'leggo' oppure il testo di un errore
-  const leggiLogo = async (e) => {
-    const campo = e.target
-    const f = campo.files && campo.files[0]
-    if (!f) return
+  const elabora = async (f) => {
     setStato('leggo')
     try {
       const r = await coloriDaFile(f)
@@ -105,11 +103,40 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
       setStato('')
     } catch (err) {
       setLogo({ colori: [], errore: true })
-      setStato('Non riesco a leggere questa foto (' + ((err && err.message) || 'errore') + '). Prova con un\'altra, oppure salvala come JPG o PNG.')
-    } finally {
-      try { campo.value = '' } catch { /* niente */ } // si svuota il campo solo dopo aver letto il file
+      setStato('Non riesco a leggere questa foto (' + ((err && err.message) || 'errore') + "). Prova con un'altra, oppure salvala come JPG o PNG.")
     }
   }
+  const leggiLogo = async (e) => {
+    const campo = e.target
+    const f = campo.files && campo.files[0]
+    if (!f) return
+    await elabora(f)
+    try { campo.value = '' } catch { /* niente */ } // si svuota il campo solo dopo aver letto il file
+  }
+  // Strada 3: incolla un'immagine copiata (dalla libreria foto o da un'altra app)
+  const incolla = async () => {
+    try {
+      const voci = await navigator.clipboard.read()
+      for (const v of voci) {
+        const tipo = v.types.find((t) => t.indexOf('image/') === 0)
+        if (tipo) { await elabora(new File([await v.getType(tipo)], 'logo', { type: tipo })); return }
+      }
+      setStato("Negli appunti non c'è un'immagine: copia prima il logo, poi riprova.")
+    } catch {
+      setStato('Non riesco a leggere gli appunti: quando compare "Incolla" toccalo, poi riprova.')
+    }
+  }
+  const puoIncollare = typeof navigator !== 'undefined' && navigator.clipboard && typeof navigator.clipboard.read === 'function'
+  // Incolla con la tastiera (Cmd+V) mentre sei nel passo del logo
+  useEffect(() => {
+    if (passo !== 'logo') return undefined
+    const f = (e) => {
+      const file = [...((e.clipboardData && e.clipboardData.files) || [])].find((x) => x.type.indexOf('image/') === 0)
+      if (file) { e.preventDefault(); elabora(file) }
+    }
+    document.addEventListener('paste', f)
+    return () => document.removeEventListener('paste', f)
+  }) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="studio2 vista-entra">
@@ -131,6 +158,11 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
                 <div className="logo-pagina__azioni">
                   <Selettore classe="primario grande logo-pagina__carica" onFile={leggiLogo}><Icona nome="immagine" size={20} /> {cliente.logo ? 'Cambia il logo' : 'Carica il logo'}</Selettore>
                   <small>Foto o immagine: meglio su sfondo bianco o trasparente.</small>
+                  <div className="logo-alt">
+                    <span>Se il pulsante non apre le foto, ci sono altre due strade:</span>
+                    <label className="logo-alt__campo">1. Scegli il file qui <input type="file" accept="image/*" onChange={leggiLogo} /></label>
+                    {puoIncollare && <button className="secondario logo-alt__incolla" onClick={incolla}><Icona nome="copia" size={18} /> 2. Incolla un'immagine copiata</button>}
+                  </div>
                   {stato === 'leggo' && <small className="logo-stato">Sto leggendo il logo…</small>}
                   {stato && stato !== 'leggo' && <small className="logo-stato logo-stato--errore">{stato}</small>}
                 </div>

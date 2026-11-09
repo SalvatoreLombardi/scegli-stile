@@ -14,7 +14,7 @@ const PASSI = [
   { id: 'direzione', nome: 'Direzione', icona: 'atmosfera' },
   { id: 'colori', nome: 'Colori', icona: 'colori' },
   { id: 'font', nome: 'Font', icona: 'font' },
-  { id: 'menu', nome: 'Menu', icona: 'menu' },
+  { id: 'menu', nome: 'Navbar', icona: 'menu' },
   { id: 'forma', nome: 'Forma', icona: 'bottoni' },
 ]
 const tasto = (fn) => ({ role: 'button', tabIndex: 0, onClick: fn, onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn() } } })
@@ -279,9 +279,9 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
 
             {passo === 'menu' && (
               <section className="passo-pag">
-                <h2 className="passo-pag__titolo">Il <em>menu</em></h2>
+                <h2 className="passo-pag__titolo">La <em>navbar</em></h2>
                 {cliente.tipo === 'webapp' ? (
-                  <p className="passo-pag__testo">Nelle web app il menu è la barra laterale a sinistra: non ci sono stili di barra in alto da scegliere.</p>
+                  <p className="passo-pag__testo">Nelle web app il menu è la barra laterale a sinistra: non ci sono stili di navbar da scegliere.</p>
                 ) : (
                   <>
                     <h4>Barra in alto</h4>

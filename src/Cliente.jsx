@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Anteprima from './Anteprima.jsx'
 import Foto from './Foto.jsx'
 import Icona from './Icona.jsx'
@@ -11,6 +11,14 @@ import { trova, variabili, riepilogoCliente } from './utils.js'
 
 export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onElimina }) {
   const [privato, setPrivato] = useState(false)
+  const area = useRef(null)
+  const timer = useRef(null)
+  // L'area riservata non ha nessun segno visibile: si apre tenendo premuto il nome del cliente.
+  const inizia = () => { clearTimeout(timer.current); timer.current = setTimeout(() => setPrivato(true), 900) }
+  const ferma = () => clearTimeout(timer.current)
+  useEffect(() => {
+    if (privato && area.current) area.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [privato])
   const [copiato, setCopiato] = useState(false)
   const [pdf, setPdf] = useState('')
   const att = trova(ATTIVITA, c.attivita)
@@ -53,7 +61,7 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
         </button>
         <div className="cl-testa__testo">
           <span className="pill">{att.nome}</span>
-          <h1 className="titolo">{c.nome}</h1>
+          <h1 className="titolo nome-cliente" onPointerDown={inizia} onPointerUp={ferma} onPointerLeave={ferma} onPointerCancel={ferma} onContextMenu={(e) => e.preventDefault()}>{c.nome}</h1>
           <div className="meta">
             <span className="pill pill--chiara"><Icona nome={tipo.id} size={16} /> {tipo.nome}</span>
             {c.referente && <span className="meta__txt">Referente: {c.referente}</span>}
@@ -85,12 +93,12 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
         <SelettoreLingue compatto valore={lingueCliente(c)} onChange={(l) => onAggiorna({ lingue: l })} />
       </section>
 
-      <section className="blocco blocco--privato glass">
+      {privato && (
+      <section ref={area} className="blocco blocco--privato glass">
         <div className="blocco-testa">
           <h2><Icona nome="lock" size={20} /> Area <em>riservata</em></h2>
-          <button className="secondario" onClick={() => setPrivato(!privato)}>{privato ? 'Nascondi' : 'Mostra'}</button>
+          <button className="secondario" onClick={() => setPrivato(false)}>Nascondi</button>
         </div>
-        {!privato && <p className="aiuto">Brief, prezzi e note per il preventivo. Tienila chiusa quando il cliente guarda lo schermo.</p>}
 
         {privato && (
           <div className="privato">
@@ -142,6 +150,7 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
           </div>
         )}
       </section>
+      )}
     </div>
   )
 }

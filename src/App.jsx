@@ -90,7 +90,7 @@ function Rail({ attivo, onHome, onClienti, onNuovo, onBackup }) {
   // Diagnostica: tenendo premuto il logo si vedono le misure dello schermo (serve a capire problemi come la striscia in fondo).
   const misure = () => {
     const sa = (v) => { const e = document.createElement('div'); e.style.cssText = 'position:fixed;visibility:hidden;padding-' + v + ':env(safe-area-inset-' + v + ')'; document.body.appendChild(e); const r = parseFloat(getComputedStyle(e)['padding' + v[0].toUpperCase() + v.slice(1)]) || 0; e.remove(); return r }
-    window.alert(['Schermo ' + screen.width + 'x' + screen.height, 'Finestra ' + window.innerWidth + 'x' + window.innerHeight, 'Documento ' + document.documentElement.clientHeight, 'A schermo intero: ' + (window.navigator.standalone ? 'sì' : 'no'), 'Margini sicuri su/giù: ' + sa('top') + ' / ' + sa('bottom')].join('\n'))
+    window.alert(['Schermo ' + screen.width + 'x' + screen.height, 'Finestra ' + window.innerWidth + 'x' + window.innerHeight, 'Documento ' + document.documentElement.clientHeight, 'A schermo intero: ' + (window.navigator.standalone ? 'sì' : 'no'), 'Sfondo pagina ' + getComputedStyle(document.documentElement).backgroundColor, 'Margini sicuri su/giù: ' + sa('top') + ' / ' + sa('bottom')].join('\n'))
   }
   return (
     <nav className="rail" aria-label="Navigazione">

@@ -14,7 +14,7 @@
 html, body, #root { margin: 0; height: 100%; }
 /* Su iPadOS 15 overscroll-behavior non esiste: se il documento può scorrere, il rimbalzo mostra una striscia chiara.
    Blocco html e body: scorrono solo i contenitori interni. */
-html { background: linear-gradient(135deg, #a9ecdf 0%, #cfd0ff 48%, #ffcfb4 100%); }
+html { background-color: #e2d6f1; }  /* colore unico: la finestra dell'iPad lo usa per riempire ciò che resta fuori dalla pagina */
 html, body { position: fixed; top: 0; left: 0; width: 100%; overflow: hidden; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 16px;
@@ -419,3 +419,6 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .cop-firma { position: absolute; left: 0; right: 0; bottom: 34px; text-align: center; font-size: 14px; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; color: rgba(18, 32, 29, .55); }
 @media (prefers-reduced-motion: reduce) { .cop-btn__alone { animation: none; opacity: 0; } }
 @media (orientation: portrait) { .cop-vetro { padding: 56px 28px 48px; } }
+
+/* App a schermo intero su iPad: il fondo sfuma nello stesso colore unico di html, così la striscia che iOS lascia in fondo si fonde. */
+.standalone .app::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; z-index: 0; pointer-events: none; background: linear-gradient(180deg, rgba(226, 214, 241, 0), #e2d6f1 92%); }

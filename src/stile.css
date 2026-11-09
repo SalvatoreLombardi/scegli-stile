@@ -321,10 +321,11 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 @media (orientation: portrait) { .esempi { gap: 12px; } .esempio b { font-size: 17px; } }
 
 /* Bordo luminoso che gira attorno alla card: un fascio di luce conico ruota dentro un anello ritagliato con la maschera. */
-.neon { position: absolute; top: 0; right: 0; bottom: 0; left: 0; border-radius: inherit; padding: 4px; overflow: hidden; pointer-events: none; z-index: 2; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
-.neon i { position: absolute; top: 50%; left: 50%; width: 220%; height: 220%; margin: -110% 0 0 -110%; background: conic-gradient(from 0deg, transparent 0deg, transparent 110deg, var(--neon) 335deg, #ffffff 357deg, transparent 360deg); animation: gira 3.2s linear infinite; animation-delay: calc(var(--i) * -1.3s); will-change: transform; }
+.neon { position: absolute; top: 0; right: 0; bottom: 0; left: 0; border-radius: inherit; padding: 3px; overflow: hidden; pointer-events: none; z-index: 2; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+.neon i { position: absolute; top: 50%; left: 50%; width: 220%; height: 220%; margin: -110% 0 0 -110%; background: conic-gradient(from 0deg, transparent 0deg, transparent 100deg, var(--neon) 340deg, var(--neon) 350deg, transparent 360deg); animation: gira 3.2s linear infinite; animation-delay: calc(var(--i) * -1.3s); will-change: transform; }
 @keyframes gira { to { transform: rotate(360deg); } }
-.esempio { box-shadow: 0 22px 50px rgba(30, 50, 90, .2), 0 0 34px var(--neon-glow), inset 0 1.5px 0 rgba(255, 255, 255, .95); }
+.esempio { border: 0; box-shadow: 0 22px 50px rgba(30, 50, 90, .2), 0 0 34px var(--neon-glow); }
+.esempio::before { display: none; }
 .esempio:nth-child(1) { --neon: #14c9a4; --neon-glow: rgba(20, 201, 164, .3); }
 .esempio:nth-child(2) { --neon: #ff7a45; --neon-glow: rgba(255, 122, 69, .28); }
 .esempio:nth-child(3) { --neon: #7c6bff; --neon-glow: rgba(124, 107, 255, .3); }

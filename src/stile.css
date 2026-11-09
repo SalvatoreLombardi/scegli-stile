@@ -12,6 +12,10 @@
 }
 *, *::before, *::after { box-sizing: border-box; }
 html, body, #root { margin: 0; height: 100%; }
+/* Su iPadOS 15 overscroll-behavior non esiste: se il documento può scorrere, il rimbalzo mostra una striscia chiara.
+   Blocco html e body: scorrono solo i contenitori interni. */
+html { background: #b9d9e6; }
+html, body { position: fixed; top: 0; left: 0; width: 100%; overflow: hidden; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 16px;
   background: #eef3f1; color: var(--ink);
@@ -275,3 +279,8 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .lingua-switch button span { font-size: 24px; line-height: 1; }
 .lingua-switch button.on { background: var(--grad); box-shadow: 0 6px 16px rgba(24, 179, 148, .5); }
 @media (orientation: portrait) { .lingue--compatto .lingue-griglia { grid-template-columns: repeat(3, 1fr); } .lingua-switch { bottom: 14px; } }
+
+/* ---------- Scarica PDF ---------- */
+.cl-pdf { position: absolute; z-index: 2; top: 18px; right: 18px; min-height: 46px; padding: 0 18px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: #fff; background: linear-gradient(160deg, rgba(255, 255, 255, .32), rgba(255, 255, 255, .12)); -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5); border: 1px solid rgba(255, 255, 255, .55); box-shadow: 0 10px 26px rgba(10, 30, 26, .3), inset 0 1.5px 0 rgba(255, 255, 255, .6); transition: transform .25s var(--elastico), opacity .2s ease; }
+.cl-pdf:active { transform: scale(.94); }
+.cl-pdf:disabled { opacity: .7; }

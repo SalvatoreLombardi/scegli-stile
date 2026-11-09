@@ -6,11 +6,13 @@ import { PALETTE, FONT, BOTTONI, CARD, ANGOLI_CARD, RIEMPIMENTO } from './dati.j
 import { ATTIVITA, TIPI, LISTINO, RICORRENTI, BRIEF } from './attivita.js'
 import SelettoreLingue from './SelettoreLingue.jsx'
 import { lingueCliente, linguaIniziale } from './lingue.js'
+import { scaricaPdf } from './pdf.js'
 import { trova, variabili, riepilogoCliente } from './utils.js'
 
 export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onElimina }) {
   const [privato, setPrivato] = useState(false)
   const [copiato, setCopiato] = useState(false)
+  const [pdf, setPdf] = useState('')
   const att = trova(ATTIVITA, c.attivita)
   const tipo = trova(TIPI, c.tipo)
   const s = c.stile
@@ -33,6 +35,10 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
       setTimeout(() => setCopiato(false), 2000)
     } catch { /* si può selezionare a mano */ }
   }
+  const scarica = async () => {
+    setPdf('lavoro')
+    try { await scaricaPdf(c); setPdf('') } catch { setPdf('errore'); setTimeout(() => setPdf(''), 3000) }
+  }
   const elimina = () => { if (window.confirm(`Eliminare ${c.nome}? Non si può annullare.`)) onElimina() }
 
   return (
@@ -42,6 +48,9 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
       <header className="cl-testa">
         <Foto att={att.id} nome="hero" className="cl-testa__foto" />
         <div className="cl-testa__velo" />
+        <button className="cl-pdf" onClick={scarica} disabled={pdf === 'lavoro'}>
+          <Icona nome="pdf" size={18} /> {pdf === 'lavoro' ? 'Preparo…' : pdf === 'errore' ? 'Errore, riprova' : 'Scarica PDF'}
+        </button>
         <div className="cl-testa__testo">
           <span className="pill">{att.nome}</span>
           <h1 className="titolo">{c.nome}</h1>

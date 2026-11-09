@@ -14,11 +14,11 @@
 html, body, #root { margin: 0; height: 100%; }
 /* Su iPadOS 15 overscroll-behavior non esiste: se il documento può scorrere, il rimbalzo mostra una striscia chiara.
    Blocco html e body: scorrono solo i contenitori interni. */
-html { background: #b9d9e6; }
+html { background: linear-gradient(135deg, #a9ecdf 0%, #cfd0ff 48%, #ffcfb4 100%); }
 html, body { position: fixed; top: 0; left: 0; width: 100%; overflow: hidden; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 16px;
-  background: #eef3f1; color: var(--ink);
+  background: transparent; color: var(--ink);
   -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; overscroll-behavior: none;
 }
 button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; border: 0; background: none; }
@@ -381,3 +381,6 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .finestra--scelta .tessere { grid-template-columns: repeat(4, 1fr); }
 @media (orientation: portrait) { .finestra--scelta .tessere { grid-template-columns: repeat(3, 1fr); } }
 .finestra--scelta { background: rgba(255, 255, 255, .96); }
+
+/* App a schermo intero su iPad: copre la striscia in fondo (--gap è misurato da main.jsx). */
+.standalone .app { bottom: calc(var(--gap, 0px) * -1); }

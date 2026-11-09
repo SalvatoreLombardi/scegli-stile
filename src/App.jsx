@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Cliente from './Cliente.jsx'
 import Copertina from './Copertina.jsx'
 import Foto from './Foto.jsx'
@@ -78,14 +78,36 @@ function Schema({ tipo }) {
   )
 }
 
-// Ricarica la pagina scaricando sempre l'ultima versione: l'indirizzo cambia ogni volta, così Safari non usa la copia vecchia.
-// I clienti restano salvati sul dispositivo.
-function aggiornaApp() {
-  window.location.replace(window.location.pathname + '?r=' + Date.now())
+// Aggiorna: chiede al service worker se c'è una versione nuova, la attiva e ricarica. I clienti restano salvati sul dispositivo.
+// Senza service worker (per esempio in prova sul Mac) ricarica scaricando una copia fresca.
+async function aggiornaApp() {
+  const reg = window.__sw
+  if (!reg) { window.location.replace(window.location.pathname + '?r=' + Date.now()); return }
+  try { await reg.update() } catch { /* senza rete si ricarica la versione salvata */ }
+  const pronto = await new Promise((ok) => {
+    if (reg.waiting) return ok(reg.waiting)
+    const n = reg.installing
+    if (!n) return ok(null)
+    n.addEventListener('statechange', () => { if (n.state === 'installed') ok(reg.waiting || n); if (n.state === 'redundant') ok(null) })
+    setTimeout(() => ok(null), 25000)
+  })
+  if (pronto) {
+    navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload(), { once: true })
+    pronto.postMessage('attiva')
+    setTimeout(() => window.location.reload(), 5000)
+  } else {
+    window.location.reload()
+  }
 }
 
 function Rail({ attivo, onHome, onClienti, onNuovo, onBackup }) {
   const [gira, setGira] = useState(false)
+  const [nuova, setNuova] = useState(!!window.__nuovaVersione)
+  useEffect(() => {
+    const f = () => setNuova(true)
+    window.addEventListener('scegli-stile-aggiornamento', f)
+    return () => window.removeEventListener('scegli-stile-aggiornamento', f)
+  }, [])
   const timer = useRef(null)
   // Diagnostica: tenendo premuto il logo si vedono le misure dello schermo (serve a capire problemi come la striscia in fondo).
   const misure = () => {
@@ -103,7 +125,7 @@ function Rail({ attivo, onHome, onClienti, onNuovo, onBackup }) {
       <button onClick={onNuovo} aria-label="Nuovo cliente"><Icona nome="piu" /></button>
       <div className="sep" />
       <button onClick={onBackup} aria-label="Backup"><Icona nome="backup" /></button>
-      <button className={gira ? 'gira' : ''} onClick={() => { setGira(true); setTimeout(aggiornaApp, 350) }} aria-label="Aggiorna l'app"><Icona nome="aggiorna" /></button>
+      <button className={(gira ? 'gira ' : '') + (nuova ? 'nuovo' : '')} onClick={() => { setGira(true); aggiornaApp() }} aria-label={nuova ? "Aggiorna l'app: c'è una versione nuova" : "Aggiorna l'app"}><Icona nome="aggiorna" /></button>
     </nav>
   )
 }

@@ -39,7 +39,7 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 600; letter-s
 @keyframes sale { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
 /* ---------- Elementi comuni ---------- */
-.glass { position: relative; background: linear-gradient(145deg, rgba(255, 255, 255, .52), rgba(255, 255, 255, .16)); -webkit-backdrop-filter: blur(22px) saturate(1.8); backdrop-filter: blur(22px) saturate(1.8); border: 1px solid rgba(255, 255, 255, .75); box-shadow: 0 22px 50px rgba(30, 50, 90, .2), inset 0 1.5px 0 rgba(255, 255, 255, .95), inset 0 -1.5px 0 rgba(255, 255, 255, .35), inset 0 0 36px rgba(255, 255, 255, .22); border-radius: 28px; }
+.glass { position: relative; background: linear-gradient(145deg, rgba(255, 255, 255, .68), rgba(255, 255, 255, .34)); border: 1px solid rgba(255, 255, 255, .75); box-shadow: 0 22px 50px rgba(30, 50, 90, .2), inset 0 1.5px 0 rgba(255, 255, 255, .95), inset 0 -1.5px 0 rgba(255, 255, 255, .35), inset 0 0 36px rgba(255, 255, 255, .22); border-radius: 28px; }
 .glass::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; border-radius: inherit; background: radial-gradient(120% 55% at 15% -8%, rgba(255, 255, 255, .6), transparent 58%); pointer-events: none; }
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) { .glass { background: rgba(255, 255, 255, .78); } }
 .eyebrow { display: block; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--ink2); margin-bottom: 10px; }
@@ -75,7 +75,7 @@ em.s { font-family: var(--serif); font-style: italic; font-weight: 600; letter-s
 .punti i:nth-child(3) { background: #a9b8ff; }
 
 /* ---------- Barra laterale scura (come la dashboard di riferimento) ---------- */
-.rail { position: absolute; z-index: 5; left: 14px; top: 50%; transform: translateY(-50%); width: 68px; padding: 14px 0; border-radius: 34px; background: linear-gradient(160deg, rgba(30, 62, 56, .72), rgba(8, 22, 19, .8)); -webkit-backdrop-filter: blur(20px) saturate(1.6); backdrop-filter: blur(20px) saturate(1.6); border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 18px 44px rgba(10, 30, 26, .35), inset 0 1.5px 0 rgba(255, 255, 255, .3); display: flex; flex-direction: column; align-items: center; gap: 8px; animation: sale .5s cubic-bezier(.2, .8, .2, 1) both; }
+.rail { position: absolute; z-index: 5; left: 14px; top: 50%; transform: translateY(-50%); width: 68px; padding: 14px 0; border-radius: 34px; background: linear-gradient(160deg, rgba(30, 62, 56, .72), rgba(8, 22, 19, .8)); -webkit-backdrop-filter: blur(10px) saturate(1.3); backdrop-filter: blur(10px) saturate(1.3); border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 18px 44px rgba(10, 30, 26, .35), inset 0 1.5px 0 rgba(255, 255, 255, .3); display: flex; flex-direction: column; align-items: center; gap: 8px; animation: sale .5s cubic-bezier(.2, .8, .2, 1) both; }
 .rail button { position: relative; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, .55); transition: transform .25s var(--elastico), background .25s ease, color .2s ease; }
 .rail button:active { transform: scale(.88); }
 .rail button.on { color: #fff; background: var(--grad); box-shadow: 0 0 0 5px rgba(127, 227, 208, .16), 0 8px 20px rgba(24, 179, 148, .5); }
@@ -178,7 +178,7 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .riga-azioni { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
 
 /* ---------- Finestre ---------- */
-.velo { position: fixed; top: 0; right: 0; bottom: 0; left: 0; background: rgba(210, 228, 223, .5); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); display: flex; align-items: center; justify-content: center; padding: 24px; z-index: 10; animation: appare .25s ease both; }
+.velo { position: fixed; top: 0; right: 0; bottom: 0; left: 0; background: rgba(210, 228, 223, .5); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 24px; z-index: 10; animation: appare .25s ease both; }
 @keyframes appare { from { opacity: 0; } to { opacity: 1; } }
 .finestra { width: 100%; max-width: 460px; background: rgba(255, 255, 255, .85); border: 1px solid #fff; border-radius: 30px; padding: 24px 24px 8px; box-shadow: var(--ombra); animation: sale .32s cubic-bezier(.2, .8, .2, 1) both; }
 .finestra h3 { font-size: 22px; font-weight: 600; margin-bottom: 8px; letter-spacing: -.02em; }
@@ -195,7 +195,7 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .interr:active { transform: scale(.88) rotate(20deg); }
 
 /* schede: barra di vetro scuro con la pallina che salta da una voce all'altra */
-.bolla-bar { position: relative; display: flex; margin: 34px 12px 12px; height: 64px; border-radius: 26px; background: linear-gradient(160deg, rgba(34, 64, 58, .8), rgba(8, 22, 19, .88)); -webkit-backdrop-filter: blur(16px) saturate(1.6); backdrop-filter: blur(16px) saturate(1.6); border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 14px 30px rgba(10, 30, 26, .3), inset 0 1.5px 0 rgba(255, 255, 255, .3); }
+.bolla-bar { position: relative; display: flex; margin: 34px 12px 12px; height: 64px; border-radius: 26px; background: linear-gradient(160deg, rgba(34, 64, 58, .94), rgba(8, 22, 19, .96)); border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 14px 30px rgba(10, 30, 26, .3), inset 0 1.5px 0 rgba(255, 255, 255, .3); }
 .bolla-bar--compatta { height: 48px; margin: 30px 4px 10px; border-radius: 20px; }
 .bolla-slider { position: absolute; z-index: 3; top: 0; left: 0; height: 100%; display: flex; justify-content: center; transition: transform .55s cubic-bezier(.34, 1.45, .5, 1); pointer-events: none; }
 .bolla { position: absolute; top: 8px; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: radial-gradient(circle at 32% 26%, #b8fff0 0%, #35d6b6 40%, #0f8f78 100%); box-shadow: 0 0 0 3px rgba(127, 227, 208, .25), 0 6px 14px rgba(24, 179, 148, .65), inset 0 1.5px 2px rgba(255, 255, 255, .75); animation: salto .7s cubic-bezier(.3, .7, .4, 1) both; }
@@ -273,7 +273,7 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .lingue--compatto .pallino__spunta { width: 24px; height: 24px; border-width: 2px; }
 .lingue--compatto .lingue-riepilogo { text-align: left; margin-top: 14px; }
 .schermo { position: relative; }
-.lingua-switch { position: absolute; z-index: 3; left: 50%; bottom: 22px; transform: translateX(-50%); display: flex; gap: 4px; padding: 6px; border-radius: 999px; background: linear-gradient(160deg, rgba(30, 62, 56, .78), rgba(8, 22, 19, .86)); -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6); border: 1px solid rgba(255, 255, 255, .25); box-shadow: 0 16px 36px rgba(10, 30, 26, .4), inset 0 1.5px 0 rgba(255, 255, 255, .3); }
+.lingua-switch { position: absolute; z-index: 3; left: 50%; bottom: 22px; transform: translateX(-50%); display: flex; gap: 4px; padding: 6px; border-radius: 999px; background: linear-gradient(160deg, rgba(30, 62, 56, .94), rgba(8, 22, 19, .96)); border: 1px solid rgba(255, 255, 255, .25); box-shadow: 0 16px 36px rgba(10, 30, 26, .4), inset 0 1.5px 0 rgba(255, 255, 255, .3); }
 .lingua-switch button { min-height: 46px; min-width: 46px; padding: 0 12px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; color: #fff; font-size: 14px; font-weight: 600; transition: background .3s ease, transform .25s var(--elastico); }
 .lingua-switch button:active { transform: scale(.92); }
 .lingua-switch button .bandiera { display: block; }
@@ -281,7 +281,7 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 @media (orientation: portrait) { .lingua-switch { bottom: 14px; } .pallini { gap: 4px; } }
 
 /* ---------- Scarica PDF ---------- */
-.cl-pdf { position: absolute; z-index: 2; top: 18px; right: 18px; min-height: 46px; padding: 0 18px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: #fff; background: linear-gradient(160deg, rgba(255, 255, 255, .32), rgba(255, 255, 255, .12)); -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5); border: 1px solid rgba(255, 255, 255, .55); box-shadow: 0 10px 26px rgba(10, 30, 26, .3), inset 0 1.5px 0 rgba(255, 255, 255, .6); transition: transform .25s var(--elastico), opacity .2s ease; }
+.cl-pdf { position: absolute; z-index: 2; top: 18px; right: 18px; min-height: 46px; padding: 0 18px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: #fff; background: rgba(10, 24, 21, .38); border: 1px solid rgba(255, 255, 255, .55); box-shadow: 0 10px 26px rgba(10, 30, 26, .3), inset 0 1.5px 0 rgba(255, 255, 255, .6); transition: transform .25s var(--elastico), opacity .2s ease; }
 .cl-pdf:active { transform: scale(.94); }
 .cl-pdf:disabled { opacity: .7; }
 
@@ -322,7 +322,7 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 
 /* Bordo luminoso che gira attorno alla card: un fascio di luce conico ruota dentro un anello ritagliato con la maschera. */
 .neon { position: absolute; top: 0; right: 0; bottom: 0; left: 0; border-radius: inherit; padding: 3px; overflow: hidden; pointer-events: none; z-index: 2; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
-.neon i { position: absolute; top: 50%; left: 50%; width: 220%; height: 220%; margin: -110% 0 0 -110%; background: conic-gradient(from 0deg, transparent 0deg, transparent 100deg, var(--neon) 340deg, var(--neon) 350deg, transparent 360deg); animation: gira 3.2s linear infinite; animation-delay: calc(var(--i) * -1.3s); will-change: transform; }
+.neon i { position: absolute; top: 50%; left: 50%; width: 220%; height: 220%; margin: -110% 0 0 -110%; background: conic-gradient(from 0deg, transparent 0deg, transparent 100deg, var(--neon) 340deg, var(--neon) 350deg, transparent 360deg); animation: gira 3.2s linear 2 both; animation-delay: calc(var(--i) * -1.3s); }
 @keyframes gira { to { transform: rotate(360deg); } }
 .esempio { border: 0; box-shadow: 0 22px 50px rgba(30, 50, 90, .2), 0 0 34px var(--neon-glow); }
 .esempio::before { display: none; }
@@ -333,7 +333,7 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 
 /* ---------- Elimina cliente ---------- */
 .cliente-card { cursor: pointer; outline: none; }
-.cliente-x { position: absolute; z-index: 3; top: 10px; right: 10px; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: rgba(10, 24, 21, .38); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, .45); box-shadow: 0 6px 16px rgba(10, 30, 26, .3); transition: transform .25s var(--elastico), background .2s ease; }
+.cliente-x { position: absolute; z-index: 3; top: 10px; right: 10px; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: rgba(10, 24, 21, .5); border: 1px solid rgba(255, 255, 255, .45); box-shadow: 0 6px 16px rgba(10, 30, 26, .3); transition: transform .25s var(--elastico), background .2s ease; }
 .cliente-x:active { transform: scale(.88); background: rgba(214, 53, 63, .85); }
 .finestra--elimina { text-align: center; max-width: 400px; }
 .finestra--elimina h3 { font-size: 24px; }
@@ -351,7 +351,7 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .bolla-bar button:focus-visible { box-shadow: inset 0 0 0 2px var(--teal2); }
 
 /* ---------- Barra delle categorie: cono di luce che scorre sotto l'icona attiva ---------- */
-.luce-bar { position: relative; display: flex; height: 56px; margin: 4px 4px 10px; border-radius: 20px; overflow: hidden; background: linear-gradient(160deg, rgba(34, 64, 58, .8), rgba(8, 22, 19, .88)); -webkit-backdrop-filter: blur(16px) saturate(1.6); backdrop-filter: blur(16px) saturate(1.6); border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 14px 30px rgba(10, 30, 26, .3), inset 0 1.5px 0 rgba(255, 255, 255, .3); }
+.luce-bar { position: relative; display: flex; height: 56px; margin: 4px 4px 10px; border-radius: 20px; overflow: hidden; background: linear-gradient(160deg, rgba(34, 64, 58, .94), rgba(8, 22, 19, .96)); border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 14px 30px rgba(10, 30, 26, .3), inset 0 1.5px 0 rgba(255, 255, 255, .3); }
 .luce-bar .cono { position: absolute; top: 0; bottom: 0; left: 0; transition: transform .5s var(--elastico); pointer-events: none; }
 .luce-bar .cono::before { content: ''; position: absolute; top: 0; left: 4%; right: 4%; bottom: 0; background: linear-gradient(180deg, rgba(127, 227, 208, .6), rgba(127, 227, 208, 0) 95%); clip-path: polygon(24% 0, 76% 0, 100% 100%, 0 100%); }
 .luce-bar .cono::after { content: ''; position: absolute; top: 0; left: 26%; right: 26%; height: 3px; border-radius: 0 0 3px 3px; background: var(--teal2); box-shadow: 0 0 12px 2px rgba(127, 227, 208, .85); }
@@ -383,7 +383,7 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .finestra--scelta { background: rgba(255, 255, 255, .96); }
 
 
-.rail button.gira svg { animation: gira-icona .6s linear infinite; }
+.rail button.gira svg { animation: gira-icona .6s linear 2; }
 @keyframes gira-icona { to { transform: rotate(-360deg); } }
 
 /* ---------- Link in home: il mio sito e un mio lavoro ---------- */
@@ -414,7 +414,7 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .cop-chips span:first-child { background: var(--grad); color: #fff; border-color: transparent; box-shadow: 0 10px 24px rgba(24, 179, 148, .38); }
 .cop-btn { position: relative; margin-top: 38px; min-height: 76px; padding: 0 40px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: 14px; font-size: clamp(19px, 2.6vw, 24px); font-weight: 700; letter-spacing: -.01em; color: #fff; background: var(--grad); box-shadow: 0 18px 44px rgba(24, 179, 148, .5), inset 0 2px 0 rgba(255, 255, 255, .5); transition: transform .3s var(--elastico); }
 .cop-btn:active { transform: scale(.95); }
-.cop-btn__alone { position: absolute; top: 0; right: 0; bottom: 0; left: 0; border-radius: inherit; border: 3px solid rgba(53, 214, 182, .9); pointer-events: none; animation: respira 2.2s ease-out infinite; }
+.cop-btn__alone { position: absolute; top: 0; right: 0; bottom: 0; left: 0; border-radius: inherit; border: 3px solid rgba(53, 214, 182, .9); pointer-events: none; animation: respira 2.2s ease-out 3 both; }
 @keyframes respira { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(1.2, 1.5); opacity: 0; } }
 .cop-firma { position: absolute; left: 0; right: 0; bottom: 34px; text-align: center; font-size: 14px; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; color: rgba(18, 32, 29, .55); }
 @media (prefers-reduced-motion: reduce) { .cop-btn__alone { animation: none; opacity: 0; } }
@@ -422,3 +422,15 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 
 /* App a schermo intero su iPad: il fondo sfuma nello stesso colore unico di html, così la striscia che iOS lascia in fondo si fonde. */
 .standalone .app::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; z-index: 0; pointer-events: none; background: linear-gradient(180deg, rgba(226, 214, 241, 0), #e2d6f1 92%); }
+
+/* ---------- Risparmio batteria ---------- */
+/* Il blur resta solo sui pannelli grandi (studio, copertina, barra laterale, finestre): 10 px al massimo. */
+.barra.glass, .cop-vetro.glass { -webkit-backdrop-filter: blur(10px) saturate(1.3); backdrop-filter: blur(10px) saturate(1.3); }
+/* Con la scheda in background o con "riduci movimento" le animazioni si fermano. */
+.pagina-nascosta *, .pagina-nascosta *::before, .pagina-nascosta *::after { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Pallino sul pulsante Aggiorna quando c'è una versione nuova pronta */
+.rail button.nuovo::after { content: ''; position: absolute; top: 8px; right: 8px; width: 11px; height: 11px; border-radius: 50%; background: #ffb98f; border: 2px solid #12201d; }

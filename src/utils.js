@@ -30,6 +30,9 @@ export const temaTesto = (s) => ({
   entrambi: 'Chiaro e scuro (con interruttore per il visitatore)',
 })[temaChiave(s)]
 
+// Colore principale scelto per il cliente (il suo, se l'ha indicato; altrimenti quello della palette).
+export const colorePrincipale = (s, pal) => (/^#[0-9a-fA-F]{6}$/.test(s.coloreMarchio || '') ? s.coloreMarchio : pal.primary)
+
 export const trova = (lista, id) => lista.find((x) => x.id === id) || lista[0]
 
 // Trasforma le scelte in variabili CSS per l'anteprima.
@@ -43,7 +46,9 @@ export function variabili(s) {
   const versoScuro = scuro && !p.dark
   const versoChiaro = !scuro && p.dark
   const base = versoScuro ? { ...p, ...TEMA_SCURO } : versoChiaro ? { ...p, ...TEMA_CHIARO } : p
-  const primary = versoScuro ? visibile(p.primary, base.bg, [p.accent]) : versoChiaro ? scurisci(p.primary, base.bg) : p.primary
+  const marchio = /^#[0-9a-fA-F]{6}$/.test(s.coloreMarchio || '') ? s.coloreMarchio : null // colore del logo del cliente
+  const principale = marchio || p.primary
+  const primary = versoScuro ? visibile(principale, base.bg, [p.accent]) : versoChiaro ? scurisci(principale, base.bg) : principale
   const accent = versoScuro ? visibile(p.accent, base.bg, [p.primary]) : versoChiaro ? scurisci(p.accent, base.bg) : p.accent
   return {
     '--bg': base.bg, '--surface': base.surface, '--text': base.text, '--muted': base.muted,
@@ -65,6 +70,7 @@ export function riepilogo(s) {
     'Il tuo stile scelto',
     `Colori: ${p.nome} (principale ${p.primary}, secondario ${p.accent})`,
     `Tema: ${temaTesto(s)}`,
+    ...(s.coloreMarchio ? [`Colore del cliente: ${s.coloreMarchio.toUpperCase()}`] : []),
     `Font: titoli ${f.titoli}, testi ${f.testi}`,
     `Bottoni: ${trova(BOTTONI, s.bottone).nome}, ${trova(RIEMPIMENTO, s.riempimento).nome.toLowerCase()}`,
     `Card: ${trova(CARD, s.card).nome}, angoli ${trova(ANGOLI_CARD, s.angoli).nome.toLowerCase()}`,

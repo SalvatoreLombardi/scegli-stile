@@ -5,7 +5,8 @@ import TabBolla from './TabBolla.jsx'
 import Bandiera from './Bandiera.jsx'
 import { LINGUE, lingueCliente, linguaIniziale } from './lingue.js'
 import { PALETTE, GRUPPI_PALETTE, GRUPPI_FONT, FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD, ATMOSFERE } from './dati.js'
-import { variabili, temaChiave } from './utils.js'
+import { variabili, temaChiave, colorePrincipale } from './utils.js'
+import { contrasto } from './colori.js'
 
 const ICONE_FONT = { moderno: 'f-moderno', elegante: 'elegante', tech: 'tecnologico', classico: 'f-classico', deciso: 'f-deciso', caldo: 'f-caldo', leggero: 'f-leggero' }
 const SCHEDE = [['atmosfera', 'Stile'], ['colori', 'Colori'], ['font', 'Font'], ['bottoni', 'Bottoni'], ['card', 'Card']].map(([id, nome]) => ({ id, nome }))
@@ -22,6 +23,8 @@ export default function Studio({ cliente, onBack, onChange }) {
   const [gruppoFontId, setGruppoFontId] = useState(() => (GRUPPI_FONT.find((g) => g.font.some((f) => f.id === s.font)) || GRUPPI_FONT[0]).id)
   const gruppoFont = GRUPPI_FONT.find((g) => g.id === gruppoFontId)
   const tema = temaChiave(s)
+  const vars = variabili(s)
+  const pocoContrasto = !!s.coloreMarchio && contrasto(s.coloreMarchio, vars['--bg']) < 3
   const scegliTema = (t) => onChange({ ...s, temaModo: t === 'entrambi' ? 'entrambi' : 'solo', scuro: t === 'scuro' ? true : t === 'chiaro' ? false : s.scuro })
   const scegliPalette = (p) => onChange({ ...s, palette: p.id, scuro: p.dark ? true : palAttuale?.dark ? false : s.scuro })
 
@@ -66,6 +69,15 @@ export default function Studio({ cliente, onBack, onChange }) {
 
           {scheda === 'colori' && (
             <>
+              <div className={'marchio-sel' + (s.coloreMarchio ? ' on' : '')}>
+                <label className="marchio-sel__corpo">
+                  <span className="marchio-sel__pallino" style={{ background: colorePrincipale(s, palAttuale || PALETTE[0]) }} />
+                  <span className="marchio-sel__testo"><b>Il colore del cliente</b><small>{s.coloreMarchio ? s.coloreMarchio.toUpperCase() : 'Tocca per scegliere il colore del suo logo'}</small></span>
+                  <input type="color" className="marchio-sel__input" aria-label="Colore del cliente" value={s.coloreMarchio || (palAttuale || PALETTE[0]).primary} onChange={(e) => imposta('coloreMarchio', e.target.value)} />
+                </label>
+                {s.coloreMarchio && <button className="marchio-sel__togli" onClick={() => imposta('coloreMarchio', '')}>Togli</button>}
+              </div>
+              {pocoContrasto && <p className="aiuto marchio-sel__avviso">Questo colore si legge poco sullo sfondo: link e bordi risulteranno deboli.</p>}
               <TabBolla compatta voci={GRUPPI_PALETTE.map((g) => ({ id: g.id, nome: g.nome, icona: g.icona }))} attivo={gruppo.id} onScegli={setGruppoId} />
               <div className="gruppo-testa" key={gruppo.id}><b>{gruppo.nome}</b><span>{gruppo.desc}</span></div>
               <div className="griglia-colori" key={'g' + gruppo.id}>

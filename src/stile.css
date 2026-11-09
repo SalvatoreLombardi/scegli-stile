@@ -443,3 +443,15 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .tema-sel__righe button:active { transform: scale(.94); }
 .tema-sel__righe button.on { background: var(--scuro); color: var(--teal2); box-shadow: 0 6px 14px rgba(10, 30, 26, .25); }
 .barra-testa { padding-bottom: 0; }
+
+/* ---------- Il colore del cliente ---------- */
+.marchio-sel { position: relative; display: flex; align-items: center; gap: 8px; margin: 2px 2px 12px; padding: 8px 8px 8px 10px; border-radius: 22px; background: rgba(255, 255, 255, .72); border: 2px solid transparent; box-shadow: 0 3px 10px rgba(30, 70, 60, .08); }
+.marchio-sel.on { border-color: var(--teal); background: #fff; }
+.marchio-sel__corpo { position: relative; flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; }
+.marchio-sel__pallino { width: 40px; height: 40px; flex: none; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 1px rgba(18, 32, 29, .15), 0 6px 14px rgba(30, 70, 60, .2); }
+.marchio-sel__testo { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.marchio-sel__testo b { font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+.marchio-sel__testo small { font-size: 12px; color: var(--ink2); line-height: 1.25; }
+.marchio-sel__input { position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; margin: 0; padding: 0; border: 0; opacity: 0; cursor: pointer; }
+.marchio-sel__togli { flex: none; min-height: 44px; padding: 0 14px; border-radius: 999px; font-size: 14px; font-weight: 600; background: rgba(255, 90, 100, .1); color: #d1353f; }
+.marchio-sel__avviso { margin: -4px 6px 10px; color: #a8651a; }

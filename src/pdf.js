@@ -1,7 +1,7 @@
 import { PALETTE, FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD } from './dati.js'
 import { ATTIVITA, TIPI, BRIEF } from './attivita.js'
 import { LINGUE, lingueCliente } from './lingue.js'
-import { trova, temaTesto } from './utils.js'
+import { trova, temaTesto, colorePrincipale } from './utils.js'
 import { urlFoto } from './Foto.jsx'
 
 const INK = [18, 32, 29]
@@ -121,7 +121,7 @@ export async function creaPdf(c) {
   // ---- Stile ----
   sezione('Stile scelto')
   serve(30)
-  const campioni = [[pal.primary, 'Principale'], [pal.accent, 'Secondario'], [pal.bg, 'Sfondo'], [pal.surface, 'Card'], [pal.text, 'Testo']]
+  const campioni = [[colorePrincipale(s, pal), s.coloreMarchio ? 'Del cliente' : 'Principale'], [pal.accent, 'Secondario'], [pal.bg, 'Sfondo'], [pal.surface, 'Card'], [pal.text, 'Testo']]
   const lato = 24, gap = 5
   campioni.forEach(([hex, nome], i) => {
     const x = M + i * (lato + gap)
@@ -139,6 +139,7 @@ export async function creaPdf(c) {
   })
   y += 33
   riga('Palette', pal.nome)
+  if (s.coloreMarchio) riga('Colore del cliente', s.coloreMarchio.toUpperCase())
   riga('Tema del sito', temaTesto(s))
   riga('Font', `Titoli ${font.titoli}, testi ${font.testi}`)
   riga('Bottoni', `${trova(BOTTONI, s.bottone).nome}, ${trova(RIEMPIMENTO, s.riempimento).nome.toLowerCase()}`)

@@ -7,7 +7,7 @@ import Nuovo from './Nuovo.jsx'
 import Studio from './Studio.jsx'
 import { PALETTE } from './dati.js'
 import { ATTIVITA, TIPI } from './attivita.js'
-import { trova } from './utils.js'
+import { trova, colorePrincipale } from './utils.js'
 import { useClienti } from './store.js'
 
 function Backup({ clienti, onImporta, onChiudi }) {
@@ -198,7 +198,7 @@ function Clienti({ clienti, onNuovo, onApri, onElimina }) {
                 <h3>{c.nome}</h3>
                 <div className="cliente-card__piede">
                   <span>{trova(TIPI, c.tipo).nome}</span>
-                  <span className="mini-pal">{[pal.primary, pal.accent, pal.bg].map((x, k) => <i key={k} style={{ background: x }} />)}</span>
+                  <span className="mini-pal">{[colorePrincipale(c.stile, pal), pal.accent, pal.bg].map((x, k) => <i key={k} style={{ background: x }} />)}</span>
                 </div>
               </div>
             </div>

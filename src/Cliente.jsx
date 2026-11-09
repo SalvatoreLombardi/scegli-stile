@@ -23,6 +23,8 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
   // Il PDF si prepara in anticipo: Safari dell'iPad apre la condivisione solo subito dopo il tocco, non dopo un'attesa.
   const [pdf, setPdf] = useState(null)
   const [pdfErrore, setPdfErrore] = useState(false)
+  const [avviso, setAvviso] = useState('')
+  const mostra = (m) => { setAvviso(m); setTimeout(() => setAvviso(''), 7000) }
   useEffect(() => {
     let vivo = true
     let url = null
@@ -33,8 +35,8 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
         url = URL.createObjectURL(blob)
         setPdf({ url, nome: nomeFile, file: new File([blob], nomeFile, { type: 'application/pdf' }) })
         setPdfErrore(false)
-      } catch {
-        if (vivo) setPdfErrore(true)
+      } catch (err) {
+        if (vivo) { setPdfErrore(true); mostra('PDF non creato: ' + (err && err.message ? err.message : err)) }
       }
     }, 500)
     return () => {
@@ -43,11 +45,22 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
       if (url) setTimeout(() => URL.revokeObjectURL(url), 15000)
     }
   }, [c])
+  const scaricaDiretto = () => {
+    const a = document.createElement('a')
+    a.href = pdf.url
+    a.download = pdf.nome
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+  }
+  // Con il foglio di condivisione (iPad) il PDF si salva in File, si manda per mail o con AirDrop.
   const condividi = (e) => {
     if (!pdf || !navigator.canShare || !navigator.canShare({ files: [pdf.file] })) return // altrimenti scarica il collegamento
     e.preventDefault()
     navigator.share({ files: [pdf.file], title: pdf.nome }).catch((err) => {
-      if (err && err.name !== 'AbortError') window.open(pdf.url, '_blank')
+      if (err && err.name === 'AbortError') return
+      mostra('Condivisione non riuscita (' + (err && err.name ? err.name : 'errore') + '): provo il download')
+      scaricaDiretto()
     })
   }
   const att = trova(ATTIVITA, c.attivita)
@@ -84,7 +97,7 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
         {pdf ? (
           <a className="cl-pdf" href={pdf.url} download={pdf.nome} onClick={condividi}><Icona nome="pdf" size={18} /> Scarica PDF</a>
         ) : (
-          <button className="cl-pdf" disabled><Icona nome="pdf" size={18} /> {pdfErrore ? 'PDF non disponibile' : 'Preparo il PDF…'}</button>
+          <button className="cl-pdf cl-pdf--attesa" disabled><Icona nome="pdf" size={18} /> Scarica PDF</button>
         )}
         <div className="cl-testa__testo">
           <span className="pill">{att.nome}</span>
@@ -178,6 +191,7 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
         )}
       </section>
       )}
+      {avviso && <div className="avviso-pop" role="status">{avviso}</div>}
     </div>
   )
 }

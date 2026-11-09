@@ -384,7 +384,7 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 
 
 .rail button.gira svg { animation: gira-icona .6s linear 2; }
-@keyframes gira-icona { to { transform: rotate(-360deg); } }
+@keyframes gira-icona { to { transform: rotate(360deg); } }
 
 /* ---------- Link in home: il mio sito e un mio lavoro ---------- */
 .link-home { display: flex; justify-content: center; gap: 16px; max-width: 860px; margin: 0 auto; }

@@ -5,12 +5,14 @@ import Icona from './Icona.jsx'
 import { PALETTE, FONT, BOTTONI, CARD, ANGOLI_CARD, RIEMPIMENTO } from './dati.js'
 import { ATTIVITA, TIPI, LISTINO, RICORRENTI, BRIEF } from './attivita.js'
 import SelettoreLingue from './SelettoreLingue.jsx'
+import { SceltaAttivita, SceltaTipo } from './Scelte.jsx'
 import { lingueCliente, linguaIniziale } from './lingue.js'
 import { creaPdf } from './pdf.js'
 import { trova, variabili, riepilogoCliente } from './utils.js'
 
 export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onElimina }) {
   const [privato, setPrivato] = useState(false)
+  const [modifica, setModifica] = useState(null) // 'attivita' | 'tipo'
   const area = useRef(null)
   const timer = useRef(null)
   // L'area riservata non ha nessun segno visibile: si apre tenendo premuto il nome del cliente.
@@ -85,10 +87,10 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
           <Icona nome="pdf" size={18} /> Scarica PDF
         </a>
         <div className="cl-testa__testo">
-          <span className="pill">{att.nome}</span>
+          <button className="pill pill--btn" onClick={() => setModifica('attivita')} aria-label="Cambia attività">{att.nome} <Icona nome="matita" size={14} /></button>
           <h1 className="titolo nome-cliente" onPointerDown={inizia} onPointerUp={ferma} onPointerLeave={ferma} onPointerCancel={ferma} onContextMenu={(e) => e.preventDefault()}>{c.nome}</h1>
           <div className="meta">
-            <span className="pill pill--chiara"><Icona nome={tipo.id} size={16} /> {tipo.nome}</span>
+            <button className="pill pill--chiara pill--btn" onClick={() => setModifica('tipo')} aria-label="Cambia tipo di progetto"><Icona nome={tipo.id} size={16} /> {tipo.nome} <Icona nome="matita" size={14} /></button>
             {c.referente && <span className="meta__txt">Referente: {c.referente}</span>}
           </div>
         </div>
@@ -175,6 +177,22 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
           </div>
         )}
       </section>
+      )}
+      {modifica && (
+        <div className="velo" onClick={() => setModifica(null)}>
+          <div className="finestra finestra--scelta" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+            <h3>{modifica === 'attivita' ? 'Cambia attività' : 'Cambia tipo di progetto'}</h3>
+            {modifica === 'tipo' && Object.values(c.brief || {}).some((v) => v && v.length) && (
+              <p className="aiuto">Le domande del brief sono diverse per ogni tipo di progetto: cambiandolo, le risposte già inserite vengono azzerate.</p>
+            )}
+            {modifica === 'attivita' ? (
+              <SceltaAttivita valore={c.attivita} onScegli={(id) => { onAggiorna({ attivita: id }); setModifica(null) }} />
+            ) : (
+              <SceltaTipo valore={c.tipo} onScegli={(id) => { if (id !== c.tipo) onAggiorna({ tipo: id, brief: {} }); setModifica(null) }} />
+            )}
+            <div className="barra-piede"><button className="secondario" onClick={() => setModifica(null)}>Chiudi</button></div>
+          </div>
+        </div>
       )}
       {avviso && <div className="avviso-pop" role="status">{avviso}</div>}
     </div>

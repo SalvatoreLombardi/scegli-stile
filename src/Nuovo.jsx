@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import Foto from './Foto.jsx'
 import Icona from './Icona.jsx'
 import SelettoreLingue from './SelettoreLingue.jsx'
-import { ATTIVITA, TIPI } from './attivita.js'
+import { SceltaAttivita, SceltaTipo } from './Scelte.jsx'
 import { LINGUE_DEFAULT } from './lingue.js'
 
 export default function Nuovo({ onAnnulla, onCrea }) {
@@ -38,15 +37,7 @@ export default function Nuovo({ onAnnulla, onCrea }) {
         <div className="passo passo--largo" key="p2">
           <span className="eyebrow">Nuovo cliente · 2 di 4</span>
           <h1 className="titolo">Che <em>attività</em> è?</h1>
-          <div className="tessere">
-            {ATTIVITA.map((a, i) => (
-              <button key={a.id} style={{ '--i': i }} className={'tessera' + (d.attivita === a.id ? ' on' : '')} onClick={() => set('attivita', a.id)}>
-                <Foto att={a.id} nome="hero" className="tessera__foto" />
-                <span className="tessera__nome">{a.nome}</span>
-                {d.attivita === a.id && <span className="spunta"><Icona nome="check" size={18} /></span>}
-              </button>
-            ))}
-          </div>
+          <SceltaAttivita valore={d.attivita} onScegli={(v) => set('attivita', v)} />
         </div>
       )}
 
@@ -54,15 +45,7 @@ export default function Nuovo({ onAnnulla, onCrea }) {
         <div className="passo passo--largo" key="p3">
           <span className="eyebrow">Nuovo cliente · 3 di 4</span>
           <h1 className="titolo">Che <em>progetto</em> serve?</h1>
-          <div className="tipi">
-            {TIPI.map((t, i) => (
-              <button key={t.id} style={{ '--i': i }} className={'tipo glass' + (d.tipo === t.id ? ' on' : '')} onClick={() => set('tipo', t.id)}>
-                <span className="tipo__icona"><Icona nome={t.id} size={30} /></span>
-                <b>{t.nome}</b>
-                <small>{t.desc}</small>
-              </button>
-            ))}
-          </div>
+          <SceltaTipo valore={d.tipo} onScegli={(v) => set('tipo', v)} />
         </div>
       )}
 

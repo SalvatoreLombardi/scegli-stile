@@ -33,6 +33,7 @@ const P = {
   'f-deciso': 'M13 3L5 13h6l-1 8 8-10h-6z',
   'f-caldo': 'M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.5-7 10-7 10z',
   'f-leggero': 'M20 4c-8 0-13 4-13 11l-3 5M20 4c0 6-4 10-10 10M9 15h6',
+  matita: 'M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4',
   pennello: 'M4 20c3 0 4-1.5 4-3a2.5 2.5 0 015 0c0 2-2 3-9 3zM9.5 14.5L20 4',
 }
 export default function Icona({ nome, size = 22 }) {

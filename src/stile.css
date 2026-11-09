@@ -668,3 +668,7 @@ input.file-ancorato { position: absolute; top: 0; left: 0; width: 100%; height: 
 .mn-pill { display: flex; align-items: center; gap: 4px; flex: 1; height: 24px; padding: 0 7px; border-radius: 999px; background: #fff; box-shadow: 0 3px 8px rgba(30, 70, 60, .18); }
 .mn-burger { display: flex; flex-direction: column; gap: 2px; padding: 4px 5px; border-radius: 5px; border: 1px solid rgba(18, 32, 29, .2); }
 .mn-burger u { display: block; width: 10px; height: 1.5px; background: rgba(18, 32, 29, .6); }
+
+/* ---------- Note sul cliente ---------- */
+.blocco--note textarea { min-height: 150px; margin-top: 0; font-size: 17px; line-height: 1.5; }
+.note-salvate { font-size: 13px; color: var(--ink2); }

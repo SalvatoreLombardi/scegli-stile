@@ -3,7 +3,7 @@ import Anteprima from './Anteprima.jsx'
 import Foto from './Foto.jsx'
 import Icona from './Icona.jsx'
 import { PALETTE, FONT, BOTTONI, CARD, ANGOLI_CARD, RIEMPIMENTO } from './dati.js'
-import { ATTIVITA, TIPI, LISTINO, RICORRENTI, BRIEF } from './attivita.js'
+import { ATTIVITA, TIPI, LISTINO, RICORRENTI } from './attivita.js'
 import SelettoreLingue from './SelettoreLingue.jsx'
 import { SceltaAttivita, SceltaTipo } from './Scelte.jsx'
 import { lingueCliente, linguaIniziale } from './lingue.js'
@@ -57,18 +57,9 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
   const pal = trova(PALETTE, s.palette)
   const font = trova(FONT, s.font)
   const listino = LISTINO[c.tipo]
-  const domande = BRIEF[c.tipo] || []
-  const fatte = domande.filter((d) => c.brief?.[d.k] && c.brief[d.k].length).length
-  const perc = domande.length ? Math.round((fatte / domande.length) * 100) : 0
-
-  const setBrief = (k, v) => onAggiorna({ brief: { ...c.brief, [k]: v } })
-  const toggleMulti = (k, o) => {
-    const cur = c.brief?.[k] || []
-    setBrief(k, cur.includes(o) ? cur.filter((x) => x !== o) : [...cur, o])
-  }
   const copia = async () => {
     try {
-      await navigator.clipboard.writeText(riepilogoCliente(c, ATTIVITA, TIPI, BRIEF))
+      await navigator.clipboard.writeText(riepilogoCliente(c, ATTIVITA, TIPI))
       setCopiato(true)
       setTimeout(() => setCopiato(false), 2000)
     } catch { /* si può selezionare a mano */ }
@@ -122,6 +113,11 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
         <SelettoreLingue compatto valore={lingueCliente(c)} onChange={(l) => onAggiorna({ lingue: l })} />
       </section>
 
+      <section className="blocco glass blocco--note">
+        <div className="blocco-testa"><h2><em>Note</em></h2><span className="note-salvate">Si salvano da sole</span></div>
+        <textarea rows="7" value={c.note || ''} onChange={(e) => onAggiorna({ note: e.target.value })} aria-label="Note sul cliente" />
+      </section>
+
       {privato && (
       <section ref={area} className="blocco blocco--privato glass">
         <div className="blocco-testa">
@@ -151,27 +147,6 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
               </div>
             )}
 
-            <h3>Brief · {perc}%</h3>
-            <div className="progresso"><i style={{ width: perc + '%' }} /></div>
-            {(BRIEF[c.tipo] || []).map((d) => (
-              <div className="domanda" key={d.k}>
-                <span className="domanda__q">{d.q}</span>
-                {d.t === 'testo' ? (
-                  <input value={c.brief?.[d.k] || ''} onChange={(e) => setBrief(d.k, e.target.value)} placeholder="Scrivi…" />
-                ) : (
-                  <div className="chips">
-                    {d.o.map((o) => {
-                      const on = d.t === 'multi' ? (c.brief?.[d.k] || []).includes(o) : c.brief?.[d.k] === o
-                      return <button key={o} className={'chip' + (on ? ' on' : '')} onClick={() => (d.t === 'multi' ? toggleMulti(d.k, o) : setBrief(d.k, on ? '' : o))}>{o}</button>
-                    })}
-                  </div>
-                )}
-              </div>
-            ))}
-
-            <h3>Note</h3>
-            <textarea rows="3" value={c.note || ''} onChange={(e) => onAggiorna({ note: e.target.value })} placeholder="Appunti dell’incontro, richieste particolari…" />
-
             <div className="riga-azioni">
               <button className="secondario" onClick={copia}><Icona nome="copia" size={18} /> {copiato ? 'Copiato ✓' : 'Copia riepilogo'}</button>
               <button className="pericolo" onClick={elimina}><Icona nome="cestino" size={18} /> Elimina cliente</button>
@@ -184,13 +159,10 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
         <div className="velo" onClick={() => setModifica(null)}>
           <div className="finestra finestra--scelta" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
             <h3>{modifica === 'attivita' ? 'Cambia attività' : 'Cambia tipo di progetto'}</h3>
-            {modifica === 'tipo' && Object.values(c.brief || {}).some((v) => v && v.length) && (
-              <p className="aiuto">Le domande del brief sono diverse per ogni tipo di progetto: cambiandolo, le risposte già inserite vengono azzerate.</p>
-            )}
             {modifica === 'attivita' ? (
               <SceltaAttivita valore={c.attivita} onScegli={(id) => { onAggiorna({ attivita: id }); setModifica(null) }} />
             ) : (
-              <SceltaTipo valore={c.tipo} onScegli={(id) => { if (id !== c.tipo) onAggiorna({ tipo: id, brief: {} }); setModifica(null) }} />
+              <SceltaTipo valore={c.tipo} onScegli={(id) => { if (id !== c.tipo) onAggiorna({ tipo: id }); setModifica(null) }} />
             )}
             <div className="barra-piede"><button className="secondario" onClick={() => setModifica(null)}>Chiudi</button></div>
           </div>

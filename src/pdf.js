@@ -1,5 +1,5 @@
 import { PALETTE, FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD } from './dati.js'
-import { ATTIVITA, TIPI, BRIEF } from './attivita.js'
+import { ATTIVITA, TIPI } from './attivita.js'
 import { LINGUE, lingueCliente } from './lingue.js'
 import { trova, temaTesto, colorePrincipale, menuTesto } from './utils.js'
 import { urlFoto } from './Foto.jsx'
@@ -146,18 +146,6 @@ export async function creaPdf(c) {
   riga('Bottoni', `${trova(BOTTONI, s.bottone).nome}, ${trova(RIEMPIMENTO, s.riempimento).nome.toLowerCase()}`)
   riga('Card', `${trova(CARD, s.card).nome}, angoli ${trova(ANGOLI_CARD, s.angoli).nome.toLowerCase()}`)
   y += 4
-
-  // ---- Brief ----
-  const domande = (BRIEF[c.tipo] || []).filter((d) => c.brief?.[d.k] && c.brief[d.k].length)
-  sezione('Brief')
-  if (domande.length === 0) {
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5); doc.setTextColor(...TENUE)
-    doc.text('Nessuna risposta compilata.', M, y)
-    y += 9
-  } else {
-    domande.forEach((d) => riga(d.q, Array.isArray(c.brief[d.k]) ? c.brief[d.k].join(', ') : c.brief[d.k]))
-    y += 4
-  }
 
   // ---- Note ----
   if (c.note && c.note.trim()) {

@@ -90,15 +90,10 @@ export function riepilogo(s) {
   ].join('\n')
 }
 
-export function riepilogoCliente(c, ATTIVITA, TIPI, BRIEF) {
+export function riepilogoCliente(c, ATTIVITA, TIPI) {
   const att = trova(ATTIVITA, c.attivita)
   const tipo = trova(TIPI, c.tipo)
   const righe = [`Cliente: ${c.nome}${c.referente ? ` (${c.referente})` : ''}`, `Attività: ${att.nome}`, `Progetto: ${tipo.nome}`, `Menu: ${menuTesto(c.stile, c.tipo)}`, `Lingue: ${lingueNomi(lingueCliente(c))}`, '', riepilogo(c.stile)]
-  const domande = (BRIEF[c.tipo] || []).filter((d) => c.brief?.[d.k] && c.brief[d.k].length)
-  if (domande.length) {
-    righe.push('', 'Brief')
-    domande.forEach((d) => righe.push(`${d.q} ${Array.isArray(c.brief[d.k]) ? c.brief[d.k].join(', ') : c.brief[d.k]}`))
-  }
   if (c.note) righe.push('', `Note: ${c.note}`)
   return righe.join('\n')
 }

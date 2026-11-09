@@ -194,6 +194,7 @@ export const GRUPPI_PALETTE = [
 export const PALETTE = GRUPPI_PALETTE.flatMap((g) => g.palette)
 
 export const TEMA_SCURO = { bg: '#101216', surface: '#1a1d23', text: '#f3f4f6', muted: '#9aa1ad' }
+export const TEMA_CHIARO = { bg: '#F5F7FA', surface: '#FFFFFF', text: '#10151C', muted: '#586270' }
 
 export { GRUPPI_FONT, FONT } from './fontsData.js'
 

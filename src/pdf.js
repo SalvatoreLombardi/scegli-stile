@@ -139,7 +139,7 @@ export async function creaPdf(c) {
   })
   y += 33
   riga('Palette', pal.nome)
-  riga('Tema', s.scuro || pal.dark ? 'Scuro' : 'Chiaro')
+  riga('Tema', s.scuro ? 'Scuro' : 'Chiaro')
   riga('Font', `Titoli ${font.titoli}, testi ${font.testi}`)
   riga('Bottoni', `${trova(BOTTONI, s.bottone).nome}, ${trova(RIEMPIMENTO, s.riempimento).nome.toLowerCase()}`)
   riga('Card', `${trova(CARD, s.card).nome}, angoli ${trova(ANGOLI_CARD, s.angoli).nome.toLowerCase()}`)

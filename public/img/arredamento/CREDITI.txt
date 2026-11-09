@@ -1,0 +1,7 @@
+hero.jpg | Spacejoy | https://unsplash.com/photos/9M66C_w_ToM | Unsplash License (uso gratuito anche commerciale)
+g1.jpg | Maverick Frame | https://unsplash.com/photos/GswoB8XDnBc | Unsplash License (uso gratuito anche commerciale)
+g2.jpg | Max Vakhtbovych | https://www.pexels.com/photo/6903157/ | Pexels License (uso gratuito anche commerciale)
+g3.jpg | Salvador Godoy | https://unsplash.com/photos/aQ0ww937100 | Unsplash License (uso gratuito anche commerciale)
+g4.jpg | Jean-Philippe Delberghe | https://unsplash.com/photos/Ry9WBo3qmoc | Unsplash License (uso gratuito anche commerciale)
+g5.jpg | Karola G (Kaboompics) | https://www.pexels.com/photo/4968698/ | Pexels License (uso gratuito anche commerciale)
+g6.jpg | Rita Chou | https://unsplash.com/photos/aRcwkYv7870 | Unsplash License (uso gratuito anche commerciale)

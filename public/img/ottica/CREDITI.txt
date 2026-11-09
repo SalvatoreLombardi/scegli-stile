@@ -1,0 +1,7 @@
+hero.jpg | Tamara Bellis | https://unsplash.com/photos/d7CK4t8Lz6s | Unsplash License (uso gratuito anche commerciale)
+g1.jpg | Carlos Vaz | https://unsplash.com/photos/KP4bxnxAilU | Unsplash License (uso gratuito anche commerciale) (ritagliata)
+g2.jpg | Jack Delulio | https://unsplash.com/photos/AYo8xUW5F58 | Unsplash License (uso gratuito anche commerciale)
+g3.jpg | Jocelyn Morales | https://unsplash.com/photos/Mv7kokwzIMw | Unsplash License (uso gratuito anche commerciale) (ritagliata)
+g4.jpg | Habib Dadkhah | https://unsplash.com/photos/MivM1hirbUI | Unsplash License (uso gratuito anche commerciale)
+g5.jpg | Sara Dabaghian | https://unsplash.com/photos/PYaoN4x4uTY | Unsplash License (uso gratuito anche commerciale) (ritagliata)
+g6.jpg | Marcin Sajur | https://unsplash.com/photos/K1UNJgXZePA | Unsplash License (uso gratuito anche commerciale) (ritagliata)

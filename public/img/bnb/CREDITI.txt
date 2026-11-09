@@ -1,0 +1,7 @@
+hero.jpg | alleksana | https://www.pexels.com/photo/luxurious-villa-during-daytime-4186560/ | Pexels License (uso gratuito, anche commerciale)
+g1.jpg | Keegan Checks | https://www.pexels.com/photo/luxury-bedroom-in-boutique-hotel-in-jambiani-39836725/ | Pexels License (uso gratuito, anche commerciale)
+g2.jpg | Anastase Maragos | https://unsplash.com/photos/jg6Xq0XYTCo | Unsplash License (uso gratuito, anche commerciale)
+g3.jpg | Clay Banks | https://unsplash.com/photos/j7Uv1Y_A7dY | Unsplash License (uso gratuito, anche commerciale)
+g4.jpg | Matea Brajdić | https://unsplash.com/photos/cxC7KzC653w | Unsplash License (uso gratuito, anche commerciale)
+g5.jpg | Vincenzo De Simone | https://unsplash.com/photos/yAn892ej5kQ | Unsplash License (uso gratuito, anche commerciale)
+g6.jpg | Krzysztof | https://unsplash.com/photos/Z_079N5t7I4 | Unsplash License (uso gratuito, anche commerciale)

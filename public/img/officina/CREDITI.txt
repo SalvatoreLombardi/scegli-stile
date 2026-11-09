@@ -1,0 +1,7 @@
+hero.jpg | Matthew McKinney | https://unsplash.com/photos/khrrLvFLcTo | Unsplash License (uso gratuito anche commerciale)
+g1.jpg | Quentin Martinez | https://www.pexels.com/photo/39823759/ | Pexels License (uso gratuito anche commerciale)
+g2.jpg | LeenSelina Cook Jordan | https://www.pexels.com/photo/11455717/ | Pexels License (uso gratuito anche commerciale)
+g3.jpg | Zac Nielson | https://unsplash.com/photos/8k_T1EwTySs | Unsplash License (uso gratuito anche commerciale)
+g4.jpg | Zac Nielson | https://unsplash.com/photos/CsZjHjFN3N8 | Unsplash License (uso gratuito anche commerciale)
+g5.jpg | Andrea Piacquadio | https://www.pexels.com/photo/3855223/ | Pexels License (uso gratuito anche commerciale)
+g6.jpg | GoGoNano | https://unsplash.com/photos/bDBiGYkr3h8 | Unsplash License (uso gratuito anche commerciale)

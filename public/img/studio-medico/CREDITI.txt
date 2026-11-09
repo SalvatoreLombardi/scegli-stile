@@ -1,0 +1,7 @@
+hero.jpg | Harold Hisona | https://unsplash.com/photos/Bg81yWKZlMg | Unsplash License (uso gratuito anche commerciale)
+g1.jpg | Lesly Juarez | https://unsplash.com/photos/1AhGNGKuhR0 | Unsplash License (uso gratuito anche commerciale)
+g2.jpg | Katarzyna Zygnerska | https://unsplash.com/photos/98eodnv1abo | Unsplash License (uso gratuito anche commerciale)
+g3.jpg | Yan Krukau | https://www.pexels.com/photo/5793917/ | Pexels License (uso gratuito anche commerciale)
+g4.jpg | rawkkim | https://unsplash.com/photos/X8Y3CJA0aNs | Unsplash License (uso gratuito anche commerciale)
+g5.jpg | Gustavo Fring | https://www.pexels.com/photo/4173248/ | Pexels License (uso gratuito anche commerciale)
+g6.jpg | Cedric Fauntleroy | https://www.pexels.com/photo/4269268/ | Pexels License (uso gratuito anche commerciale)

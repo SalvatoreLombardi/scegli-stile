@@ -1,0 +1,7 @@
+hero.jpg | Jay Wennington | https://unsplash.com/photos/N_Y88TWmGwA | Unsplash License (uso gratuito, anche commerciale)
+g1.jpg | sorin popa | https://unsplash.com/photos/XAxvKp0tdwU | Unsplash License (uso gratuito, anche commerciale)
+g2.jpg | Edoardo Cuoghi | https://unsplash.com/photos/l-YUd_JRLdE | Unsplash License (uso gratuito, anche commerciale)
+g3.jpg | Paras Kapoor | https://unsplash.com/photos/NNTV0JhNmis | Unsplash License (uso gratuito, anche commerciale)
+g4.jpg | Taylor Heery | https://unsplash.com/photos/_Bs62oh7x5Q | Unsplash License (uso gratuito, anche commerciale)
+g5.jpg | sahand karwan | https://unsplash.com/photos/CSQNSwksxEY | Unsplash License (uso gratuito, anche commerciale)
+g6.jpg | Urban Gyllström | https://unsplash.com/photos/MaWMfm-HCqQ | Unsplash License (uso gratuito, anche commerciale)

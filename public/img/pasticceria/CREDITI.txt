@@ -1,0 +1,7 @@
+hero.jpg | Marie Wickert | https://unsplash.com/photos/ukvRLhEWtlM | Unsplash License (uso gratuito, anche commerciale)
+g1.jpg | Bruno Mattos | https://www.pexels.com/photo/elegant-white-cake-with-floral-decoration-30233124/ | Pexels License (uso gratuito, anche commerciale)
+g2.jpg | Amine Kübranur Çakıroğlu | https://www.pexels.com/photo/freshly-baked-croissants-on-baking-tray-38594753/ | Pexels License (uso gratuito, anche commerciale)
+g3.jpg | Intrepid | https://unsplash.com/photos/1l2qWh-W5AU | Unsplash License (uso gratuito, anche commerciale)
+g4.jpg | Teresa Jang | https://www.pexels.com/photo/napoleon-cake-with-whipped-cream-and-strawberries-19446143/ | Pexels License (uso gratuito, anche commerciale)
+g5.jpg | Nano Erdozain | https://www.pexels.com/photo/chef-dusting-pastry-with-powdered-sugar-in-kitchen-37888518/ | Pexels License (uso gratuito, anche commerciale)
+g6.jpg | Ahmet Yüksek | https://www.pexels.com/photo/coffee-and-food-on-table-20412424/ | Pexels License (uso gratuito, anche commerciale)

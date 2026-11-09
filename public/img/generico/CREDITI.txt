@@ -1,0 +1,7 @@
+hero.jpg | Aalo Lens | https://unsplash.com/photos/QVVHV24DA_o | Unsplash License (uso gratuito anche commerciale) (piccolo logo su monitor rimosso)
+g1.jpg | Leone Venter | https://unsplash.com/photos/VieM9BdZKFo | Unsplash License (uso gratuito anche commerciale)
+g2.jpg | Hayley Kim Studios | https://unsplash.com/photos/b01zgiTaMYE | Unsplash License (uso gratuito anche commerciale)
+g3.jpg | Vitaly Gariev | https://www.pexels.com/photo/39190569/ | Pexels License (uso gratuito anche commerciale)
+g4.jpg | Declan Sun | https://unsplash.com/photos/jRQ-YugzjWE | Unsplash License (uso gratuito anche commerciale)
+g5.jpg | Kimon Maritz | https://unsplash.com/photos/mQiZnKwGXW0 | Unsplash License (uso gratuito anche commerciale)
+g6.jpg | Augustine Wong | https://unsplash.com/photos/PxypFiQMkIk | Unsplash License (uso gratuito anche commerciale)

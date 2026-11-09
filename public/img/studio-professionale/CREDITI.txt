@@ -1,0 +1,7 @@
+hero.jpg | Julio Lopez | https://unsplash.com/photos/WbGrqnS_t3k | Unsplash License (uso gratuito anche commerciale)
+g1.jpg | Caroline Badran | https://unsplash.com/photos/rHGfFRgu5zE | Unsplash License (uso gratuito anche commerciale) (ritagliata)
+g2.jpg | Vlada Karpovich | https://www.pexels.com/photo/7433930/ | Pexels License (uso gratuito anche commerciale)
+g3.jpg | George Piskov | https://www.pexels.com/photo/39148380/ | Pexels License (uso gratuito anche commerciale)
+g4.jpg | Nick Morrison | https://unsplash.com/photos/FHnnjk1Yj7Y | Unsplash License (uso gratuito anche commerciale)
+g5.jpg | Giammarco Boscaro | https://unsplash.com/photos/zeH-ljawHtg | Unsplash License (uso gratuito anche commerciale)
+g6.jpg | Pavel Gromov | https://unsplash.com/photos/wEi2LkDF8LY | Unsplash License (uso gratuito anche commerciale)

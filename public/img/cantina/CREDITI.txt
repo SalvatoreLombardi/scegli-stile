@@ -1,0 +1,7 @@
+hero.jpg | Betül Kaya | https://www.pexels.com/photo/serene-olive-grove-in-golden-hour-light-38928225/ | Pexels License (uso gratuito, anche commerciale)
+g1.jpg | Lucia Yarushkina | https://unsplash.com/photos/cDrcApEgiOo | Unsplash License (uso gratuito, anche commerciale)
+g2.jpg | Thomas Franke | https://unsplash.com/photos/LQ5o5boYE-8 | Unsplash License (uso gratuito, anche commerciale)
+g3.jpg | Xavier von Erlach | https://unsplash.com/photos/dDWVq_XEhus | Unsplash License (uso gratuito, anche commerciale)
+g4.jpg | phoebe lynch | https://unsplash.com/photos/yypStCHlxAA | Unsplash License (uso gratuito, anche commerciale)
+g5.jpg | Kristina Kutleša | https://unsplash.com/photos/h6S8-UsDB6E | Unsplash License (uso gratuito, anche commerciale)
+g6.jpg | K (@kelly) | https://www.pexels.com/photo/aerial-view-of-green-trees-on-brown-soil-12464170/ | Pexels License (uso gratuito, anche commerciale)

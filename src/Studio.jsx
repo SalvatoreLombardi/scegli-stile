@@ -1,0 +1,142 @@
+import { useState } from 'react'
+import Anteprima from './Anteprima.jsx'
+import Icona from './Icona.jsx'
+import TabBolla from './TabBolla.jsx'
+import { LINGUE, lingueCliente, linguaIniziale } from './lingue.js'
+import { PALETTE, GRUPPI_PALETTE, FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD, ATMOSFERE } from './dati.js'
+import { variabili } from './utils.js'
+
+const SCHEDE = [['atmosfera', 'Atmosfera'], ['colori', 'Colori'], ['font', 'Font'], ['bottoni', 'Bottoni'], ['card', 'Card']].map(([id, nome]) => ({ id, nome }))
+
+export default function Studio({ cliente, onBack, onChange }) {
+  const s = cliente.stile
+  const [scheda, setScheda] = useState('atmosfera')
+  const [lang, setLang] = useState(() => linguaIniziale(cliente))
+  const lingue = lingueCliente(cliente)
+  const imposta = (k, v) => onChange({ ...s, [k]: v })
+  const palAttuale = PALETTE.find((p) => p.id === s.palette)
+  const [gruppoId, setGruppoId] = useState(() => (GRUPPI_PALETTE.find((g) => g.palette.some((p) => p.id === s.palette)) || GRUPPI_PALETTE[0]).id)
+  const gruppo = GRUPPI_PALETTE.find((g) => g.id === gruppoId)
+  const scegliPalette = (p) => onChange({ ...s, palette: p.id, scuro: p.dark ? true : palAttuale?.dark ? false : s.scuro })
+
+  return (
+    <div className="studio vista-entra">
+      <aside className="barra glass">
+        <div className="barra-testa">
+          <button className="indietro" onClick={onBack}><Icona nome="indietro" size={18} /> {cliente.nome}</button>
+          <button className="interr" onClick={() => imposta('scuro', !s.scuro)} aria-pressed={s.scuro} aria-label="Tema chiaro o scuro">
+            <Icona nome={s.scuro ? 'luna' : 'sole'} size={20} />
+          </button>
+        </div>
+
+        <TabBolla voci={SCHEDE} attivo={scheda} onScegli={setScheda} />
+
+        <div className="pannello">
+          {scheda === 'atmosfera' && (
+            <>
+              <h4>Punto di partenza</h4>
+              <div className="lista">
+                {ATMOSFERE.map((a) => (
+                  <button key={a.id} className="opzione" onClick={() => onChange({ ...s, ...a.set })}>
+                    <span className="opz-riga">
+                      {a.nome}
+                      <span className="mini-pal">{[PALETTE.find((p) => p.id === a.set.palette)].map((p) => <i key={p.id} style={{ background: p.primary }} />)}</span>
+                    </span>
+                    <small>{a.desc}</small>
+                  </button>
+                ))}
+              </div>
+              <p className="aiuto">Scegli un’atmosfera, poi rifinisci colori, font e forme nelle altre schede.</p>
+            </>
+          )}
+
+          {scheda === 'colori' && (
+            <>
+              <TabBolla compatta voci={GRUPPI_PALETTE.map((g) => ({ id: g.id, nome: g.nome, icona: g.icona }))} attivo={gruppo.id} onScegli={setGruppoId} />
+              <div className="gruppo-testa" key={gruppo.id}><b>{gruppo.nome}</b><span>{gruppo.desc}</span></div>
+              <div className="griglia-colori" key={'g' + gruppo.id}>
+                {gruppo.palette.map((p, i) => (
+                  <button key={p.id} style={{ '--i': i }} className={'colore' + (s.palette === p.id ? ' on' : '')} onClick={() => scegliPalette(p)}>
+                    <span className="strisce"><i style={{ background: p.primary }} /><i style={{ background: p.accent }} /><i style={{ background: p.bg }} /><i style={{ background: p.text }} /></span>
+                    {p.nome}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+
+          {scheda === 'font' && (
+            <div className="lista">
+              {FONT.map((f) => (
+                <button key={f.id} className={'opzione' + (s.font === f.id ? ' on' : '')} onClick={() => imposta('font', f.id)}>
+                  <span className="esempio-font" style={{ fontFamily: `'${f.titoli}', serif` }}>Aa {f.nome}</span>
+                  <small>{f.titoli} + {f.testi} · {f.note}</small>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {scheda === 'bottoni' && (
+            <>
+              <h4>Forma</h4>
+              <div className="segmenti">
+                {BOTTONI.map((b) => (
+                  <button key={b.id} className={s.bottone === b.id ? 'on' : ''} onClick={() => imposta('bottone', b.id)}>
+                    <i className="forma" style={{ borderRadius: b.raggio }} />{b.nome}
+                  </button>
+                ))}
+              </div>
+              <h4>Riempimento</h4>
+              <div className="segmenti">
+                {RIEMPIMENTO.map((r) => (
+                  <button key={r.id} className={s.riempimento === r.id ? 'on' : ''} onClick={() => imposta('riempimento', r.id)}>{r.nome}</button>
+                ))}
+              </div>
+            </>
+          )}
+
+          {scheda === 'card' && (
+            <>
+              <h4>Stile</h4>
+              <div className="lista">
+                {CARD.map((c) => (
+                  <button key={c.id} className={'opzione' + (s.card === c.id ? ' on' : '')} onClick={() => imposta('card', c.id)}>
+                    <span>{c.nome}</span><small>{c.note}</small>
+                  </button>
+                ))}
+              </div>
+              <h4>Angoli</h4>
+              <div className="segmenti">
+                {ANGOLI_CARD.map((a) => (
+                  <button key={a.id} className={s.angoli === a.id ? 'on' : ''} onClick={() => imposta('angoli', a.id)}>{a.nome}</button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className="barra-piede">
+          <button className="primario" onClick={onBack}><Icona nome="check" size={18} /> Fatto</button>
+        </div>
+      </aside>
+
+      <main className="schermo">
+        <div className="sito" style={variabili(s)}>
+          <Anteprima stile={s} cliente={cliente} lang={lang} />
+        </div>
+        {lingue.length > 1 && (
+          <div className="lingua-switch" role="group" aria-label="Lingua dell'anteprima">
+            {lingue.map((x) => {
+              const l = LINGUE.find((y) => y.id === x.id)
+              return (
+                <button key={x.id} className={lang === x.id ? 'on' : ''} onClick={() => setLang(x.id)} aria-pressed={lang === x.id}>
+                  <span>{l.bandiera}</span>{lang === x.id && <b>{l.nativo}</b>}
+                </button>
+              )
+            })}
+          </div>
+        )}
+      </main>
+    </div>
+  )
+}

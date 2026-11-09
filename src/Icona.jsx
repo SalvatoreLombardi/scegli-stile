@@ -27,6 +27,7 @@ const P = {
   vivace: 'M12 8a4 4 0 100 8 4 4 0 000-8zM12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6L7 7M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4',
   tecnologico: 'M8 8h8v8H8zM4 10h4M4 14h4M16 10h4M16 14h4M10 4v4M14 4v4M10 16v4M14 16v4',
   pdf: 'M6 3h8l5 5v13H6zM14 3v5h5M9 14h6M9 17.5h4',
+  x: 'M6 6l12 12M18 6L6 18',
   pennello: 'M4 20c3 0 4-1.5 4-3a2.5 2.5 0 015 0c0 2-2 3-9 3zM9.5 14.5L20 4',
 }
 export default function Icona({ nome, size = 22 }) {

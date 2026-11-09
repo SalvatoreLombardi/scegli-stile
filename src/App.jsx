@@ -85,7 +85,8 @@ function Rail({ attivo, onClienti, onNuovo, onBackup }) {
   )
 }
 
-function Home({ clienti, onNuovo, onApri }) {
+function Home({ clienti, onNuovo, onApri, onElimina }) {
+  const [da, setDa] = useState(null)
   return (
     <div className="vista vista-entra">
       <div className="home-titolo">
@@ -119,9 +120,13 @@ function Home({ clienti, onNuovo, onApri }) {
             const att = trova(ATTIVITA, c.attivita)
             const pal = trova(PALETTE, c.stile.palette)
             return (
-              <button key={c.id} className="cliente-card" style={{ '--i': i }} onClick={() => onApri(c.id)}>
+              <div key={c.id} className="cliente-card" style={{ '--i': i }} role="button" tabIndex={0} onClick={() => onApri(c.id)}
+                onKeyDown={(ev) => { if (ev.key === 'Enter') onApri(c.id) }}>
                 <Foto att={att.id} nome="hero" className="cliente-card__foto" />
                 <div className="cliente-card__velo" />
+                <button className="cliente-x" aria-label={`Elimina ${c.nome}`} onClick={(ev) => { ev.stopPropagation(); setDa(c) }}>
+                  <Icona nome="x" size={18} />
+                </button>
                 <div className="cliente-card__corpo">
                   <span className="pill">{att.nome}</span>
                   <h3>{c.nome}</h3>
@@ -130,10 +135,23 @@ function Home({ clienti, onNuovo, onApri }) {
                     <span className="mini-pal">{[pal.primary, pal.accent, pal.bg].map((x, k) => <i key={k} style={{ background: x }} />)}</span>
                   </div>
                 </div>
-              </button>
+              </div>
             )
           })}
           <button className="cliente-nuovo glass" onClick={onNuovo}><span><Icona nome="piu" size={26} /></span>Nuovo cliente</button>
+        </div>
+      )}
+      {da && (
+        <div className="velo" onClick={() => setDa(null)}>
+          <div className="finestra finestra--elimina" onClick={(e) => e.stopPropagation()} role="alertdialog" aria-modal="true">
+            <span className="finestra__icona"><Icona nome="cestino" size={26} /></span>
+            <h3>Eliminare il cliente?</h3>
+            <p className="aiuto">Sei sicuro di voler eliminare <b>{da.nome}</b>? Verranno cancellati anche stile, lingue, brief e note. Non si può annullare.</p>
+            <div className="barra-piede">
+              <button className="secondario" onClick={() => setDa(null)}>Annulla</button>
+              <button className="pericolo" onClick={() => { onElimina(da.id); setDa(null) }}>Elimina</button>
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -152,7 +170,7 @@ export default function App() {
       {(v.n === 'home' || v.n === 'cliente') && (
         <Rail attivo="clienti" onClienti={() => setV({ n: 'home' })} onNuovo={() => setV({ n: 'nuovo' })} onBackup={() => setBackup(true)} />
       )}
-      {v.n === 'home' && <Home clienti={clienti} onNuovo={() => setV({ n: 'nuovo' })} onApri={(id) => setV({ n: 'cliente', id })} />}
+      {v.n === 'home' && <Home clienti={clienti} onNuovo={() => setV({ n: 'nuovo' })} onApri={(id) => setV({ n: 'cliente', id })} onElimina={elimina} />}
       {v.n === 'nuovo' && <Nuovo onAnnulla={() => setV({ n: 'home' })} onCrea={(d) => setV({ n: 'cliente', id: crea(d) })} />}
       {v.n === 'cliente' && cliente && (
         <Cliente cliente={cliente} onBack={() => setV({ n: 'home' })} onStudio={() => setV({ n: 'studio', id: cliente.id })}

@@ -330,3 +330,13 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .esempio:nth-child(2) { --neon: #ff7a45; --neon-glow: rgba(255, 122, 69, .28); }
 .esempio:nth-child(3) { --neon: #7c6bff; --neon-glow: rgba(124, 107, 255, .3); }
 @media (prefers-reduced-motion: reduce) { .neon i { animation: none; } }
+
+/* ---------- Elimina cliente ---------- */
+.cliente-card { cursor: pointer; outline: none; }
+.cliente-x { position: absolute; z-index: 3; top: 10px; right: 10px; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: rgba(10, 24, 21, .38); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, .45); box-shadow: 0 6px 16px rgba(10, 30, 26, .3); transition: transform .25s var(--elastico), background .2s ease; }
+.cliente-x:active { transform: scale(.88); background: rgba(214, 53, 63, .85); }
+.finestra--elimina { text-align: center; max-width: 400px; }
+.finestra--elimina h3 { font-size: 24px; }
+.finestra--elimina .aiuto { font-size: 15px; line-height: 1.5; margin: 6px 0 4px; }
+.finestra__icona { width: 60px; height: 60px; margin: 0 auto 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #d1353f; background: rgba(255, 90, 100, .14); }
+.finestra .pericolo { background: #d1353f; color: #fff; border-color: transparent; box-shadow: 0 8px 20px rgba(209, 53, 63, .35); }

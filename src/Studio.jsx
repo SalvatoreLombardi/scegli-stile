@@ -11,7 +11,7 @@ import { contrasto, coloriDaFile } from './colori.js'
 const ICONE_FONT = { moderno: 'f-moderno', elegante: 'elegante', tech: 'tecnologico', classico: 'f-classico', deciso: 'f-deciso', caldo: 'f-caldo', leggero: 'f-leggero' }
 const SCHEDE = [['atmosfera', 'Stile'], ['colori', 'Colori'], ['font', 'Font'], ['bottoni', 'Bottoni'], ['card', 'Card']].map(([id, nome]) => ({ id, nome }))
 
-export default function Studio({ cliente, onBack, onChange }) {
+export default function Studio({ cliente, onBack, onChange, onLogo }) {
   const s = cliente.stile
   const [scheda, setScheda] = useState('atmosfera')
   const [lang, setLang] = useState(() => linguaIniziale(cliente))
@@ -23,12 +23,17 @@ export default function Studio({ cliente, onBack, onChange }) {
   const [gruppoFontId, setGruppoFontId] = useState(() => (GRUPPI_FONT.find((g) => g.font.some((f) => f.id === s.font)) || GRUPPI_FONT[0]).id)
   const gruppoFont = GRUPPI_FONT.find((g) => g.id === gruppoFontId)
   const tema = temaChiave(s)
+  const [campione, setCampione] = useState('cliente') // nei font: scrivere il nome del cliente o il nome del font
   const [logo, setLogo] = useState(null) // colori trovati nella foto del logo (non viene salvata)
   const leggiLogo = async (e) => {
     const f = e.target.files && e.target.files[0]
     e.target.value = ''
     if (!f) return
-    try { setLogo(await coloriDaFile(f)) } catch { setLogo({ colori: [], anteprima: '', errore: true }) }
+    try {
+      const r = await coloriDaFile(f)
+      setLogo(r)
+      if (r.anteprima && onLogo) onLogo(r.anteprima) // il logo si salva nel cliente: serve per il confronto dei font
+    } catch { setLogo({ colori: [], anteprima: '', errore: true }) }
   }
   const vars = variabili(s)
   const pocoContrasto = !!s.coloreMarchio && contrasto(s.coloreMarchio, vars['--bg']) < 3
@@ -124,13 +129,27 @@ export default function Studio({ cliente, onBack, onChange }) {
 
           {scheda === 'font' && (
             <>
+              <div className="conf-logo">
+                {cliente.logo ? (
+                  <>
+                    <img src={cliente.logo} alt="Logo del cliente" />
+                    <label className="conf-logo__cambia">Cambia<input type="file" accept="image/*" onChange={leggiLogo} /></label>
+                  </>
+                ) : (
+                  <label className="conf-logo__aggiungi"><Icona nome="immagine" size={18} /> Aggiungi il logo per confrontare<input type="file" accept="image/*" onChange={leggiLogo} /></label>
+                )}
+              </div>
+              <div className="campione-sel" role="radiogroup" aria-label="Cosa scrivere nei font">
+                <button role="radio" aria-checked={campione === 'cliente'} className={campione === 'cliente' ? 'on' : ''} onClick={() => setCampione('cliente')}>Nome del cliente</button>
+                <button role="radio" aria-checked={campione === 'font'} className={campione === 'font' ? 'on' : ''} onClick={() => setCampione('font')}>Nome del font</button>
+              </div>
               <TabBolla compatta voci={GRUPPI_FONT.map((g) => ({ id: g.id, nome: g.nome, icona: ICONE_FONT[g.id] }))} attivo={gruppoFont.id} onScegli={setGruppoFontId} />
               <div className="gruppo-testa" key={gruppoFont.id}><b>{gruppoFont.nome}</b><span>{gruppoFont.note}</span></div>
               <div className="lista" key={'f' + gruppoFont.id}>
                 {gruppoFont.font.map((f, i) => (
                   <button key={f.id} style={{ '--i': i }} className={'opzione opzione--font' + (s.font === f.id ? ' on' : '')} onClick={() => imposta('font', f.id)}>
-                    <span className="esempio-font" style={{ fontFamily: `'${f.titoli}', serif`, fontWeight: f.pesoTitoli }}>{f.titoli}</span>
-                    <small style={{ fontFamily: `'${f.testi}', sans-serif` }}>con {f.testi}: il tuo testo si legge così</small>
+                    <span className="esempio-font" style={{ fontFamily: `'${f.titoli}', serif`, fontWeight: f.pesoTitoli }}>{campione === 'cliente' ? cliente.nome : f.titoli}</span>
+                    <small style={campione === 'cliente' ? undefined : { fontFamily: `'${f.testi}', sans-serif` }}>{campione === 'cliente' ? `${f.titoli} · con ${f.testi}` : `con ${f.testi}: il tuo testo si legge così`}</small>
                   </button>
                 ))}
               </div>

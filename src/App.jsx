@@ -254,7 +254,7 @@ export default function App() {
           onAggiorna={(p) => aggiorna(cliente.id, p)} onElimina={() => { elimina(cliente.id); setV({ n: 'clienti' }) }} />
       )}
       {v.n === 'studio' && cliente && (
-        <Studio cliente={cliente} onBack={() => setV({ n: 'cliente', id: cliente.id })} onChange={(stile) => aggiorna(cliente.id, { stile })} />
+        <Studio cliente={cliente} onBack={() => setV({ n: 'cliente', id: cliente.id })} onChange={(stile) => aggiorna(cliente.id, { stile })} onLogo={(logo) => aggiorna(cliente.id, { logo })} />
       )}
       {backup && <Backup clienti={clienti} onImporta={importa} onChiudi={() => setBackup(false)} />}
     </div>

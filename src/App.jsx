@@ -101,11 +101,13 @@ function Home({ clienti, onNuovo, onApri }) {
         <div className="vuoto">
           <div className="esempi">
             {ESEMPI.map((e, i) => (
-              <button key={e.id} className="esempio glass" style={{ '--i': i }} onClick={onNuovo}>
+              <div key={e.id} className="esempio glass" style={{ '--i': i }} role="button" tabIndex={0} onClick={onNuovo}
+                onKeyDown={(ev) => { if (ev.key === 'Enter' || ev.key === ' ') onNuovo() }}>
+                <span className="neon" aria-hidden="true"><i /></span>
                 <Schema tipo={e.id} />
                 <b>{e.nome}</b>
                 <small>{e.desc}</small>
-              </button>
+              </div>
             ))}
           </div>
           <h2>Nessun cliente, <em className="s">per ora</em></h2>

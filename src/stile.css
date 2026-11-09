@@ -288,8 +288,7 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 /* ---------- Schermata vuota: tre layout di esempio ---------- */
 .vuoto { padding-top: 24px; }
 .esempi { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 860px; margin: 0 auto 38px; }
-.esempio { padding: 14px 14px 18px; text-align: left; display: flex; flex-direction: column; gap: 4px; animation: sale .5s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 80ms); transition: transform .3s var(--elastico); }
-.esempio:nth-child(2) { margin-top: -14px; }
+.esempio { cursor: pointer; outline: none; padding: 14px 14px 18px; text-align: left; display: flex; flex-direction: column; gap: 4px; -webkit-user-select: none; user-select: none; animation: sale .5s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 80ms); transition: transform .3s var(--elastico); }
 .esempio:active { transform: scale(.96); }
 .esempio b { font-size: 19px; font-weight: 600; letter-spacing: -.02em; margin-top: 12px; }
 .esempio small { color: var(--ink2); font-size: 14px; line-height: 1.35; }
@@ -320,3 +319,10 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .w-kpi { flex: none; height: 44px; }
 .w-riga { height: 22px; border-radius: 8px; background: rgba(18, 32, 29, .08); }
 @media (orientation: portrait) { .esempi { gap: 12px; } .esempio b { font-size: 17px; } }
+
+/* Bordo luminoso che gira attorno alla card: un fascio di luce conico ruota dentro un anello ritagliato con la maschera. */
+.neon { position: absolute; top: 0; right: 0; bottom: 0; left: 0; border-radius: inherit; padding: 4px; overflow: hidden; pointer-events: none; z-index: 2; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+.neon i { position: absolute; top: 50%; left: 50%; width: 220%; height: 220%; margin: -110% 0 0 -110%; background: conic-gradient(from 0deg, rgba(255, 255, 255, 0) 0deg, rgba(255, 255, 255, 0) 120deg, #35d6b6 175deg, #6fb4ff 220deg, #8f86ff 265deg, #ff9ec4 310deg, #ffb98f 340deg, #ffffff 356deg, rgba(255, 255, 255, 0) 360deg); animation: gira 3.2s linear infinite; animation-delay: calc(var(--i) * -1.3s); will-change: transform; }
+@keyframes gira { to { transform: rotate(360deg); } }
+.esempio { box-shadow: 0 22px 50px rgba(30, 50, 90, .2), 0 0 34px rgba(143, 134, 255, .22), inset 0 1.5px 0 rgba(255, 255, 255, .95); }
+@media (prefers-reduced-motion: reduce) { .neon i { animation: none; } }

@@ -195,15 +195,7 @@ export const PALETTE = GRUPPI_PALETTE.flatMap((g) => g.palette)
 
 export const TEMA_SCURO = { bg: '#101216', surface: '#1a1d23', text: '#f3f4f6', muted: '#9aa1ad' }
 
-export const FONT = [
-  { id: 'moderno', nome: 'Moderno', titoli: 'Poppins', testi: 'Inter', note: 'Pulito e amichevole' },
-  { id: 'elegante', nome: 'Elegante', titoli: 'Playfair Display', testi: 'Inter', note: 'Raffinato, hotel e ristoranti' },
-  { id: 'tech', nome: 'Tech', titoli: 'Space Grotesk', testi: 'DM Sans', note: 'Startup e servizi digitali' },
-  { id: 'classico', nome: 'Classico', titoli: 'Merriweather', testi: 'Work Sans', note: 'Serio e affidabile' },
-  { id: 'deciso', nome: 'Deciso', titoli: 'Montserrat', testi: 'Inter', note: 'Forte, brand e negozi' },
-  { id: 'caldo', nome: 'Caldo', titoli: 'Lora', testi: 'DM Sans', note: 'Artigianato e food' },
-  { id: 'leggero', nome: 'Leggero', titoli: 'Raleway', testi: 'Work Sans', note: 'Minimal e arioso' },
-]
+export { GRUPPI_FONT, FONT } from './fontsData.js'
 
 export const BOTTONI = [
   { id: 'squadrato', nome: 'Squadrato', raggio: '0px' },
@@ -233,13 +225,13 @@ export const ANGOLI_CARD = [
 ]
 
 export const DEFAULT = {
-  palette: 'carta', font: 'moderno', bottone: 'morbido', riempimento: 'pieno',
+  palette: 'carta', font: 'poppins-inter', bottone: 'morbido', riempimento: 'pieno',
   card: 'ombra', angoli: 'medi', scuro: false,
 }
 
 export const ATMOSFERE = [
-  { id: 'elegante', nome: 'Elegante', desc: 'Sobrio, poco colore', set: { palette: 'navy-oro', font: 'elegante', bottone: 'leggero', riempimento: 'contorno', card: 'bordo', angoli: 'netti', scuro: false } },
-  { id: 'moderno', nome: 'Moderno', desc: 'Pulito e diretto', set: { palette: 'carta', font: 'moderno', bottone: 'morbido', riempimento: 'pieno', card: 'ombra', angoli: 'medi', scuro: false } },
-  { id: 'colorato', nome: 'Colorato', desc: 'Vivace, personalità forte', set: { palette: 'corallo-sole', font: 'deciso', bottone: 'pillola', riempimento: 'pieno', card: 'rialzata', angoli: 'ampi', scuro: false } },
-  { id: 'tecnologico', nome: 'Tecnologico', desc: 'Netto, futurista', set: { palette: 'mood-dark', font: 'tech', bottone: 'morbido', riempimento: 'pieno', card: 'accento', angoli: 'medi', scuro: true } },
+  { id: 'elegante', nome: 'Elegante', desc: 'Sobrio, poco colore', set: { palette: 'navy-oro', font: 'playfair-display-inter', bottone: 'leggero', riempimento: 'contorno', card: 'bordo', angoli: 'netti', scuro: false } },
+  { id: 'moderno', nome: 'Moderno', desc: 'Pulito e diretto', set: { palette: 'carta', font: 'poppins-inter', bottone: 'morbido', riempimento: 'pieno', card: 'ombra', angoli: 'medi', scuro: false } },
+  { id: 'colorato', nome: 'Colorato', desc: 'Vivace, personalità forte', set: { palette: 'corallo-sole', font: 'montserrat-inter', bottone: 'pillola', riempimento: 'pieno', card: 'rialzata', angoli: 'ampi', scuro: false } },
+  { id: 'tecnologico', nome: 'Tecnologico', desc: 'Netto, futurista', set: { palette: 'mood-dark', font: 'space-grotesk-dm-sans', bottone: 'morbido', riempimento: 'pieno', card: 'accento', angoli: 'medi', scuro: true } },
 ]

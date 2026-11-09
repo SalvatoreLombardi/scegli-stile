@@ -33,7 +33,7 @@ export function variabili(s) {
     '--primary-soft': rgba(primary, s.scuro || p.dark ? 0.22 : 0.12),
     '--line': s.scuro || p.dark ? 'rgba(255,255,255,.12)' : 'rgba(0,0,0,.1)',
     '--shadow': s.scuro || p.dark ? 'rgba(0,0,0,.5)' : 'rgba(15,23,42,.14)',
-    '--font-titoli': `'${f.titoli}', Georgia, serif`,
+    '--font-titoli': `'${f.titoli}', Georgia, serif`, '--peso-titoli': f.pesoTitoli, '--peso-testi': f.pesoTesti,
     '--font-testi': `'${f.testi}', -apple-system, sans-serif`,
     '--r-btn': b.raggio, '--r-card': a.raggio,
   }
@@ -46,7 +46,7 @@ export function riepilogo(s) {
     'Il tuo stile scelto',
     `Colori: ${p.nome} (principale ${p.primary}, secondario ${p.accent})`,
     `Tema: ${s.scuro ? 'scuro' : 'chiaro'}`,
-    `Font: ${f.nome} (titoli ${f.titoli}, testi ${f.testi})`,
+    `Font: titoli ${f.titoli}, testi ${f.testi}`,
     `Bottoni: ${trova(BOTTONI, s.bottone).nome}, ${trova(RIEMPIMENTO, s.riempimento).nome.toLowerCase()}`,
     `Card: ${trova(CARD, s.card).nome}, angoli ${trova(ANGOLI_CARD, s.angoli).nome.toLowerCase()}`,
   ].join('\n')

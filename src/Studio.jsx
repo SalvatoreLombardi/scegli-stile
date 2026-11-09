@@ -3,9 +3,10 @@ import Anteprima from './Anteprima.jsx'
 import Icona from './Icona.jsx'
 import TabBolla from './TabBolla.jsx'
 import { LINGUE, lingueCliente, linguaIniziale } from './lingue.js'
-import { PALETTE, GRUPPI_PALETTE, FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD, ATMOSFERE } from './dati.js'
+import { PALETTE, GRUPPI_PALETTE, GRUPPI_FONT, FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD, ATMOSFERE } from './dati.js'
 import { variabili } from './utils.js'
 
+const ICONE_FONT = { moderno: 'f-moderno', elegante: 'elegante', tech: 'tecnologico', classico: 'f-classico', deciso: 'f-deciso', caldo: 'f-caldo', leggero: 'f-leggero' }
 const SCHEDE = [['atmosfera', 'Atmosfera'], ['colori', 'Colori'], ['font', 'Font'], ['bottoni', 'Bottoni'], ['card', 'Card']].map(([id, nome]) => ({ id, nome }))
 
 export default function Studio({ cliente, onBack, onChange }) {
@@ -17,6 +18,8 @@ export default function Studio({ cliente, onBack, onChange }) {
   const palAttuale = PALETTE.find((p) => p.id === s.palette)
   const [gruppoId, setGruppoId] = useState(() => (GRUPPI_PALETTE.find((g) => g.palette.some((p) => p.id === s.palette)) || GRUPPI_PALETTE[0]).id)
   const gruppo = GRUPPI_PALETTE.find((g) => g.id === gruppoId)
+  const [gruppoFontId, setGruppoFontId] = useState(() => (GRUPPI_FONT.find((g) => g.font.some((f) => f.id === s.font)) || GRUPPI_FONT[0]).id)
+  const gruppoFont = GRUPPI_FONT.find((g) => g.id === gruppoFontId)
   const scegliPalette = (p) => onChange({ ...s, palette: p.id, scuro: p.dark ? true : palAttuale?.dark ? false : s.scuro })
 
   return (
@@ -66,14 +69,18 @@ export default function Studio({ cliente, onBack, onChange }) {
           )}
 
           {scheda === 'font' && (
-            <div className="lista">
-              {FONT.map((f) => (
-                <button key={f.id} className={'opzione' + (s.font === f.id ? ' on' : '')} onClick={() => imposta('font', f.id)}>
-                  <span className="esempio-font" style={{ fontFamily: `'${f.titoli}', serif` }}>Aa {f.nome}</span>
-                  <small>{f.titoli} + {f.testi} · {f.note}</small>
-                </button>
-              ))}
-            </div>
+            <>
+              <TabBolla compatta voci={GRUPPI_FONT.map((g) => ({ id: g.id, nome: g.nome, icona: ICONE_FONT[g.id] }))} attivo={gruppoFont.id} onScegli={setGruppoFontId} />
+              <div className="gruppo-testa" key={gruppoFont.id}><b>{gruppoFont.nome}</b><span>{gruppoFont.note}</span></div>
+              <div className="lista" key={'f' + gruppoFont.id}>
+                {gruppoFont.font.map((f, i) => (
+                  <button key={f.id} style={{ '--i': i }} className={'opzione opzione--font' + (s.font === f.id ? ' on' : '')} onClick={() => imposta('font', f.id)}>
+                    <span className="esempio-font" style={{ fontFamily: `'${f.titoli}', serif`, fontWeight: f.pesoTitoli }}>{f.titoli}</span>
+                    <small style={{ fontFamily: `'${f.testi}', sans-serif` }}>con {f.testi}: il tuo testo si legge così</small>
+                  </button>
+                ))}
+              </div>
+            </>
           )}
 
           {scheda === 'bottoni' && (

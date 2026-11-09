@@ -81,7 +81,7 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
           <dl className="dettagli">
             <div><dt>Colori</dt><dd>{pal.nome}<span className="mini-pal">{[pal.primary, pal.accent, pal.bg, pal.text].map((x, k) => <i key={k} style={{ background: x }} />)}</span></dd></div>
             <div><dt>Tema</dt><dd>{s.scuro ? 'Scuro' : 'Chiaro'}</dd></div>
-            <div><dt>Font</dt><dd>{font.nome} <small>{font.titoli} + {font.testi}</small></dd></div>
+            <div><dt>Font</dt><dd>{font.titoli} <small>con {font.testi}</small></dd></div>
             <div><dt>Bottoni</dt><dd>{trova(BOTTONI, s.bottone).nome}, {trova(RIEMPIMENTO, s.riempimento).nome.toLowerCase()}</dd></div>
             <div><dt>Card</dt><dd>{trova(CARD, s.card).nome}, angoli {trova(ANGOLI_CARD, s.angoli).nome.toLowerCase()}</dd></div>
           </dl>

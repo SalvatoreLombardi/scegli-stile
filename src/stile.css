@@ -479,3 +479,75 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .campione-sel button { flex: 1; min-height: 40px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--ink2); transition: background .25s ease, color .25s ease; }
 .campione-sel button.on { background: var(--scuro); color: var(--teal2); }
 .opzione--font .esempio-font { overflow-wrap: anywhere; }
+
+/* ============ Studio a passi: tutta la pagina a disposizione ============ */
+.studio2 { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 1; display: flex; flex-direction: column; padding: 30px 18px 0; padding-top: calc(30px + env(safe-area-inset-top)); }
+.studio2__testa { display: grid; grid-template-columns: 1fr minmax(0, 500px) 1fr; align-items: center; gap: 12px; margin-bottom: 4px; }
+.studio2__testa .indietro { margin: 0; justify-self: start; font-size: 17px; color: var(--ink); }
+.studio2__testa .bolla-bar { margin: 0; }
+.studio2__piena { justify-self: end; min-height: 48px; }
+.studio2 .bolla { animation-name: salto-basso; }
+@keyframes salto-basso { 0% { transform: translateY(0) scale(1, 1); } 36% { transform: translateY(-30px) scale(.9, 1.12); } 66% { transform: translateY(3px) scale(1.15, .85); } 82% { transform: translateY(-3px) scale(.97, 1.04); } 100% { transform: translateY(0) scale(1, 1); } }
+.studio2__corpo { flex: 1; min-height: 0; display: flex; gap: 18px; padding-top: 14px; }
+.studio2__pagina { flex: 1; min-width: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 6px 110px 2px; }
+.studio2__lato { width: 300px; flex: none; display: flex; flex-direction: column; align-items: center; gap: 12px; padding-bottom: 96px; }
+
+.passo-pag { animation: sale .4s cubic-bezier(.2, .8, .2, 1) both; }
+.passo-pag__titolo { font-size: 38px; font-weight: 600; letter-spacing: -.035em; line-height: 1.05; margin-bottom: 10px; }
+.passo-pag__titolo em { font-family: var(--serif); font-style: italic; font-weight: 600; letter-spacing: -.02em; }
+.passo-pag__testo { color: var(--ink2); font-size: 16px; line-height: 1.5; max-width: 620px; margin-bottom: 18px; }
+.passo-pag h4 { margin: 18px 4px 10px; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink2); font-weight: 600; }
+.passo-pag .tema-sel--largo { margin: 6px 2px 14px; max-width: 460px; }
+.passo-pag .griglia-colori { grid-template-columns: repeat(4, 1fr); }
+.passo-pag .lista--griglia { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.passo-pag .conf-logo { max-width: 460px; }
+.passo-pag .campione-sel { max-width: 460px; }
+.passo-pag .marchio-sel { max-width: 460px; }
+
+.logo-pagina { display: flex; align-items: center; gap: 18px; margin-bottom: 16px; padding: 16px; border-radius: 26px; background: #fff; border: 1px solid var(--vetro-bordo); box-shadow: var(--ombra); max-width: 620px; }
+.logo-pagina img, .logo-pagina__vuoto { width: 190px; height: 130px; flex: none; object-fit: contain; border-radius: 16px; background: #f4f6f5; border: 1px dashed rgba(18, 32, 29, .2); }
+.logo-pagina__vuoto { display: flex; align-items: center; justify-content: center; color: var(--ink2); }
+.logo-pagina__azioni { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.logo-pagina__azioni small { color: var(--ink2); font-size: 13px; line-height: 1.35; }
+.logo-pagina__carica { position: relative; cursor: pointer; }
+.logo-pagina__carica input, .conf-logo label input { position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.logo-trovati { max-width: 620px; padding: 18px; margin-bottom: 14px; }
+.logo-trovati h3 { margin: 0 0 4px; font-size: 18px; }
+.logo-colori__sw--grandi button { width: 60px; height: 60px; }
+
+.direzioni { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; max-width: 660px; }
+.direzione { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 6px; cursor: pointer; transition: transform .3s var(--elastico); outline: none; }
+.direzione:active { transform: scale(.97); }
+.direzione .strisce { height: 56px; margin-bottom: 8px; }
+.direzione b { font-size: 22px; font-weight: 600; letter-spacing: -.02em; }
+.direzione small { color: var(--ink2); font-size: 14px; }
+
+.forma-colonne { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 700px; }
+
+/* miniatura dell'anteprima (colonna a destra) */
+.mini-anteprima { position: relative; width: 300px; height: 470px; flex: none; overflow: hidden; border-radius: 26px; background: var(--bg); color: var(--text); font-family: var(--font-testi); border: 3px solid #fff; box-shadow: var(--ombra); cursor: pointer; outline: none; transition: transform .3s var(--elastico); }
+.mini-anteprima:active { transform: scale(.98); }
+.mini-anteprima__in { width: 760px; transform: scale(.38); transform-origin: top left; pointer-events: none; }
+.mini-anteprima__etichetta { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 6px; padding: 0 14px; min-height: 36px; border-radius: 999px; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: #fff; background: rgba(10, 24, 21, .72); white-space: nowrap; }
+.lingua-switch--statico { position: static; transform: none; }
+
+/* barra in basso: indietro, avanti */
+.nav-passi { position: absolute; z-index: 4; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; padding: 8px; border-radius: 999px; background: linear-gradient(160deg, rgba(30, 62, 56, .94), rgba(8, 22, 19, .96)); border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 16px 36px rgba(10, 30, 26, .35), inset 0 1.5px 0 rgba(255, 255, 255, .3); animation: appare .4s ease both; }
+.nav-passi .secondario { background: rgba(255, 255, 255, .12); color: #fff; border-color: rgba(255, 255, 255, .2); box-shadow: none; }
+.nav-passi__n { color: rgba(255, 255, 255, .7); font-size: 14px; font-weight: 600; min-width: 44px; text-align: center; }
+
+/* anteprima a schermo intero */
+.anteprima-piena { position: fixed; z-index: 30; top: 0; right: 0; bottom: 0; left: 0; background: var(--bg); animation: appare .25s ease both; }
+.sito--pieno { position: absolute; top: 0; right: 0; bottom: 0; left: 0; border: 0; border-radius: 0; box-shadow: none; }
+.sito--pieno .p-sito { max-width: 980px; }
+.piena-chiudi { position: absolute; z-index: 3; bottom: 22px; right: 18px; min-height: 48px; padding: 0 20px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: #fff; background: rgba(10, 24, 21, .78); border: 1px solid rgba(255, 255, 255, .3); box-shadow: 0 10px 26px rgba(10, 30, 26, .35); transition: transform .25s var(--elastico); }
+.piena-chiudi:active { transform: scale(.94); }
+.anteprima-piena .lingua-switch { bottom: 22px; }
+
+@media (orientation: portrait) {
+  .studio2__testa { grid-template-columns: 1fr auto; }
+  .studio2__testa .bolla-bar { grid-column: 1 / -1; grid-row: 2; margin-top: 30px; }
+  .studio2__lato { display: none; }
+  .passo-pag .griglia-colori { grid-template-columns: repeat(3, 1fr); }
+  .forma-colonne { grid-template-columns: 1fr; }
+}

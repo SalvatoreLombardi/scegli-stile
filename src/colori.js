@@ -76,21 +76,22 @@ export function coloriDaPixel(dati, larghezza, altezza, max = 6) {
   return scelti.map(hex)
 }
 
+// Legge i colori da un indirizzo (foto appena scelta o logo già salvato) e prepara una miniatura del logo.
+export async function coloriDaUrl(url) {
+  const img = await new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = ko; i.src = url })
+  const scala = Math.min(1, 96 / Math.max(img.naturalWidth, img.naturalHeight))
+  const w = Math.max(1, Math.round(img.naturalWidth * scala)), h = Math.max(1, Math.round(img.naturalHeight * scala))
+  const c = document.createElement('canvas'); c.width = w; c.height = h
+  const ctx = c.getContext('2d', { willReadFrequently: true })
+  ctx.drawImage(img, 0, 0, w, h)
+  const colori = coloriDaPixel(ctx.getImageData(0, 0, w, h).data, w, h)
+  const s2 = Math.min(1, 240 / Math.max(img.naturalWidth, img.naturalHeight))
+  const t = document.createElement('canvas'); t.width = Math.max(1, Math.round(img.naturalWidth * s2)); t.height = Math.max(1, Math.round(img.naturalHeight * s2))
+  t.getContext('2d').drawImage(img, 0, 0, t.width, t.height)
+  return { colori, anteprima: t.toDataURL('image/png') }
+}
+
 export async function coloriDaFile(file) {
   const url = URL.createObjectURL(file)
-  try {
-    const img = await new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = ko; i.src = url })
-    const scala = Math.min(1, 96 / Math.max(img.naturalWidth, img.naturalHeight))
-    const w = Math.max(1, Math.round(img.naturalWidth * scala)), h = Math.max(1, Math.round(img.naturalHeight * scala))
-    const c = document.createElement('canvas'); c.width = w; c.height = h
-    const ctx = c.getContext('2d', { willReadFrequently: true })
-    ctx.drawImage(img, 0, 0, w, h)
-    const colori = coloriDaPixel(ctx.getImageData(0, 0, w, h).data, w, h)
-    const s2 = Math.min(1, 200 / Math.max(img.naturalWidth, img.naturalHeight))
-    const t = document.createElement('canvas'); t.width = Math.max(1, Math.round(img.naturalWidth * s2)); t.height = Math.max(1, Math.round(img.naturalHeight * s2))
-    t.getContext('2d').drawImage(img, 0, 0, t.width, t.height)
-    return { colori, anteprima: t.toDataURL('image/png') }
-  } finally {
-    URL.revokeObjectURL(url)
-  }
+  try { return await coloriDaUrl(url) } finally { URL.revokeObjectURL(url) }
 }

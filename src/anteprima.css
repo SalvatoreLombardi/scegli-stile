@@ -124,6 +124,6 @@
 .p-app__lato .p-logo--img { height: 32px; margin: 0 0 14px 8px; }
 
 /* grandezza del logo scelta nello studio (--logo-h) */
-.p-logo--img { height: var(--logo-h, 58px); max-width: calc(var(--logo-h, 58px) * 4.5); }
-.p-app__lato .p-logo--img { height: calc(var(--logo-h, 58px) * .75); max-width: 100%; }
+.p-logo--img { height: var(--logo-h, 80px); max-width: calc(var(--logo-h, 80px) * 5); }
+.p-app__lato .p-logo--img { height: calc(var(--logo-h, 80px) * .7); max-width: 100%; }
 .p-nav:has(.p-logo--img) { padding-top: 10px; padding-bottom: 10px; }

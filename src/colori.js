@@ -84,9 +84,30 @@ function analizza(sorgente, nw, nh) {
   const ctx = c.getContext('2d')
   ctx.drawImage(sorgente, 0, 0, w, h)
   const colori = coloriDaPixel(ctx.getImageData(0, 0, w, h).data, w, h)
-  const s2 = Math.min(1, 240 / Math.max(nw, nh))
+  const s2 = Math.min(1, 480 / Math.max(nw, nh))
   const t = document.createElement('canvas'); t.width = Math.max(1, Math.round(nw * s2)); t.height = Math.max(1, Math.round(nh * s2))
-  t.getContext('2d').drawImage(sorgente, 0, 0, t.width, t.height)
+  const tc = t.getContext('2d')
+  tc.drawImage(sorgente, 0, 0, t.width, t.height)
+  // Toglie i margini vuoti (bianchi o trasparenti) attorno al logo: così il logo vero riempie lo spazio.
+  try {
+    const px = tc.getImageData(0, 0, t.width, t.height).data
+    let x0 = t.width, y0 = t.height, x1 = -1, y1 = -1
+    for (let y = 0; y < t.height; y++) {
+      for (let x = 0; x < t.width; x++) {
+        const i = (y * t.width + x) * 4
+        if (px[i + 3] > 25 && !(px[i] > 243 && px[i + 1] > 243 && px[i + 2] > 243)) {
+          if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y
+        }
+      }
+    }
+    if (x1 - x0 > 8 && y1 - y0 > 8) {
+      const m = Math.round(Math.max(t.width, t.height) * 0.02) // piccolo respiro
+      x0 = Math.max(0, x0 - m); y0 = Math.max(0, y0 - m); x1 = Math.min(t.width - 1, x1 + m); y1 = Math.min(t.height - 1, y1 + m)
+      const r = document.createElement('canvas'); r.width = x1 - x0 + 1; r.height = y1 - y0 + 1
+      r.getContext('2d').drawImage(t, x0, y0, r.width, r.height, 0, 0, r.width, r.height)
+      return { colori, anteprima: r.toDataURL('image/png') }
+    }
+  } catch { /* se non si riesce a ritagliare, resta l'immagine intera */ }
   return { colori, anteprima: t.toDataURL('image/png') }
 }
 

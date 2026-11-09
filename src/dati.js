@@ -238,7 +238,7 @@ export const ATMOSFERE = [
 ]
 
 export const LOGO_DIM = [
-  { id: 'piccolo', nome: 'Piccolo', px: 40 },
-  { id: 'medio', nome: 'Medio', px: 58 },
-  { id: 'grande', nome: 'Grande', px: 80 },
+  { id: 'piccolo', nome: 'Piccolo', px: 56 },
+  { id: 'medio', nome: 'Medio', px: 80 },
+  { id: 'grande', nome: 'Grande', px: 112 },
 ]

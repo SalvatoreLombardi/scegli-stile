@@ -4,7 +4,7 @@ import Icona from './Icona.jsx'
 import TabBolla from './TabBolla.jsx'
 import Bandiera from './Bandiera.jsx'
 import { LINGUE, lingueCliente, linguaIniziale } from './lingue.js'
-import { LOGO_DIM, PALETTE, GRUPPI_PALETTE, GRUPPI_FONT, FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD, ATMOSFERE } from './dati.js'
+import { NAV_STILI, NAV_EFFETTI, CATALOGO, LOGO_DIM, PALETTE, GRUPPI_PALETTE, GRUPPI_FONT, FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD, ATMOSFERE } from './dati.js'
 import { variabili, temaChiave, colorePrincipale } from './utils.js'
 import { contrasto, coloriDaFile, coloriDaUrl, paletteDaLogo, fontSimili } from './colori.js'
 
@@ -14,6 +14,7 @@ const PASSI = [
   { id: 'direzione', nome: 'Direzione', icona: 'atmosfera' },
   { id: 'colori', nome: 'Colori', icona: 'colori' },
   { id: 'font', nome: 'Font', icona: 'font' },
+  { id: 'menu', nome: 'Menu', icona: 'menu' },
   { id: 'forma', nome: 'Forma', icona: 'bottoni' },
 ]
 const tasto = (fn) => ({ role: 'button', tabIndex: 0, onClick: fn, onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn() } } })
@@ -49,6 +50,19 @@ function BloccoColoreCliente({ s, palAttuale, imposta, togli, pocoContrasto, usa
       {usaLogo && !s.coloreMarchio && <button className="secondario marchio-sel__usa" onClick={usaLogo}>Usa i colori del logo</button>}
       {pocoContrasto && <p className="aiuto marchio-sel__avviso">Questo colore si legge poco sullo sfondo.</p>}
     </>
+  )
+}
+
+// Disegnino dello stile di barra in alto.
+function MiniNav({ id }) {
+  const v = [<i key="a" className="mn-v" />, <i key="b" className="mn-v" />]
+  return (
+    <span className={'mini-nav mini-nav--' + id} aria-hidden="true">
+      {id === 'centrata' && <>{v}<i className="mn-logo" /><i className="mn-v" /><i className="mn-b" /></>}
+      {id === 'panino' && <><i className="mn-logo" /><i className="mn-flex" /><i className="mn-burger"><u /><u /><u /></i></>}
+      {id === 'pillola' && <span className="mn-pill"><i className="mn-logo" /><i className="mn-flex" />{v}<i className="mn-b" /></span>}
+      {(id === 'classica' || id === 'trasparente' || id === 'piena') && <><i className="mn-logo" /><i className="mn-flex" />{v}<i className="mn-b" /></>}
+    </span>
   )
 }
 
@@ -262,6 +276,47 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
                 <div className="lista" key={'f' + gruppoFont.id}>
                   {gruppoFont.font.map((f, k) => <TileFont key={f.id} i={k} f={f} testo={cliente.nome} on={s.font === f.id} onClick={() => imposta('font', f.id)} />)}
                 </div>
+              </section>
+            )}
+
+            {passo === 'menu' && (
+              <section className="passo-pag">
+                <h2 className="passo-pag__titolo">Il <em>menu</em></h2>
+                {cliente.tipo === 'webapp' ? (
+                  <p className="passo-pag__testo">Nelle web app il menu è la barra laterale a sinistra: non ci sono stili di barra in alto da scegliere.</p>
+                ) : (
+                  <>
+                    <h4>Barra in alto</h4>
+                    <div className="navs">
+                      {NAV_STILI.map((n) => (
+                        <button key={n.id} className={'nav-tile' + ((s.navStile || 'classica') === n.id ? ' on' : '')} onClick={() => imposta('navStile', n.id)}>
+                          <MiniNav id={n.id} />
+                          <b>{n.nome}</b>
+                          <small>{n.desc}</small>
+                        </button>
+                      ))}
+                    </div>
+                    {cliente.tipo === 'landing' && <p className="aiuto">Nella landing page la barra trasparente diventa classica: sotto non c'è una foto.</p>}
+                    <h4>Quando scorri la pagina</h4>
+                    <div className="segmenti">
+                      {NAV_EFFETTI.map((e) => (
+                        <button key={e.id} className={(s.navEffetto || 'nessuno') === e.id ? 'on' : ''} onClick={() => imposta('navEffetto', e.id)}>{e.nome}</button>
+                      ))}
+                    </div>
+                    <p className="aiuto">Per vedere l'effetto scorri l'anteprima.</p>
+                    {cliente.tipo === 'ecommerce' && (
+                      <>
+                        <h4>Catalogo prodotti</h4>
+                        <div className="segmenti">
+                          {CATALOGO.map((c) => (
+                            <button key={c.id} className={(s.catalogo || 'sopra') === c.id ? 'on' : ''} onClick={() => imposta('catalogo', c.id)}>{c.nome}</button>
+                          ))}
+                        </div>
+                        <p className="aiuto">La barra laterale mostra categorie, prezzo e filtri accanto ai prodotti.</p>
+                      </>
+                    )}
+                  </>
+                )}
               </section>
             )}
 

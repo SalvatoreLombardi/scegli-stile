@@ -1,7 +1,7 @@
 import { PALETTE, FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD } from './dati.js'
 import { ATTIVITA, TIPI, BRIEF } from './attivita.js'
 import { LINGUE, lingueCliente } from './lingue.js'
-import { trova, temaTesto, colorePrincipale } from './utils.js'
+import { trova, temaTesto, colorePrincipale, menuTesto } from './utils.js'
 import { urlFoto } from './Foto.jsx'
 
 const INK = [18, 32, 29]
@@ -142,6 +142,7 @@ export async function creaPdf(c) {
   if (s.coloreMarchio) riga('Colore del cliente', s.coloreMarchio.toUpperCase())
   riga('Tema del sito', temaTesto(s))
   riga('Font', `Titoli ${font.titoli}, testi ${font.testi}`)
+  riga('Menu', menuTesto(s, c.tipo))
   riga('Bottoni', `${trova(BOTTONI, s.bottone).nome}, ${trova(RIEMPIMENTO, s.riempimento).nome.toLowerCase()}`)
   riga('Card', `${trova(CARD, s.card).nome}, angoli ${trova(ANGOLI_CARD, s.angoli).nome.toLowerCase()}`)
   y += 4

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import Foto from './Foto.jsx'
 import Icona from './Icona.jsx'
 import { trova } from './utils.js'
@@ -6,15 +7,29 @@ import { contenuto, t } from './lingue.js'
 
 const euro = (n, T) => (n === 0 ? (T('lang') === 'zh' ? '免费' : 'Gratis') : `${n} €`)
 
-function Nav({ nome, voci, btn, carrello, T, tema, logo }) {
+const NAV_OK = ['classica', 'centrata', 'trasparente', 'panino', 'piena', 'pillola']
+
+// Barra in alto: 6 stili e 3 effetti allo scorrimento (nessuno, fissa, si rimpicciolisce).
+function Nav({ nome, voci, btn, carrello, T, tema, logo, nav = {}, tipo }) {
+  let st = NAV_OK.includes(nav.stile) ? nav.stile : 'classica'
+  if (st === 'trasparente' && tipo === 'landing') st = 'classica' // la landing non ha una foto sotto la barra
+  const ef = nav.effetto || 'nessuno'
+  const marchio = logo ? <img className="p-logo p-logo--img" src={logo} alt={nome} /> : <strong className="p-logo">{nome}</strong>
+  const links = <nav>{voci.map((v) => <span key={v}>{v}</span>)}</nav>
+  const carr = carrello && <span className="p-cart">{T('carrello')}<b>2</b></span>
+  const bottone = <button className={btn + ' p-btn--sm'}>{carrello ? T('accedi') : T('contattaci')}</button>
   return (
-    <header className="p-nav">
-      {logo ? <img className="p-logo p-logo--img" src={logo} alt={nome} /> : <strong className="p-logo">{nome}</strong>}
-      <nav>{voci.map((v) => <span key={v}>{v}</span>)}</nav>
-      {tema}
-      {carrello && <span className="p-cart">{T('carrello')}<b>2</b></span>}
-      <button className={btn + ' p-btn--sm'}>{carrello ? T('accedi') : T('contattaci')}</button>
-    </header>
+    <div className={`p-navwrap p-navwrap--${st} p-navwrap--${ef}`}>
+      <header className={`p-nav p-nav--${st}`}>
+        {st === 'centrata' ? (
+          <>{links}{marchio}<div className="p-nav__dx">{tema}{carr}{bottone}</div></>
+        ) : st === 'panino' ? (
+          <>{marchio}<div className="p-nav__dx">{tema}{carr}<span className="p-panino" aria-hidden="true"><i /><i /><i /></span></div></>
+        ) : (
+          <>{marchio}{links}{tema}{carr}{bottone}</>
+        )}
+      </header>
+    </div>
   )
 }
 
@@ -70,10 +85,10 @@ function Contatti({ cardCls, btn, T }) {
   )
 }
 
-function Vetrina({ a, nome, btn, cardCls, T, tema, logo }) {
+function Vetrina({ a, nome, btn, cardCls, T, tema, logo, nav }) {
   return (
     <>
-      <Nav nome={nome} voci={[T('home'), T('servizi'), T('chiSiamo'), T('contatti')]} btn={btn} T={T} tema={tema} logo={logo} />
+      <Nav nome={nome} voci={[T('home'), T('servizi'), T('chiSiamo'), T('contatti')]} btn={btn} T={T} tema={tema} logo={logo} nav={nav} tipo="vetrina" />
       <Hero a={a} btn={btn} T={T} />
       <Servizi a={a} cardCls={cardCls} T={T} />
       <section className="p-sezione p-due">
@@ -94,10 +109,10 @@ function Vetrina({ a, nome, btn, cardCls, T, tema, logo }) {
   )
 }
 
-function Landing({ a, nome, btn, cardCls, T, tema, logo }) {
+function Landing({ a, nome, btn, cardCls, T, tema, logo, nav }) {
   return (
     <>
-      <Nav nome={nome} voci={[]} btn={btn} T={T} tema={tema} logo={logo} />
+      <Nav nome={nome} voci={[]} btn={btn} T={T} tema={tema} logo={logo} nav={nav} tipo="landing" />
       <section className="p-split">
         <div>
           <span className="p-badge">{a.badge}</span>
@@ -134,30 +149,49 @@ function Landing({ a, nome, btn, cardCls, T, tema, logo }) {
   )
 }
 
-function Ecommerce({ a, nome, btn, cardCls, T, tema, logo }) {
+function Ecommerce({ a, nome, btn, cardCls, T, tema, logo, nav, catalogo }) {
+  const laterale = catalogo === 'laterale'
+  const voci = laterale ? [T('home'), T('novita'), T('offerta'), T('contatti')] : a.categorie
   return (
     <>
       <div className="p-promo">{T('promo')}</div>
-      <Nav nome={nome} voci={a.categorie} btn={btn} carrello T={T} tema={tema} logo={logo} />
+      <Nav nome={nome} voci={voci} btn={btn} carrello T={T} tema={tema} logo={logo} nav={nav} tipo="ecommerce" />
       <Hero a={a} btn={btn} T={T} />
       <section className="p-sezione">
         <h2>{T('piuVenduti')}</h2>
-        <div className="p-prodotti">
-          {a.prodotti.map(([n, p], i) => (
-            <article className={cardCls + ' p-card--img p-prodotto'} key={i}>
-              <Foto att={a.id} nome={a.imgProd[i]} className="p-card__foto p-card__foto--quad" />
-              <div className="p-card__corpo">
-                <h3>{n}</h3>
-                <b className="p-prezzo">{euro(p, T)}</b>
-                <button className={btn + ' p-btn--sm p-btn--blocco'}>{T('aggiungi')}</button>
-              </div>
-            </article>
-          ))}
+        <div className={laterale ? 'p-catalogo p-catalogo--lat' : 'p-catalogo'}>
+          {laterale && (
+            <aside className={cardCls + ' p-filtri'}>
+              <h4>{T('categorie')}</h4>
+              <ul>
+                <li className="on">{T('tutti')}</li>
+                {a.categorie.map((c) => <li key={c}>{c}</li>)}
+              </ul>
+              <h4>{T('prezzo')}</h4>
+              <div className="p-slider"><i /><b /><b /></div>
+              <label className="p-spunta"><i className="on" />{T('disp')}</label>
+              <label className="p-spunta"><i />{T('offerta')}</label>
+            </aside>
+          )}
+          <div className="p-prodotti">
+            {a.prodotti.map(([n, p], i) => (
+              <article className={cardCls + ' p-card--img p-prodotto'} key={i}>
+                <Foto att={a.id} nome={a.imgProd[i]} className="p-card__foto p-card__foto--quad" />
+                <div className="p-card__corpo">
+                  <h3>{n}</h3>
+                  <b className="p-prezzo">{euro(p, T)}</b>
+                  <button className={btn + ' p-btn--sm p-btn--blocco'}>{T('aggiungi')}</button>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
-      <section className="p-sezione p-chips">
-        {a.categorie.map((c) => <span key={c} className="p-chip">{c}</span>)}
-      </section>
+      {!laterale && (
+        <section className="p-sezione p-chips">
+          {a.categorie.map((c) => <span key={c} className="p-chip">{c}</span>)}
+        </section>
+      )}
       <section className="p-sezione">
         <div className={cardCls + ' p-newsletter'}>
           <div><h3>{T('newsletter')}</h3><p className="p-muted">{T('newsletterSub')}</p></div>
@@ -239,9 +273,20 @@ export default function Anteprima({ stile, cliente, lang = 'it', onTema }) {
   const tema = stile.temaModo === 'entrambi'
     ? <button className="p-tema" onClick={onTema} aria-label="Cambia tema chiaro o scuro"><Icona nome={stile.scuro ? 'sole' : 'luna'} size={20} /></button>
     : null
-  const P = { a, nome, btn, cardCls, T, tema, logo: cliente?.logo || '' }
+  const P = { a, nome, btn, cardCls, T, tema, logo: cliente?.logo || '', nav: { stile: stile.navStile, effetto: stile.navEffetto }, catalogo: stile.catalogo }
+  // Allo scorrimento la barra cambia (si riempie, si rimpicciolisce): segno sulla pagina se è stata scorsa.
+  const radice = useRef(null)
+  useEffect(() => {
+    const el = radice.current
+    const sc = el && el.closest('.sito')
+    if (!sc) return undefined
+    const f = () => el.classList.toggle('p-sito--scroll', sc.scrollTop > 40)
+    sc.addEventListener('scroll', f, { passive: true })
+    f()
+    return () => sc.removeEventListener('scroll', f)
+  }, [])
   return (
-    <div className="p-sito" lang={lang}>
+    <div className="p-sito" lang={lang} ref={radice}>
       {tipo === 'vetrina' && <Vetrina {...P} />}
       {tipo === 'landing' && <Landing {...P} />}
       {tipo === 'ecommerce' && <Ecommerce {...P} />}

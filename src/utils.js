@@ -1,6 +1,6 @@
 import { rgb, luce, mix, contrasto } from './colori.js'
 import { lingueCliente, lingueNomi } from './lingue.js'
-import { LOGO_DIM, PALETTE, TEMA_SCURO, TEMA_CHIARO, FONT, BOTTONI, CARD, ANGOLI_CARD, RIEMPIMENTO } from './dati.js'
+import { NAV_STILI, NAV_EFFETTI, CATALOGO, LOGO_DIM, PALETTE, TEMA_SCURO, TEMA_CHIARO, FONT, BOTTONI, CARD, ANGOLI_CARD, RIEMPIMENTO } from './dati.js'
 
 export const rgba = (hex, a) => `rgba(${rgb(hex).join(',')},${a})`
 
@@ -32,6 +32,16 @@ export const temaTesto = (s) => ({
 
 // Colore principale scelto per il cliente (il suo, se l'ha indicato; altrimenti quello della palette).
 export const colorePrincipale = (s, pal) => (/^#[0-9a-fA-F]{6}$/.test(s.coloreMarchio || '') ? s.coloreMarchio : pal.primary)
+
+// Descrizione del menu scelto (barra in alto, effetto, e per gli e-commerce il catalogo).
+export const menuTesto = (s, tipo) => {
+  if (tipo === 'webapp') return 'Barra laterale (web app)'
+  const st = NAV_STILI.find((x) => x.id === (s.navStile || 'classica')) || NAV_STILI[0]
+  const ef = NAV_EFFETTI.find((x) => x.id === (s.navEffetto || 'nessuno')) || NAV_EFFETTI[0]
+  let t = `${st.nome}, scorrimento: ${ef.nome.toLowerCase()}`
+  if (tipo === 'ecommerce') t += `; catalogo: ${(CATALOGO.find((x) => x.id === (s.catalogo || 'sopra')) || CATALOGO[0]).nome.toLowerCase()}`
+  return t
+}
 
 export const trova = (lista, id) => lista.find((x) => x.id === id) || lista[0]
 
@@ -83,7 +93,7 @@ export function riepilogo(s) {
 export function riepilogoCliente(c, ATTIVITA, TIPI, BRIEF) {
   const att = trova(ATTIVITA, c.attivita)
   const tipo = trova(TIPI, c.tipo)
-  const righe = [`Cliente: ${c.nome}${c.referente ? ` (${c.referente})` : ''}`, `Attività: ${att.nome}`, `Progetto: ${tipo.nome}`, `Lingue: ${lingueNomi(lingueCliente(c))}`, '', riepilogo(c.stile)]
+  const righe = [`Cliente: ${c.nome}${c.referente ? ` (${c.referente})` : ''}`, `Attività: ${att.nome}`, `Progetto: ${tipo.nome}`, `Menu: ${menuTesto(c.stile, c.tipo)}`, `Lingue: ${lingueNomi(lingueCliente(c))}`, '', riepilogo(c.stile)]
   const domande = (BRIEF[c.tipo] || []).filter((d) => c.brief?.[d.k] && c.brief[d.k].length)
   if (domande.length) {
     righe.push('', 'Brief')

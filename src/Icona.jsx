@@ -40,6 +40,7 @@ const P = {
   tema: 'M12 3a9 9 0 100 18zM12 3v18',
   immagine: 'M4 5h16v14H4zM4 16l4.5-4.5 3.5 3.5 3-3 5 5M9 9.5h.01',
   schermo: 'M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5',
+  menu: 'M4 7h16M4 12h16M4 17h16',
   pennello: 'M4 20c3 0 4-1.5 4-3a2.5 2.5 0 015 0c0 2-2 3-9 3zM9.5 14.5L20 4',
 }
 export default function Icona({ nome, size = 22 }) {

@@ -8,7 +8,7 @@ import SelettoreLingue from './SelettoreLingue.jsx'
 import { SceltaAttivita, SceltaTipo } from './Scelte.jsx'
 import { lingueCliente, linguaIniziale } from './lingue.js'
 import { creaPdf } from './pdf.js'
-import { trova, variabili, riepilogoCliente, temaTesto, colorePrincipale } from './utils.js'
+import { trova, variabili, riepilogoCliente, temaTesto, colorePrincipale, menuTesto } from './utils.js'
 
 export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onElimina }) {
   const [privato, setPrivato] = useState(false)
@@ -110,6 +110,7 @@ export default function Cliente({ cliente: c, onBack, onStudio, onAggiorna, onEl
             {s.coloreMarchio && <div><dt>Colore del cliente</dt><dd>{s.coloreMarchio.toUpperCase()}<span className="mini-pal"><i style={{ background: s.coloreMarchio }} /></span></dd></div>}
             <div><dt>Tema del sito</dt><dd>{temaTesto(s)}</dd></div>
             <div><dt>Font</dt><dd>{font.titoli} <small>con {font.testi}</small></dd></div>
+            <div><dt>Menu</dt><dd>{menuTesto(s, c.tipo)}</dd></div>
             <div><dt>Bottoni</dt><dd>{trova(BOTTONI, s.bottone).nome}, {trova(RIEMPIMENTO, s.riempimento).nome.toLowerCase()}</dd></div>
             <div><dt>Card</dt><dd>{trova(CARD, s.card).nome}, angoli {trova(ANGOLI_CARD, s.angoli).nome.toLowerCase()}</dd></div>
           </dl>

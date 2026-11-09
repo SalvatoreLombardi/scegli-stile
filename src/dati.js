@@ -227,7 +227,7 @@ export const ANGOLI_CARD = [
 
 export const DEFAULT = {
   palette: 'carta', font: 'poppins-inter', bottone: 'morbido', riempimento: 'pieno',
-  card: 'ombra', angoli: 'medi', scuro: false, temaModo: 'solo', coloreMarchio: '', coloreAccento: '', logoDim: 'medio',
+  card: 'ombra', angoli: 'medi', scuro: false, temaModo: 'solo', coloreMarchio: '', coloreAccento: '', navStile: 'classica', navEffetto: 'nessuno', catalogo: 'sopra', logoDim: 'medio',
 }
 
 export const ATMOSFERE = [
@@ -241,4 +241,22 @@ export const LOGO_DIM = [
   { id: 'piccolo', nome: 'Piccolo', px: 56 },
   { id: 'medio', nome: 'Medio', px: 80 },
   { id: 'grande', nome: 'Grande', px: 112 },
+]
+
+export const NAV_STILI = [
+  { id: 'classica', nome: 'Classica', desc: 'Logo a sinistra, menu a destra' },
+  { id: 'centrata', nome: 'Centrata', desc: 'Logo al centro' },
+  { id: 'trasparente', nome: 'Trasparente', desc: 'Sopra la foto' },
+  { id: 'panino', nome: 'A panino', desc: 'Menu nascosto, più pulita' },
+  { id: 'piena', nome: 'Colorata', desc: 'Barra del colore del brand' },
+  { id: 'pillola', nome: 'Fluttuante', desc: 'Barra tonda staccata' },
+]
+export const NAV_EFFETTI = [
+  { id: 'nessuno', nome: 'Nessuno' },
+  { id: 'fissa', nome: 'Fissa in alto' },
+  { id: 'riduce', nome: 'Si rimpicciolisce' },
+]
+export const CATALOGO = [
+  { id: 'sopra', nome: 'Categorie sopra' },
+  { id: 'laterale', nome: 'Barra laterale' },
 ]

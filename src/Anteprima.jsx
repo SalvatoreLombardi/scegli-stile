@@ -6,10 +6,10 @@ import { contenuto, t } from './lingue.js'
 
 const euro = (n, T) => (n === 0 ? (T('lang') === 'zh' ? '免费' : 'Gratis') : `${n} €`)
 
-function Nav({ nome, voci, btn, carrello, T, tema }) {
+function Nav({ nome, voci, btn, carrello, T, tema, logo }) {
   return (
     <header className="p-nav">
-      <strong className="p-logo">{nome}</strong>
+      {logo ? <img className="p-logo p-logo--img" src={logo} alt={nome} /> : <strong className="p-logo">{nome}</strong>}
       <nav>{voci.map((v) => <span key={v}>{v}</span>)}</nav>
       {tema}
       {carrello && <span className="p-cart">{T('carrello')}<b>2</b></span>}
@@ -70,10 +70,10 @@ function Contatti({ cardCls, btn, T }) {
   )
 }
 
-function Vetrina({ a, nome, btn, cardCls, T, tema }) {
+function Vetrina({ a, nome, btn, cardCls, T, tema, logo }) {
   return (
     <>
-      <Nav nome={nome} voci={[T('home'), T('servizi'), T('chiSiamo'), T('contatti')]} btn={btn} T={T} tema={tema} />
+      <Nav nome={nome} voci={[T('home'), T('servizi'), T('chiSiamo'), T('contatti')]} btn={btn} T={T} tema={tema} logo={logo} />
       <Hero a={a} btn={btn} T={T} />
       <Servizi a={a} cardCls={cardCls} T={T} />
       <section className="p-sezione p-due">
@@ -94,10 +94,10 @@ function Vetrina({ a, nome, btn, cardCls, T, tema }) {
   )
 }
 
-function Landing({ a, nome, btn, cardCls, T, tema }) {
+function Landing({ a, nome, btn, cardCls, T, tema, logo }) {
   return (
     <>
-      <Nav nome={nome} voci={[]} btn={btn} T={T} tema={tema} />
+      <Nav nome={nome} voci={[]} btn={btn} T={T} tema={tema} logo={logo} />
       <section className="p-split">
         <div>
           <span className="p-badge">{a.badge}</span>
@@ -134,11 +134,11 @@ function Landing({ a, nome, btn, cardCls, T, tema }) {
   )
 }
 
-function Ecommerce({ a, nome, btn, cardCls, T, tema }) {
+function Ecommerce({ a, nome, btn, cardCls, T, tema, logo }) {
   return (
     <>
       <div className="p-promo">{T('promo')}</div>
-      <Nav nome={nome} voci={a.categorie} btn={btn} carrello T={T} tema={tema} />
+      <Nav nome={nome} voci={a.categorie} btn={btn} carrello T={T} tema={tema} logo={logo} />
       <Hero a={a} btn={btn} T={T} />
       <section className="p-sezione">
         <h2>{T('piuVenduti')}</h2>
@@ -168,12 +168,12 @@ function Ecommerce({ a, nome, btn, cardCls, T, tema }) {
   )
 }
 
-function WebApp({ a, nome, btn, cardCls, T, tema }) {
+function WebApp({ a, nome, btn, cardCls, T, tema, logo }) {
   const righe = ['Giulia Marino', 'Luca Fabbri', 'Anna Greco', 'Paolo Neri'].map((n, i) => [['09:00', '10:30', '12:00', '15:30'][i], n])
   return (
     <div className="p-app">
       <aside className="p-app__lato">
-        <strong className="p-logo">{nome}</strong>
+        {logo ? <img className="p-logo p-logo--img" src={logo} alt={nome} /> : <strong className="p-logo">{nome}</strong>}
         {[T('panoramica'), a.app, T('clientiNav'), T('calendario'), T('impostazioni')].map((v, i) => <span key={i} className={i === 1 ? 'on' : ''}>{v}</span>)}
       </aside>
       <div className="p-app__main">
@@ -239,7 +239,7 @@ export default function Anteprima({ stile, cliente, lang = 'it', onTema }) {
   const tema = stile.temaModo === 'entrambi'
     ? <button className="p-tema" onClick={onTema} aria-label="Cambia tema chiaro o scuro"><Icona nome={stile.scuro ? 'sole' : 'luna'} size={20} /></button>
     : null
-  const P = { a, nome, btn, cardCls, T, tema }
+  const P = { a, nome, btn, cardCls, T, tema, logo: cliente?.logo || '' }
   return (
     <div className="p-sito" lang={lang}>
       {tipo === 'vetrina' && <Vetrina {...P} />}

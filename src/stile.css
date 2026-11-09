@@ -565,3 +565,7 @@ input.file-ancorato { position: absolute; top: 0; left: 0; width: 100%; height: 
 
 .logo-pagina.trascina { outline: 3px dashed var(--teal); outline-offset: 4px; }
 .logo-alt__trascina { color: var(--ink2); line-height: 1.4; }
+
+.logo-pagina__grande { font-size: 20px; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; }
+.logo-pagina__azioni small b { font-weight: 700; color: var(--ink); }
+.conf-logo__vuoto { flex: 1; text-align: center; color: var(--ink2); font-size: 14px; }

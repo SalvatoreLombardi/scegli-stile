@@ -118,3 +118,7 @@
 .p-sito h1, .p-sito h2, .p-sito h3, .p-logo, .p-stats b, .p-prezzo, .p-kpi b, .p-icona, .p-quote { font-weight: var(--peso-titoli, 700); }
 
 .p-tema { width: 44px; height: 44px; flex: none; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--text); background: var(--surface); border: 1.5px solid var(--line); cursor: pointer; }
+
+/* logo del cliente al posto del nome */
+.p-logo--img { display: block; height: 38px; width: auto; max-width: 190px; object-fit: contain; margin-right: auto; border-radius: 4px; }
+.p-app__lato .p-logo--img { height: 32px; margin: 0 0 14px 8px; }

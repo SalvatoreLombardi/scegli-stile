@@ -122,6 +122,11 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
                   <b className="logo-pagina__grande">{cliente.logo ? 'Trascina qui un altro logo per cambiarlo' : 'Trascina qui il logo'}</b>
                   <small>Apri le <b>Foto</b> a fianco dell'app (Split View), tieni premuto sul logo e trascinalo dentro questo riquadro.</small>
                   <small>Meglio un logo su sfondo bianco o trasparente.</small>
+                  {cliente.logo && (
+                    <button className="pericolo logo-pagina__togli" onClick={() => { if (onLogo) onLogo(''); setLogo(null); setStato('') }}>
+                      <Icona nome="cestino" size={18} /> Togli il logo
+                    </button>
+                  )}
                   {stato === 'leggo' && <small className="logo-stato">Sto leggendo il logo…</small>}
                   {stato && stato !== 'leggo' && <small className="logo-stato logo-stato--errore">{stato}</small>}
                 </div>

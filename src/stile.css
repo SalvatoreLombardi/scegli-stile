@@ -195,7 +195,7 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .interr:active { transform: scale(.88) rotate(20deg); }
 
 /* schede: barra di vetro scuro con la pallina che salta da una voce all'altra */
-.bolla-bar { position: relative; display: flex; margin: 34px 12px 12px; height: 64px; border-radius: 26px; background: linear-gradient(160deg, rgba(34, 64, 58, .94), rgba(8, 22, 19, .96)); border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 14px 30px rgba(10, 30, 26, .3), inset 0 1.5px 0 rgba(255, 255, 255, .3); }
+.bolla-bar { position: relative; display: flex; margin: 30px 12px 12px; height: 64px; border-radius: 26px; background: linear-gradient(160deg, rgba(34, 64, 58, .94), rgba(8, 22, 19, .96)); border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 14px 30px rgba(10, 30, 26, .3), inset 0 1.5px 0 rgba(255, 255, 255, .3); }
 .bolla-bar--compatta { height: 48px; margin: 30px 4px 10px; border-radius: 20px; }
 .bolla-slider { position: absolute; z-index: 3; top: 0; left: 0; height: 100%; display: flex; justify-content: center; transition: transform .55s cubic-bezier(.34, 1.45, .5, 1); pointer-events: none; }
 .bolla { position: absolute; top: 8px; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: radial-gradient(circle at 32% 26%, #b8fff0 0%, #35d6b6 40%, #0f8f78 100%); box-shadow: 0 0 0 3px rgba(127, 227, 208, .25), 0 6px 14px rgba(24, 179, 148, .65), inset 0 1.5px 2px rgba(255, 255, 255, .75); animation: salto .7s cubic-bezier(.3, .7, .4, 1) both; }
@@ -438,8 +438,8 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 /* ---------- Scelta del tema del sito (chiaro, scuro, entrambi) ---------- */
 .tema-sel { margin: 8px 12px 2px; }
 .tema-sel__titolo { display: block; margin: 0 4px 6px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink2); }
-.tema-sel__righe { display: flex; gap: 6px; padding: 5px; border-radius: 999px; background: rgba(18, 32, 29, .08); }
-.tema-sel__righe button { flex: 1; min-height: 44px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--ink2); transition: background .25s ease, color .25s ease, transform .25s var(--elastico); }
+.tema-sel__righe { display: flex; gap: 4px; padding: 5px; border-radius: 22px; background: rgba(18, 32, 29, .08); }
+.tema-sel__righe button { flex: 1 1 0; min-width: 0; min-height: 54px; padding: 0 2px; border-radius: 17px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 12.5px; font-weight: 600; line-height: 1; white-space: nowrap; color: var(--ink2); transition: background .25s ease, color .25s ease, transform .25s var(--elastico); }
 .tema-sel__righe button:active { transform: scale(.94); }
 .tema-sel__righe button.on { background: var(--scuro); color: var(--teal2); box-shadow: 0 6px 14px rgba(10, 30, 26, .25); }
 .barra-testa { padding-bottom: 0; }

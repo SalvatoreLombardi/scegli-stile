@@ -36,7 +36,7 @@ function LingueSwitch({ lingue, lang, setLang, classe = '' }) {
   )
 }
 
-function BloccoColoreCliente({ s, palAttuale, imposta, togli, pocoContrasto, usaLogo }) {
+function BloccoColoreCliente({ s, palAttuale, imposta, togli, usaLogo }) {
   return (
     <>
       <div className={'marchio-sel' + (s.coloreMarchio ? ' on' : '')}>
@@ -48,7 +48,6 @@ function BloccoColoreCliente({ s, palAttuale, imposta, togli, pocoContrasto, usa
         {s.coloreMarchio && <button className="marchio-sel__togli" onClick={togli}>Togli</button>}
       </div>
       {usaLogo && !s.coloreMarchio && <button className="secondario marchio-sel__usa" onClick={usaLogo}>Usa i colori del logo</button>}
-      {pocoContrasto && <p className="aiuto marchio-sel__avviso">Questo colore si legge poco sullo sfondo.</p>}
     </>
   )
 }
@@ -98,7 +97,6 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
   const [simili, setSimili] = useState(null) // font più vicini al logo: [{id, punti}] oppure null se non ancora cercati
   const [cerca, setCerca] = useState(0) // percentuale della ricerca dei font
   const vars = variabili(s)
-  const pocoContrasto = !!s.coloreMarchio && contrasto(s.coloreMarchio, vars['--bg']) < 3
   const scegliTema = (t) => onChange({ ...sRef.current, temaModo: t === 'entrambi' ? 'entrambi' : 'solo', scuro: t === 'scuro' ? true : t === 'chiaro' ? false : sRef.current.scuro })
   const scegliPalette = (p) => onChange({ ...sRef.current, palette: p.id, coloreMarchio: '', coloreAccento: '', scuro: p.dark ? true : palAttuale?.dark ? false : sRef.current.scuro })
   const coloriLogo = logo && logo.colori.length > 0 ? logo.colori : null
@@ -203,7 +201,7 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
                     </div>
                   </div>
                 )}
-                <BloccoColoreCliente s={s} palAttuale={palAttuale} imposta={imposta} togli={togliColori} pocoContrasto={pocoContrasto} usaLogo={coloriLogo ? applicaColoriLogo : null} />
+                <BloccoColoreCliente s={s} palAttuale={palAttuale} imposta={imposta} togli={togliColori} usaLogo={coloriLogo ? applicaColoriLogo : null} />
               </section>
             )}
 
@@ -229,7 +227,7 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
             {passo === 'colori' && (
               <section className="passo-pag">
                 <h2 className="passo-pag__titolo"><em>Colori</em> e tema</h2>
-                <BloccoColoreCliente s={s} palAttuale={palAttuale} imposta={imposta} togli={togliColori} pocoContrasto={pocoContrasto} usaLogo={coloriLogo ? applicaColoriLogo : null} />
+                <BloccoColoreCliente s={s} palAttuale={palAttuale} imposta={imposta} togli={togliColori} usaLogo={coloriLogo ? applicaColoriLogo : null} />
                 <div className="tema-sel" role="radiogroup" aria-label="Tema del sito">
                   <div className="tema-sel__righe">
                     {[['chiaro', 'Chiaro', 'sole'], ['scuro', 'Scuro', 'luna'], ['entrambi', 'Entrambi', 'tema']].map(([id, nome, icona]) => (

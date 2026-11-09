@@ -382,8 +382,6 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 @media (orientation: portrait) { .finestra--scelta .tessere { grid-template-columns: repeat(3, 1fr); } }
 .finestra--scelta { background: rgba(255, 255, 255, .96); }
 
-/* App a schermo intero su iPad: copre la striscia in fondo (--gap è misurato da main.jsx). */
-.standalone .app { bottom: calc(var(--gap, 0px) * -1); }
 
 .rail button.gira svg { animation: gira-icona .6s linear infinite; }
 @keyframes gira-icona { to { transform: rotate(-360deg); } }

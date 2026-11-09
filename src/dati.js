@@ -227,7 +227,7 @@ export const ANGOLI_CARD = [
 
 export const DEFAULT = {
   palette: 'carta', font: 'poppins-inter', bottone: 'morbido', riempimento: 'pieno',
-  card: 'ombra', angoli: 'medi', scuro: false, temaModo: 'solo', coloreMarchio: '',
+  card: 'ombra', angoli: 'medi', scuro: false, temaModo: 'solo', coloreMarchio: '', logoDim: 'medio',
 }
 
 export const ATMOSFERE = [
@@ -235,4 +235,10 @@ export const ATMOSFERE = [
   { id: 'moderno', nome: 'Moderno', desc: 'Pulito e diretto', set: { palette: 'carta', font: 'poppins-inter', bottone: 'morbido', riempimento: 'pieno', card: 'ombra', angoli: 'medi', scuro: false } },
   { id: 'colorato', nome: 'Colorato', desc: 'Vivace, personalità forte', set: { palette: 'corallo-sole', font: 'montserrat-inter', bottone: 'pillola', riempimento: 'pieno', card: 'rialzata', angoli: 'ampi', scuro: false } },
   { id: 'tecnologico', nome: 'Tecnologico', desc: 'Netto, futurista', set: { palette: 'mood-dark', font: 'space-grotesk-dm-sans', bottone: 'morbido', riempimento: 'pieno', card: 'accento', angoli: 'medi', scuro: true } },
+]
+
+export const LOGO_DIM = [
+  { id: 'piccolo', nome: 'Piccolo', px: 40 },
+  { id: 'medio', nome: 'Medio', px: 58 },
+  { id: 'grande', nome: 'Grande', px: 80 },
 ]

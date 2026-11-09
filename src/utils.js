@@ -1,6 +1,6 @@
 import { rgb, luce, mix, contrasto } from './colori.js'
 import { lingueCliente, lingueNomi } from './lingue.js'
-import { PALETTE, TEMA_SCURO, TEMA_CHIARO, FONT, BOTTONI, CARD, ANGOLI_CARD, RIEMPIMENTO } from './dati.js'
+import { LOGO_DIM, PALETTE, TEMA_SCURO, TEMA_CHIARO, FONT, BOTTONI, CARD, ANGOLI_CARD, RIEMPIMENTO } from './dati.js'
 
 export const rgba = (hex, a) => `rgba(${rgb(hex).join(',')},${a})`
 
@@ -60,6 +60,7 @@ export function variabili(s) {
     '--font-titoli': `'${f.titoli}', Georgia, serif`, '--peso-titoli': f.pesoTitoli, '--peso-testi': f.pesoTesti,
     '--font-testi': `'${f.testi}', -apple-system, sans-serif`,
     '--r-btn': b.raggio, '--r-card': a.raggio,
+    '--logo-h': ((LOGO_DIM.find((x) => x.id === s.logoDim) || LOGO_DIM[1]).px) + 'px',
   }
 }
 

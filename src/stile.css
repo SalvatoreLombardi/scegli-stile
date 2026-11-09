@@ -569,3 +569,6 @@ input.file-ancorato { position: absolute; top: 0; left: 0; width: 100%; height: 
 .logo-pagina__grande { font-size: 20px; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; }
 .logo-pagina__azioni small b { font-weight: 700; color: var(--ink); }
 .conf-logo__vuoto { flex: 1; text-align: center; color: var(--ink2); font-size: 14px; }
+
+.logo-dim { align-items: center; max-width: 460px; margin: 0 2px 14px; }
+.logo-dim__titolo { padding: 0 12px; font-size: 13px; font-weight: 600; color: var(--ink2); white-space: nowrap; }

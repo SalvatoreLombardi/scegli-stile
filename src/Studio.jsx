@@ -4,7 +4,7 @@ import Icona from './Icona.jsx'
 import TabBolla from './TabBolla.jsx'
 import Bandiera from './Bandiera.jsx'
 import { LINGUE, lingueCliente, linguaIniziale } from './lingue.js'
-import { PALETTE, GRUPPI_PALETTE, GRUPPI_FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD, ATMOSFERE } from './dati.js'
+import { LOGO_DIM, PALETTE, GRUPPI_PALETTE, GRUPPI_FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD, ATMOSFERE } from './dati.js'
 import { variabili, temaChiave, colorePrincipale } from './utils.js'
 import { contrasto, coloriDaFile, coloriDaUrl } from './colori.js'
 
@@ -126,6 +126,14 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
                   {stato && stato !== 'leggo' && <small className="logo-stato logo-stato--errore">{stato}</small>}
                 </div>
               </div>
+              {cliente.logo && (
+                <div className="campione-sel logo-dim" role="radiogroup" aria-label="Grandezza del logo nel sito">
+                  <span className="logo-dim__titolo">Grandezza nel sito</span>
+                  {LOGO_DIM.map((d) => (
+                    <button key={d.id} role="radio" aria-checked={(s.logoDim || 'medio') === d.id} className={(s.logoDim || 'medio') === d.id ? 'on' : ''} onClick={() => imposta('logoDim', d.id)}>{d.nome}</button>
+                  ))}
+                </div>
+              )}
               {logo && (
                 <div className="blocco glass logo-trovati">
                   {logo.colori.length > 0 ? (

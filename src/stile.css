@@ -641,3 +641,5 @@ input.file-ancorato { position: absolute; top: 0; left: 0; width: 100%; height: 
   .studio2__testa .bolla-bar { max-width: none; }
   .passo-pag .griglia-colori { grid-template-columns: repeat(3, 1fr); }
 }
+
+.marchio-sel__usa { width: 100%; min-height: 44px; margin: 0 0 8px; font-size: 13px; }

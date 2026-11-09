@@ -349,3 +349,13 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 
 .bolla-bar button { outline: none; -webkit-tap-highlight-color: transparent; border-radius: 22px; }
 .bolla-bar button:focus-visible { box-shadow: inset 0 0 0 2px var(--teal2); }
+
+/* ---------- Barra delle categorie: cono di luce che scorre sotto l'icona attiva ---------- */
+.luce-bar { position: relative; display: flex; height: 56px; margin: 4px 4px 10px; border-radius: 20px; overflow: hidden; background: linear-gradient(160deg, rgba(34, 64, 58, .8), rgba(8, 22, 19, .88)); -webkit-backdrop-filter: blur(16px) saturate(1.6); backdrop-filter: blur(16px) saturate(1.6); border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 14px 30px rgba(10, 30, 26, .3), inset 0 1.5px 0 rgba(255, 255, 255, .3); }
+.luce-bar .cono { position: absolute; top: 0; bottom: 0; left: 0; transition: transform .5s var(--elastico); pointer-events: none; }
+.luce-bar .cono::before { content: ''; position: absolute; top: 0; left: 4%; right: 4%; bottom: 0; background: linear-gradient(180deg, rgba(127, 227, 208, .6), rgba(127, 227, 208, 0) 95%); clip-path: polygon(24% 0, 76% 0, 100% 100%, 0 100%); }
+.luce-bar .cono::after { content: ''; position: absolute; top: 0; left: 26%; right: 26%; height: 3px; border-radius: 0 0 3px 3px; background: var(--teal2); box-shadow: 0 0 12px 2px rgba(127, 227, 208, .85); }
+.luce-bar button { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; padding: 0; color: rgba(255, 255, 255, .6); transition: color .3s ease, transform .25s var(--elastico); outline: none; -webkit-tap-highlight-color: transparent; }
+.luce-bar button:active { transform: scale(.88); }
+.luce-bar button.on { color: var(--teal2); }
+.luce-bar button:focus-visible { box-shadow: inset 0 0 0 2px var(--teal2); border-radius: 18px; }

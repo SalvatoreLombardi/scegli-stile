@@ -227,7 +227,7 @@ export const ANGOLI_CARD = [
 
 export const DEFAULT = {
   palette: 'carta', font: 'poppins-inter', bottone: 'morbido', riempimento: 'pieno',
-  card: 'ombra', angoli: 'medi', scuro: false, temaModo: 'solo', coloreMarchio: '', logoDim: 'medio',
+  card: 'ombra', angoli: 'medi', scuro: false, temaModo: 'solo', coloreMarchio: '', coloreAccento: '', logoDim: 'medio',
 }
 
 export const ATMOSFERE = [

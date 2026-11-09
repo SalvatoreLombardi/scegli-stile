@@ -49,7 +49,9 @@ export function variabili(s) {
   const marchio = /^#[0-9a-fA-F]{6}$/.test(s.coloreMarchio || '') ? s.coloreMarchio : null // colore del logo del cliente
   const principale = marchio || p.primary
   const primary = versoScuro ? visibile(principale, base.bg, [p.accent]) : versoChiaro ? scurisci(principale, base.bg) : principale
-  const accent = versoScuro ? visibile(p.accent, base.bg, [p.primary]) : versoChiaro ? scurisci(p.accent, base.bg) : p.accent
+  const accentoMarchio = /^#[0-9a-fA-F]{6}$/.test(s.coloreAccento || '') ? s.coloreAccento : null // secondo colore del logo
+  const accentoBase = accentoMarchio || p.accent
+  const accent = versoScuro ? visibile(accentoBase, base.bg, [principale]) : versoChiaro ? scurisci(accentoBase, base.bg) : accentoBase
   return {
     '--bg': base.bg, '--surface': base.surface, '--text': base.text, '--muted': base.muted,
     '--primary': primary, '--on-primary': testoSu(primary),

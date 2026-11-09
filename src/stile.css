@@ -574,3 +574,70 @@ input.file-ancorato { position: absolute; top: 0; left: 0; width: 100%; height: 
 .logo-dim__titolo { padding: 0 12px; font-size: 13px; font-weight: 600; color: var(--ink2); white-space: nowrap; }
 
 .logo-pagina__togli { min-height: 44px; font-size: 14px; margin-top: 4px; }
+
+/* ============ Studio: anteprima GRANDE a destra, comandi piccoli a sinistra ============ */
+.studio2 { padding: 14px 14px 0; padding-top: calc(14px + env(safe-area-inset-top)); }
+.studio2__testa { display: flex; align-items: center; gap: 10px; margin-bottom: 0; }
+.studio2__testa .indietro { flex: none; max-width: 230px; font-size: 16px; }
+.studio2__testa .bolla-bar { flex: 1; max-width: 400px; margin: 30px auto 0; }
+.studio2__piena { flex: none; width: 48px; min-height: 48px; padding: 0; }
+.studio2__corpo { flex: 1; min-height: 0; display: flex; gap: 12px; padding-top: 6px; padding-bottom: 12px; }
+.studio2__comandi { position: relative; width: 330px; flex: none; display: flex; flex-direction: column; min-height: 0; }
+.studio2__pagina { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 4px 64px 2px; }
+.studio2__anteprima { position: relative; flex: 1; min-width: 0; display: flex; }
+.studio2__anteprima .sito { flex: 1; min-width: 0; }
+.studio2__anteprima .lingua-switch { bottom: 16px; }
+
+.passo-pag__titolo { font-size: 24px; margin-bottom: 4px; }
+.passo-pag__testo { font-size: 13px; line-height: 1.4; margin-bottom: 10px; }
+.passo-pag h4 { margin: 12px 4px 6px; font-size: 11px; }
+.passo-pag .griglia-colori { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.passo-pag .colore { padding: 6px; border-radius: 14px; font-size: 12.5px; }
+.passo-pag .strisce { height: 26px; margin-bottom: 5px; border-radius: 9px; }
+.passo-pag .lista { gap: 6px; }
+.passo-pag .opzione { min-height: 44px; padding: 7px 12px; border-radius: 14px; }
+.passo-pag .opzione--font .esempio-font { font-size: 21px; }
+.passo-pag .opzione small { font-size: 11px; }
+.passo-pag .segmenti { gap: 6px; }
+.passo-pag .segmenti button { flex: 1 1 calc(50% - 3px); min-height: 44px; font-size: 13px; border-radius: 14px; }
+.passo-pag .gruppo-testa { margin: 2px 4px 8px; }
+.passo-pag .gruppo-testa b { font-size: 15px; }
+.passo-pag .gruppo-testa span { font-size: 11.5px; }
+.passo-pag .bolla-bar--compatta, .passo-pag .luce-bar { height: 46px; margin: 8px 0 8px; }
+.passo-pag .luce-bar button svg { width: 20px; height: 20px; }
+.passo-pag .marchio-sel { max-width: none; padding: 6px 6px 6px 8px; margin: 2px 0 8px; }
+.passo-pag .marchio-sel__corpo { min-height: 42px; gap: 10px; }
+.passo-pag .marchio-sel__pallino { width: 32px; height: 32px; }
+.passo-pag .marchio-sel__testo b { font-size: 14px; }
+.passo-pag .marchio-sel__testo small { font-size: 11px; }
+.passo-pag .tema-sel { margin: 0 0 8px; max-width: none; }
+.passo-pag .tema-sel__righe button { min-height: 46px; font-size: 12px; }
+.passo-pag .conf-logo { position: static; max-width: none; min-height: 60px; margin: 0 0 8px; padding: 6px 10px; }
+.passo-pag .conf-logo img { max-height: 56px; }
+.passo-pag .direzioni { grid-template-columns: repeat(2, 1fr); gap: 8px; max-width: none; }
+.passo-pag .direzione { padding: 9px 10px 11px; border-radius: 18px; }
+.passo-pag .direzione .strisce { height: 30px; margin-bottom: 4px; }
+.passo-pag .direzione b { font-size: 16px; }
+.passo-pag .direzione small { font-size: 11.5px; }
+.passo-pag .logo-pagina { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px; border-radius: 18px; max-width: none; margin-bottom: 8px; }
+.passo-pag .logo-pagina img, .passo-pag .logo-pagina__vuoto { width: 100%; height: 80px; border-radius: 12px; }
+.passo-pag .logo-pagina__grande { font-size: 15px; }
+.passo-pag .logo-pagina__azioni small { font-size: 11.5px; }
+.passo-pag .logo-dim { margin: 0 0 8px; max-width: none; }
+.passo-pag .campione-sel button { min-height: 40px; }
+.passo-pag .logo-pagina__togli { min-height: 40px; padding: 0 14px; font-size: 13px; margin: 0 0 8px; }
+.passo-pag .logo-trovati { padding: 0; margin-bottom: 4px; background: none; border: 0; box-shadow: none; }
+.passo-pag .logo-trovati h4 { margin: 4px 4px 6px; }
+.passo-pag .logo-colori__sw button { width: 44px; height: 44px; }
+
+.nav-passi { position: absolute; z-index: 4; left: 50%; bottom: 4px; gap: 8px; padding: 5px; }
+.nav-passi .secondario, .nav-passi .primario { min-height: 44px; padding: 0 14px; font-size: 14px; }
+.nav-passi .secondario { width: 44px; padding: 0; }
+.nav-passi__n { font-size: 13px; min-width: 40px; }
+
+@media (orientation: portrait) {
+  .studio2__corpo { flex-direction: column-reverse; }
+  .studio2__comandi { width: auto; height: 46%; flex: none; }
+  .studio2__testa .bolla-bar { max-width: none; }
+  .passo-pag .griglia-colori { grid-template-columns: repeat(3, 1fr); }
+}

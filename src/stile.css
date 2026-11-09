@@ -434,3 +434,12 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 
 /* Pallino sul pulsante Aggiorna quando c'è una versione nuova pronta */
 .rail button.nuovo::after { content: ''; position: absolute; top: 8px; right: 8px; width: 11px; height: 11px; border-radius: 50%; background: #ffb98f; border: 2px solid #12201d; }
+
+/* ---------- Scelta del tema del sito (chiaro, scuro, entrambi) ---------- */
+.tema-sel { margin: 8px 12px 2px; }
+.tema-sel__titolo { display: block; margin: 0 4px 6px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink2); }
+.tema-sel__righe { display: flex; gap: 6px; padding: 5px; border-radius: 999px; background: rgba(18, 32, 29, .08); }
+.tema-sel__righe button { flex: 1; min-height: 44px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--ink2); transition: background .25s ease, color .25s ease, transform .25s var(--elastico); }
+.tema-sel__righe button:active { transform: scale(.94); }
+.tema-sel__righe button.on { background: var(--scuro); color: var(--teal2); box-shadow: 0 6px 14px rgba(10, 30, 26, .25); }
+.barra-testa { padding-bottom: 0; }

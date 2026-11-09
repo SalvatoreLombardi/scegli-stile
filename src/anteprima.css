@@ -116,3 +116,5 @@
 /* I font dei titoli hanno un solo peso scelto: niente grassetto finto. */
 .p-sito { font-synthesis: none; }
 .p-sito h1, .p-sito h2, .p-sito h3, .p-logo, .p-stats b, .p-prezzo, .p-kpi b, .p-icona, .p-quote { font-weight: var(--peso-titoli, 700); }
+
+.p-tema { width: 44px; height: 44px; flex: none; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--text); background: var(--surface); border: 1.5px solid var(--line); cursor: pointer; }

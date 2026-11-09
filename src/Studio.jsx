@@ -5,7 +5,7 @@ import TabBolla from './TabBolla.jsx'
 import Bandiera from './Bandiera.jsx'
 import { LINGUE, lingueCliente, linguaIniziale } from './lingue.js'
 import { PALETTE, GRUPPI_PALETTE, GRUPPI_FONT, FONT, BOTTONI, RIEMPIMENTO, CARD, ANGOLI_CARD, ATMOSFERE } from './dati.js'
-import { variabili } from './utils.js'
+import { variabili, temaChiave } from './utils.js'
 
 const ICONE_FONT = { moderno: 'f-moderno', elegante: 'elegante', tech: 'tecnologico', classico: 'f-classico', deciso: 'f-deciso', caldo: 'f-caldo', leggero: 'f-leggero' }
 const SCHEDE = [['atmosfera', 'Stile'], ['colori', 'Colori'], ['font', 'Font'], ['bottoni', 'Bottoni'], ['card', 'Card']].map(([id, nome]) => ({ id, nome }))
@@ -21,6 +21,8 @@ export default function Studio({ cliente, onBack, onChange }) {
   const gruppo = GRUPPI_PALETTE.find((g) => g.id === gruppoId)
   const [gruppoFontId, setGruppoFontId] = useState(() => (GRUPPI_FONT.find((g) => g.font.some((f) => f.id === s.font)) || GRUPPI_FONT[0]).id)
   const gruppoFont = GRUPPI_FONT.find((g) => g.id === gruppoFontId)
+  const tema = temaChiave(s)
+  const scegliTema = (t) => onChange({ ...s, temaModo: t === 'entrambi' ? 'entrambi' : 'solo', scuro: t === 'scuro' ? true : t === 'chiaro' ? false : s.scuro })
   const scegliPalette = (p) => onChange({ ...s, palette: p.id, scuro: p.dark ? true : palAttuale?.dark ? false : s.scuro })
 
   return (
@@ -28,9 +30,17 @@ export default function Studio({ cliente, onBack, onChange }) {
       <aside className="barra glass">
         <div className="barra-testa">
           <button className="indietro" onClick={onBack}><Icona nome="indietro" size={18} /> {cliente.nome}</button>
-          <button className="interr" onClick={() => imposta('scuro', !s.scuro)} aria-pressed={s.scuro} aria-label="Tema chiaro o scuro">
-            <Icona nome={s.scuro ? 'luna' : 'sole'} size={20} />
-          </button>
+        </div>
+
+        <div className="tema-sel" role="radiogroup" aria-label="Tema del sito">
+          <span className="tema-sel__titolo">Tema del sito</span>
+          <div className="tema-sel__righe">
+            {[['chiaro', 'Chiaro', 'sole'], ['scuro', 'Scuro', 'luna'], ['entrambi', 'Entrambi', 'tema']].map(([id, nome, icona]) => (
+              <button key={id} role="radio" aria-checked={tema === id} className={tema === id ? 'on' : ''} onClick={() => scegliTema(id)}>
+                <Icona nome={icona} size={17} />{nome}
+              </button>
+            ))}
+          </div>
         </div>
 
         <TabBolla voci={SCHEDE} attivo={scheda} onScegli={setScheda} />
@@ -130,7 +140,7 @@ export default function Studio({ cliente, onBack, onChange }) {
 
       <main className="schermo">
         <div className="sito" style={variabili(s)}>
-          <Anteprima stile={s} cliente={cliente} lang={lang} />
+          <Anteprima stile={s} cliente={cliente} lang={lang} onTema={() => imposta('scuro', !s.scuro)} />
         </div>
         {lingue.length > 1 && (
           <div className="lingua-switch" role="group" aria-label="Lingua dell'anteprima">

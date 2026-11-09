@@ -22,6 +22,14 @@ export const testoSu = (hex) => {
   return rapporto(l, luce('#ffffff')) >= rapporto(l, luce('#111418')) ? '#ffffff' : '#111418'
 }
 
+// Cosa ha scelto il cliente per il tema del sito: un solo tema, oppure chiaro e scuro con interruttore.
+export const temaChiave = (s) => (s.temaModo === 'entrambi' ? 'entrambi' : s.scuro ? 'scuro' : 'chiaro')
+export const temaTesto = (s) => ({
+  chiaro: 'Solo chiaro',
+  scuro: 'Solo scuro',
+  entrambi: 'Chiaro e scuro (con interruttore per il visitatore)',
+})[temaChiave(s)]
+
 export const trova = (lista, id) => lista.find((x) => x.id === id) || lista[0]
 
 // Trasforma le scelte in variabili CSS per l'anteprima.
@@ -56,7 +64,7 @@ export function riepilogo(s) {
   return [
     'Il tuo stile scelto',
     `Colori: ${p.nome} (principale ${p.primary}, secondario ${p.accent})`,
-    `Tema: ${s.scuro ? 'scuro' : 'chiaro'}`,
+    `Tema: ${temaTesto(s)}`,
     `Font: titoli ${f.titoli}, testi ${f.testi}`,
     `Bottoni: ${trova(BOTTONI, s.bottone).nome}, ${trova(RIEMPIMENTO, s.riempimento).nome.toLowerCase()}`,
     `Card: ${trova(CARD, s.card).nome}, angoli ${trova(ANGOLI_CARD, s.angoli).nome.toLowerCase()}`,

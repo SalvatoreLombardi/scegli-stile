@@ -1,15 +1,17 @@
 import Foto from './Foto.jsx'
+import Icona from './Icona.jsx'
 import { trova } from './utils.js'
 import { ATTIVITA } from './attivita.js'
 import { contenuto, t } from './lingue.js'
 
 const euro = (n, T) => (n === 0 ? (T('lang') === 'zh' ? '免费' : 'Gratis') : `${n} €`)
 
-function Nav({ nome, voci, btn, carrello, T }) {
+function Nav({ nome, voci, btn, carrello, T, tema }) {
   return (
     <header className="p-nav">
       <strong className="p-logo">{nome}</strong>
       <nav>{voci.map((v) => <span key={v}>{v}</span>)}</nav>
+      {tema}
       {carrello && <span className="p-cart">{T('carrello')}<b>2</b></span>}
       <button className={btn + ' p-btn--sm'}>{carrello ? T('accedi') : T('contattaci')}</button>
     </header>
@@ -68,10 +70,10 @@ function Contatti({ cardCls, btn, T }) {
   )
 }
 
-function Vetrina({ a, nome, btn, cardCls, T }) {
+function Vetrina({ a, nome, btn, cardCls, T, tema }) {
   return (
     <>
-      <Nav nome={nome} voci={[T('home'), T('servizi'), T('chiSiamo'), T('contatti')]} btn={btn} T={T} />
+      <Nav nome={nome} voci={[T('home'), T('servizi'), T('chiSiamo'), T('contatti')]} btn={btn} T={T} tema={tema} />
       <Hero a={a} btn={btn} T={T} />
       <Servizi a={a} cardCls={cardCls} T={T} />
       <section className="p-sezione p-due">
@@ -92,10 +94,10 @@ function Vetrina({ a, nome, btn, cardCls, T }) {
   )
 }
 
-function Landing({ a, nome, btn, cardCls, T }) {
+function Landing({ a, nome, btn, cardCls, T, tema }) {
   return (
     <>
-      <Nav nome={nome} voci={[]} btn={btn} T={T} />
+      <Nav nome={nome} voci={[]} btn={btn} T={T} tema={tema} />
       <section className="p-split">
         <div>
           <span className="p-badge">{a.badge}</span>
@@ -132,11 +134,11 @@ function Landing({ a, nome, btn, cardCls, T }) {
   )
 }
 
-function Ecommerce({ a, nome, btn, cardCls, T }) {
+function Ecommerce({ a, nome, btn, cardCls, T, tema }) {
   return (
     <>
       <div className="p-promo">{T('promo')}</div>
-      <Nav nome={nome} voci={a.categorie} btn={btn} carrello T={T} />
+      <Nav nome={nome} voci={a.categorie} btn={btn} carrello T={T} tema={tema} />
       <Hero a={a} btn={btn} T={T} />
       <section className="p-sezione">
         <h2>{T('piuVenduti')}</h2>
@@ -166,7 +168,7 @@ function Ecommerce({ a, nome, btn, cardCls, T }) {
   )
 }
 
-function WebApp({ a, nome, btn, cardCls, T }) {
+function WebApp({ a, nome, btn, cardCls, T, tema }) {
   const righe = ['Giulia Marino', 'Luca Fabbri', 'Anna Greco', 'Paolo Neri'].map((n, i) => [['09:00', '10:30', '12:00', '15:30'][i], n])
   return (
     <div className="p-app">
@@ -177,7 +179,7 @@ function WebApp({ a, nome, btn, cardCls, T }) {
       <div className="p-app__main">
         <div className="p-app__testa">
           <div><span className="p-muted">{T('buongiorno')}</span><h2>{a.app} {T('diOggi')}</h2></div>
-          <button className={btn + ' p-btn--sm'}>{T('nuovo')}</button>
+          <div className="p-row">{tema}<button className={btn + ' p-btn--sm'}>{T('nuovo')}</button></div>
         </div>
         <div className="p-kpi">
           {[[T('oggi'), '12'], [T('settimana'), '48'], [T('nuovi'), '+9']].map(([l, v]) => (
@@ -225,7 +227,7 @@ function Kit({ cardCls, T }) {
   )
 }
 
-export default function Anteprima({ stile, cliente, lang = 'it' }) {
+export default function Anteprima({ stile, cliente, lang = 'it', onTema }) {
   const base = trova(ATTIVITA, cliente?.attivita || 'generico')
   const a = contenuto(base, lang)
   const nome = cliente?.nome || base.azienda
@@ -233,7 +235,11 @@ export default function Anteprima({ stile, cliente, lang = 'it' }) {
   const btn = `p-btn p-btn--${stile.riempimento}`
   const cardCls = `p-card p-card--${stile.card}`
   const tipo = cliente?.tipo || 'vetrina'
-  const P = { a, nome, btn, cardCls, T }
+  // Se il sito ha sia chiaro sia scuro, il visitatore trova un interruttore: qui si può provare toccandolo.
+  const tema = stile.temaModo === 'entrambi'
+    ? <button className="p-tema" onClick={onTema} aria-label="Cambia tema chiaro o scuro"><Icona nome={stile.scuro ? 'sole' : 'luna'} size={20} /></button>
+    : null
+  const P = { a, nome, btn, cardCls, T, tema }
   return (
     <div className="p-sito" lang={lang}>
       {tipo === 'vetrina' && <Vetrina {...P} />}

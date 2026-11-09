@@ -19,8 +19,16 @@ const PASSI = [
 const tasto = (fn) => ({ role: 'button', tabIndex: 0, onClick: fn, onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn() } } })
 
 // Componenti definiti fuori da Studio: restano gli stessi a ogni modifica (altrimenti il selettore dei colori si chiuderebbe).
+// Pulsante che apre il selettore delle foto. Su iPad un campo invisibile sopra al pulsante può non rispondere:
+// qui il pulsante apre il campo (nascosto, con il suo aspetto normale) da programma, subito dopo il tocco.
 function Selettore({ classe, onFile, children }) {
-  return <label className={classe}>{children}<input type="file" accept="image/*" onChange={onFile} /></label>
+  const campo = useRef(null)
+  return (
+    <>
+      <button type="button" className={classe} onClick={() => campo.current && campo.current.click()}>{children}</button>
+      <input ref={campo} type="file" accept="image/*" onChange={onFile} className="file-nascosto" tabIndex={-1} aria-hidden="true" />
+    </>
+  )
 }
 
 function LingueSwitch({ lingue, lang, setLang, classe = '' }) {
@@ -84,15 +92,23 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
     if (cliente.logo && !logo) coloriDaUrl(cliente.logo).then((r) => setLogo({ colori: r.colori })).catch(() => {})
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const [stato, setStato] = useState('') // '', 'leggo' oppure il testo di un errore
   const leggiLogo = async (e) => {
-    const f = e.target.files && e.target.files[0]
-    e.target.value = ''
+    const campo = e.target
+    const f = campo.files && campo.files[0]
     if (!f) return
+    setStato('leggo')
     try {
       const r = await coloriDaFile(f)
       setLogo({ colori: r.colori })
       if (r.anteprima && onLogo) onLogo(r.anteprima)
-    } catch { setLogo({ colori: [], errore: true }) }
+      setStato('')
+    } catch (err) {
+      setLogo({ colori: [], errore: true })
+      setStato('Non riesco a leggere questa foto (' + ((err && err.message) || 'errore') + '). Prova con un\'altra, oppure salvala come JPG o PNG.')
+    } finally {
+      try { campo.value = '' } catch { /* niente */ } // si svuota il campo solo dopo aver letto il file
+    }
   }
 
   return (
@@ -115,6 +131,8 @@ export default function Studio({ cliente, onBack, onChange, onLogo }) {
                 <div className="logo-pagina__azioni">
                   <Selettore classe="primario grande logo-pagina__carica" onFile={leggiLogo}><Icona nome="immagine" size={20} /> {cliente.logo ? 'Cambia il logo' : 'Carica il logo'}</Selettore>
                   <small>Foto o immagine: meglio su sfondo bianco o trasparente.</small>
+                  {stato === 'leggo' && <small className="logo-stato">Sto leggendo il logo…</small>}
+                  {stato && stato !== 'leggo' && <small className="logo-stato logo-stato--errore">{stato}</small>}
                 </div>
               </div>
               {logo && (

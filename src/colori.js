@@ -76,22 +76,38 @@ export function coloriDaPixel(dati, larghezza, altezza, max = 6) {
   return scelti.map(hex)
 }
 
-// Legge i colori da un indirizzo (foto appena scelta o logo già salvato) e prepara una miniatura del logo.
-export async function coloriDaUrl(url) {
-  const img = await new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = ko; i.src = url })
-  const scala = Math.min(1, 96 / Math.max(img.naturalWidth, img.naturalHeight))
-  const w = Math.max(1, Math.round(img.naturalWidth * scala)), h = Math.max(1, Math.round(img.naturalHeight * scala))
+// Analizza un'immagine già caricata (Image o ImageBitmap): colori principali e miniatura del logo.
+function analizza(sorgente, nw, nh) {
+  const scala = Math.min(1, 96 / Math.max(nw, nh))
+  const w = Math.max(1, Math.round(nw * scala)), h = Math.max(1, Math.round(nh * scala))
   const c = document.createElement('canvas'); c.width = w; c.height = h
-  const ctx = c.getContext('2d', { willReadFrequently: true })
-  ctx.drawImage(img, 0, 0, w, h)
+  const ctx = c.getContext('2d')
+  ctx.drawImage(sorgente, 0, 0, w, h)
   const colori = coloriDaPixel(ctx.getImageData(0, 0, w, h).data, w, h)
-  const s2 = Math.min(1, 240 / Math.max(img.naturalWidth, img.naturalHeight))
-  const t = document.createElement('canvas'); t.width = Math.max(1, Math.round(img.naturalWidth * s2)); t.height = Math.max(1, Math.round(img.naturalHeight * s2))
-  t.getContext('2d').drawImage(img, 0, 0, t.width, t.height)
+  const s2 = Math.min(1, 240 / Math.max(nw, nh))
+  const t = document.createElement('canvas'); t.width = Math.max(1, Math.round(nw * s2)); t.height = Math.max(1, Math.round(nh * s2))
+  t.getContext('2d').drawImage(sorgente, 0, 0, t.width, t.height)
   return { colori, anteprima: t.toDataURL('image/png') }
 }
 
+// Legge i colori da un indirizzo (logo già salvato).
+export async function coloriDaUrl(url) {
+  const img = await new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ko(new Error('immagine non leggibile')); i.src = url })
+  return analizza(img, img.naturalWidth, img.naturalHeight)
+}
+
+// Legge i colori da una foto scelta. Se il primo metodo non riesce (formato strano), prova il secondo.
 export async function coloriDaFile(file) {
   const url = URL.createObjectURL(file)
-  try { return await coloriDaUrl(url) } finally { URL.revokeObjectURL(url) }
+  try {
+    return await coloriDaUrl(url)
+  } catch (primo) {
+    if (typeof createImageBitmap === 'function') {
+      const bmp = await createImageBitmap(file)
+      return analizza(bmp, bmp.width, bmp.height)
+    }
+    throw primo
+  } finally {
+    URL.revokeObjectURL(url)
+  }
 }

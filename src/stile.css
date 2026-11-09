@@ -398,3 +398,26 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .link-pill svg { flex: none; color: var(--teal); }
 @media (orientation: portrait) { .link-home { flex-direction: column; align-items: stretch; } .link-pill { max-width: none; } }
 .link-pill span { align-items: flex-start; text-align: left; }
+
+/* ---------- Copertina ---------- */
+.copertina { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 1; display: flex; align-items: center; justify-content: center; padding: 24px; padding-bottom: 70px; }
+.cop-vetro { width: min(800px, 92vw); padding: 54px 36px 50px; display: flex; flex-direction: column; align-items: center; border-radius: 64px; animation: sale .7s cubic-bezier(.2, .8, .2, 1) both; }
+.cop-vetro > * { position: relative; }
+.cop-logo { display: flex; margin-bottom: 26px; }
+.cop-logo i { width: 76px; height: 76px; border-radius: 50%; margin-left: -22px; border: 4px solid #fff; box-shadow: 0 12px 26px rgba(30, 50, 90, .25); }
+.cop-logo i:nth-child(1) { margin-left: 0; background: linear-gradient(145deg, #6fe6cf, #19a98d); }
+.cop-logo i:nth-child(2) { background: linear-gradient(145deg, #ffc09a, #ff8e5e); }
+.cop-logo i:nth-child(3) { background: linear-gradient(145deg, #c4b8ff, #8a79f2); }
+.cop-titolo { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; font-size: clamp(64px, 11vw, 108px); line-height: 1; letter-spacing: -.045em; color: var(--ink); text-align: center; }
+.cop-titolo em { font-family: var(--serif); font-style: italic; font-weight: 600; letter-spacing: -.02em; }
+.cop-sotto { margin-top: 18px; font-size: clamp(19px, 2.6vw, 24px); color: var(--ink2); text-align: center; }
+.cop-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 30px; }
+.cop-chips span { padding: 11px 22px; border-radius: 999px; font-weight: 600; font-size: 16px; background: rgba(255, 255, 255, .72); border: 1px solid #fff; box-shadow: 0 6px 16px rgba(30, 70, 60, .1); }
+.cop-chips span:first-child { background: var(--grad); color: #fff; border-color: transparent; box-shadow: 0 10px 24px rgba(24, 179, 148, .38); }
+.cop-btn { position: relative; margin-top: 38px; min-height: 76px; padding: 0 40px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: 14px; font-size: clamp(19px, 2.6vw, 24px); font-weight: 700; letter-spacing: -.01em; color: #fff; background: var(--grad); box-shadow: 0 18px 44px rgba(24, 179, 148, .5), inset 0 2px 0 rgba(255, 255, 255, .5); transition: transform .3s var(--elastico); }
+.cop-btn:active { transform: scale(.95); }
+.cop-btn__alone { position: absolute; top: 0; right: 0; bottom: 0; left: 0; border-radius: inherit; border: 3px solid rgba(53, 214, 182, .9); pointer-events: none; animation: respira 2.2s ease-out infinite; }
+@keyframes respira { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(1.2, 1.5); opacity: 0; } }
+.cop-firma { position: absolute; left: 0; right: 0; bottom: 34px; text-align: center; font-size: 14px; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; color: rgba(18, 32, 29, .55); }
+@media (prefers-reduced-motion: reduce) { .cop-btn__alone { animation: none; opacity: 0; } }
+@media (orientation: portrait) { .cop-vetro { padding: 56px 28px 48px; } }

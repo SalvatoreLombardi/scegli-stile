@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Cliente from './Cliente.jsx'
+import Copertina from './Copertina.jsx'
 import Foto from './Foto.jsx'
 import Icona from './Icona.jsx'
 import Nuovo from './Nuovo.jsx'
@@ -195,7 +196,14 @@ function Clienti({ clienti, onNuovo, onApri, onElimina }) {
 
 export default function App() {
   const { clienti, crea, aggiorna, elimina, importa } = useClienti()
-  const [v, setV] = useState({ n: 'home' })
+  // La copertina compare all'apertura dell'app; dopo "Aggiorna" non ricompare (sessionStorage resta nella stessa sessione).
+  const [v, setV] = useState(() => {
+    try { return { n: sessionStorage.getItem('scegli-stile-entrato') ? 'home' : 'copertina' } } catch { return { n: 'copertina' } }
+  })
+  const entra = () => {
+    try { sessionStorage.setItem('scegli-stile-entrato', '1') } catch { /* modalità privata */ }
+    setV({ n: 'home' })
+  }
   const [backup, setBackup] = useState(false)
   const cliente = v.id ? clienti.find((c) => c.id === v.id) : null
   const conRail = v.n === 'home' || v.n === 'clienti' || v.n === 'cliente'
@@ -207,6 +215,7 @@ export default function App() {
       {conRail && (
         <Rail attivo={v.n === 'home' ? 'home' : 'clienti'} onHome={() => setV({ n: 'home' })} onClienti={() => setV({ n: 'clienti' })} onNuovo={() => nuovo()} onBackup={() => setBackup(true)} />
       )}
+      {v.n === 'copertina' && <Copertina onEntra={entra} />}
       {v.n === 'home' && <Home onNuovo={nuovo} />}
       {v.n === 'clienti' && <Clienti clienti={clienti} onNuovo={nuovo} onApri={(id) => setV({ n: 'cliente', id })} onElimina={elimina} />}
       {v.n === 'nuovo' && <Nuovo tipoIniziale={v.tipo} onAnnulla={() => setV({ n: 'home' })} onCrea={(d) => setV({ n: 'cliente', id: crea(d) })} />}

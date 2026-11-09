@@ -252,7 +252,9 @@ input:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 4px r
 .lingue-aiuto { margin: -14px 2px 26px; font-size: 15px; }
 .pallini { display: flex; justify-content: space-between; gap: 10px; }
 .pallino-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; animation: sale .45s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 55ms); }
-.pallino { position: relative; border-radius: 50%; line-height: 0; margin-bottom: 6px; filter: grayscale(.85); opacity: .72; box-shadow: 0 12px 24px rgba(30, 50, 90, .2); transition: transform .3s var(--elastico), filter .3s ease, opacity .3s ease, box-shadow .3s ease; }
+.pallino { position: relative; display: block; padding: 0; width: 92px; height: 92px; flex: none; border-radius: 50%; line-height: 0; margin-bottom: 6px; filter: grayscale(.85); opacity: .72; box-shadow: 0 12px 24px rgba(30, 50, 90, .2); transition: transform .3s var(--elastico), filter .3s ease, opacity .3s ease, box-shadow .3s ease; }
+.pallino .bandiera { display: block; width: 100%; height: 100%; }
+.lingue--compatto .pallino { width: 60px; height: 60px; }
 .pallino:active { transform: scale(.9); }
 .pallino-col.on .pallino { filter: none; opacity: 1; transform: scale(1.04); box-shadow: 0 0 0 5px #fff, 0 0 0 9px rgba(24, 179, 148, .55), 0 14px 30px rgba(24, 179, 148, .45); }
 .pallino__spunta { position: absolute; right: -2px; bottom: -2px; width: 30px; height: 30px; border-radius: 50%; background: var(--grad); color: #fff; display: flex; align-items: center; justify-content: center; border: 3px solid #fff; box-shadow: 0 6px 14px rgba(24, 179, 148, .45); }
